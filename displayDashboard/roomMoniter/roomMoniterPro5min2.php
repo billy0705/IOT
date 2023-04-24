@@ -144,6 +144,7 @@
 			timeArray = <?php echo json_encode($timestamps); ?>;
 			temperatureArray = <?php echo json_encode($temperatures); ?>;
 			humidityArray = <?php echo json_encode($humidities); ?>;
+			var newesttime;
 			var doordata = [];
 			for (var i = 0; i < timeArray.length; i++){
 				if (i%10 == 0){
@@ -269,6 +270,7 @@
 						temperatureArray.push(result.temperature);
 						humidityArray.push(result.humidity);
 						doordata.push("O");
+						handleInputData();
 					}
 					txtTemp.innerHTML=result.temperature;
 					txtHumid.innerHTML=result.humidity;
@@ -300,7 +302,7 @@
 					time.add(timeoffset, 'hours');
 					//console.log(time);
 					//console.log(typeof time);
-					var roundedTime = new Date(Math.ceil(time.valueOf() / (30 * 60 * 1000)) * 30 * 60 * 1000);
+					var roundedTime = new Date(Math.ceil(time.valueOf() / (5 * 60 * 1000)) * 5 * 60 * 1000);
 					var roundedTimeString = roundedTime.toISOString();
 					var doorS = 0;
 					if (doordata[i] == "O"){
@@ -322,6 +324,7 @@
 						};
 					} 
 				}
+				newesttime = roundedTimeString;
 				//d.innerHTML=time.getUTCHours();
 				
 				//console.log(inputData);
@@ -393,16 +396,15 @@
 				d.innerHTML=year+'-'+mon+'-'+da+' '+' '+h+':'+m+':'+s+'  '+ary[day];
 					//console.log(time);
 				date.setUTCHours(date.getUTCHours() + timeoffset);
-				var roundedTime = new Date(Math.ceil(date.getTime() / (30 * 60 * 1000)) * 30 * 60 * 1000);
+				var roundedTime = new Date(Math.ceil(date.getTime() / (1 * 1 * 1000)) * 1 * 1 * 1000);
 				var roundedTimeString = roundedTime.toISOString();
-				if (roundedTimeString != chart.data.labels[chart.data.labels.length - 1]){
-					console.log(roundedTimeString);
-					console.log(chart.data.labels[chart.data.labels.length - 1]);
-					handleInputData();
+				if (roundedTimeString == newesttime){
+					console.log("roundedTimeString:", roundedTimeString);
+					console.log("labels:", newesttime);
 					updateChart();
 				}
 				//d.innerHTML = Intl.DateTimeFormat().resolvedOptions().timeZone;
-				//d.innerHTML=roundedTimeString + chart.data.labels[chart.data.labels.length - 1];
+				d.innerHTML=roundedTimeString + newesttime;
 			}
 			
 			window.onload=function(){
