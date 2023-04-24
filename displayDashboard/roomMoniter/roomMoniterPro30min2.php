@@ -300,7 +300,7 @@
 					time.add(timeoffset, 'hours');
 					//console.log(time);
 					//console.log(typeof time);
-					var roundedTime = new Date(Math.ceil(time.valueOf() / (15 * 60 * 1000)) * 15 * 60 * 1000);
+					var roundedTime = new Date(Math.ceil(time.valueOf() / (30 * 60 * 1000)) * 30 * 60 * 1000);
 					var roundedTimeString = roundedTime.toISOString();
 					var doorS = 0;
 					if (doordata[i] == "O"){
@@ -393,7 +393,7 @@
 				d.innerHTML=year+'-'+mon+'-'+da+' '+' '+h+':'+m+':'+s+'  '+ary[day];
 					//console.log(time);
 				date.setUTCHours(date.getUTCHours() + timeoffset);
-				var roundedTime = new Date(Math.ceil(date.getTime() / (15 * 60 * 1000)) * 15 * 60 * 1000);
+				var roundedTime = new Date(Math.ceil(date.getTime() / (30 * 60 * 1000)) * 30 * 60 * 1000);
 				var roundedTimeString = roundedTime.toISOString();
 				if (roundedTimeString != chart.data.labels[chart.data.labels.length - 1]){
 					console.log(roundedTimeString);
