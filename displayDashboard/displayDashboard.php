@@ -107,7 +107,7 @@
 				</table>
 				
 			</div>
-			<div class="" style="display:inline-block; float:right; margin: auto;">
+			<div class="" style="float:right; margin: auto;">
 				<a style = "width : 150px" class="modify" href="./locationStatusBoard/locationStatusBoard.php?locationid=<?php echo $locationid;?>">Back</a>
 			</div>
 		</div>
