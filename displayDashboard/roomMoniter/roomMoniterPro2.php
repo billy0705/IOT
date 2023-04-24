@@ -6,7 +6,7 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 		
-		
+
 		<!-- <meta http-equiv="refresh" content="10" >  refresh page every 10 seconds -->
 		<style>
 			#chart-container {
@@ -36,63 +36,63 @@
 		</style>
 	</head>
 	<?php
-		// Set database connection details
-		$locationid = "10";
-		$sensorid = "1234";
-		$currentdate = date("Y-m-d");
-		if (isset($_GET['locationid'])){
-			$locationid=$_GET['locationid'];
-		}
-		if (isset($_GET['sensorid'])){
-			$sensorid=$_GET['sensorid'];
-		}
-		$file = fopen("../../location.csv","r");
-		while(! feof($file)){
-			$array = fgetcsv($file);
-			if ($array[0] == $locationid){
-				$locationName = $array[1];
-				break;
+			// Set database connection details
+			$locationid = "10";
+			$sensorid = "1234";
+			$currentdate = date("Y-m-d");
+			if (isset($_GET['locationid'])){
+				$locationid=$_GET['locationid'];
 			}
-		}
-		fclose($file);
-		$url = 'http://10.10.2.108/fromsensor/api/SensorConfig/GetSensorByID/'.$sensorid;
-		$json = file_get_contents($url);
-		$obj = json_decode($json);
-		$configarray = json_decode(json_encode($obj->lstSensorConfigs[0]), true);
-		//$url = 'http://10.10.2.108/fromsensor/api/DhtValue/GetDhtValueByLocationSensor?locationId='.$locationid.'&SensorId='.$sensorid;
-		$url = 'http://10.10.2.108/fromsensor/api/DhtValue/GetDhtValueByLocDate?locationId='.$locationid.'&DataDate='.$currentdate;
-		$json = file_get_contents($url);
-		$obj = json_decode($json);
-		$acount = 0;
-		// echo $obj->statusMessage;
-		if ($obj->statusMessage == "Data Found"){
-			$acount = count($obj->lstDht_Value);
-			$temperatures = array();
-			$humidities = array();
-			$timestamps = array();
-			$tmax = array();
-			$tmin = array();
-			$hmax = array();
-			$hmin = array();
-			for ($i = 0; $i < $acount; $i++){
-				//echo print_r($obj->lstDht_Value[$i])."<br>";
-				$array = json_decode(json_encode($obj->lstDht_Value[$i]), true);
-				$temperatures[] = $array["temperature"];
-				$humidities[] = $array["humidity"];
-				$timestamps[] = $array["dataDate"];
-				$tmax[] = $configarray["tmax"];
-				$tmin[] = $configarray["tmin"];
-				$hmax[] = $configarray["hmax"];
-				$hmin[] = $configarray["hmin"];
+			if (isset($_GET['sensorid'])){
+				$sensorid=$_GET['sensorid'];
 			}
-			$temperatures = array_reverse($temperatures);
-			$humidities = array_reverse($humidities);
-			$timestamps = array_reverse($timestamps);
-		}
-		else {
-			echo $obj->statusMessage;
-		}
-	?>
+			$file = fopen("../../location.csv","r");
+			while(! feof($file)){
+				$array = fgetcsv($file);
+				if ($array[0] == $locationid){
+					$locationName = $array[1];
+					break;
+				}
+			}
+			fclose($file);
+			$url = 'http://10.10.2.108/fromsensor/api/SensorConfig/GetSensorByID/'.$sensorid;
+			$json = file_get_contents($url);
+			$obj = json_decode($json);
+			$configarray = json_decode(json_encode($obj->lstSensorConfigs[0]), true);
+			//$url = 'http://10.10.2.108/fromsensor/api/DhtValue/GetDhtValueByLocationSensor?locationId='.$locationid.'&SensorId='.$sensorid;
+			$url = 'http://10.10.2.108/fromsensor/api/DhtValue/GetDhtValueByLocDate?locationId='.$locationid.'&DataDate='.$currentdate;
+			$json = file_get_contents($url);
+			$obj = json_decode($json);
+			$acount = 0;
+			// echo $obj->statusMessage;
+			if ($obj->statusMessage == "Data Found"){
+				$acount = count($obj->lstDht_Value);
+				$temperatures = array();
+				$humidities = array();
+				$timestamps = array();
+				$tmax = array();
+				$tmin = array();
+				$hmax = array();
+				$hmin = array();
+				for ($i = 0; $i < $acount; $i++){
+					//echo print_r($obj->lstDht_Value[$i])."<br>";
+					$array = json_decode(json_encode($obj->lstDht_Value[$i]), true);
+					$temperatures[] = $array["temperature"];
+					$humidities[] = $array["humidity"];
+					$timestamps[] = $array["dataDate"];
+					$tmax[] = $configarray["tmax"];
+					$tmin[] = $configarray["tmin"];
+					$hmax[] = $configarray["hmax"];
+					$hmin[] = $configarray["hmin"];
+				}
+				$temperatures = array_reverse($temperatures);
+				$humidities = array_reverse($humidities);
+				$timestamps = array_reverse($timestamps);
+			}
+			else {
+				echo $obj->statusMessage;
+			}
+		?>
 	<body>
 		<?php require "../header.php"?>
 		
@@ -102,6 +102,8 @@
 		<div style="float:right; width:30%;">
 			<button id="reset-zoom-button">Reset Zoom</button>
 			<a id="simple" href="./roomMoniter.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>">Simple Moniter</a>
+			<a id="simple" href="./roomMoniterPro15min.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>">15 Min</a>
+			<a id="simple" href="./roomMoniterPro30min.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>">30 Min</a>
 			<div class="" style="float:right; margin: auto;">
 				<a style = "width : 150px" class="modify" href="../locationStatusBoard/locationStatusBoard.php?locationid=<?php echo $locationid;?>">Back</a>
 			</div>
@@ -139,25 +141,46 @@
 		
 		<script>
 			
-			const timeZone = "Asia/Bangkok";
 			timeArray = <?php echo json_encode($timestamps); ?>;
 			temperatureArray = <?php echo json_encode($temperatures); ?>;
 			humidityArray = <?php echo json_encode($humidities); ?>;
-			inputData = {};
 			//console.log(timearray);
+			var doordata = [];
+			for (var i = 0; i < timeArray.length; i++){
+				if (i%10 == 0){
+					//console.log(i);
+					doordata.push("O");
+				}
+				else{
+					doordata.push("C");
+				}
+			}
+			//console.log(doordata);
+			var doorStatusColorData = doordata.map(function (item) {
+            	return item === "O" ? "rgba(255, 0, 0, 1)" : "rgba(0, 0, 0, 0.1)";
+        	});
+			var doorStatusRadiusData = doordata.map(function (item) {
+            	return item === "O" ? 6 : 3;
+        	});
+			//console.log(doorStatusColorData);
+
 			var chartData = {
 				labels: timeArray,
 				datasets: [
 				{
 					label: 'Temperature',
-					data:temperatureArray,
+					data: temperatureArray,
 					borderColor: 'green',
+					pointBackgroundColor: doorStatusColorData,
+                    pointRadius: doorStatusRadiusData,
 					fill: false
 				},
 				{
 					label: 'Humidity',
 					data: humidityArray,
 					borderColor: 'blue',
+					pointBackgroundColor: doorStatusColorData,
+                    pointRadius: doorStatusRadiusData,
 					fill: false
 				},
 				{
@@ -194,7 +217,7 @@
 					label: 'Humidity Lower Limit',
 					pointRadius: 0,
 					pointHoverRadius: 0
-				}
+				},
 				]
 			};
 			
@@ -207,7 +230,7 @@
 						time: {
 							parser: 'YYYY-MM-DDTHH:mm:ss',
 							tooltipFormat: 'YYYY-MM-DDTHH:mm:ss',
-							unit: 'hour',
+							unit: 'hour'
 						},
 					}],
 				},
@@ -225,7 +248,7 @@
 			// Function to update chart data
 			function updateChartData() {
 				var url = "../THnow.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>";
-				console.log(url);
+				//console.log(url);
 				var txtTemp=document.getElementById('txtTemp');
 				var txtHumid=document.getElementById('txtHumid');
 				fetch(url,{
@@ -237,27 +260,30 @@
 				})
 				.then(result  => {
 					console.log(result);
-					/* console.log(result.temperature);
+					console.log(result.temperature);
 					console.log(result.humidity);
-					console.log(result.timestamp); */
+					console.log(result.timestamp);
 					
-					last_date = timeArray[timeArray.length - 1];
+					last_date = chart.data.labels[chart.data.labels.length - 1];
 					
-					//console.log(last_date);
+					console.log(last_date);
 					if (last_date != result.timestamp){
-						timeArray.push(result.timestamp);
-						temperatureArray.push(result.temperature);
-						humidityArray.push(result.humidity);
-						
-						/* chart.data.datasets[0].data.push(result.temperature);
+						chart.data.datasets[0].data.push(result.temperature);
 						chart.data.datasets[1].data.push(result.humidity);
 						chart.data.datasets[2].data.push(<?php echo $configarray["tmax"]?>);
 						chart.data.datasets[3].data.push(<?php echo $configarray["tmin"]?>);
 						chart.data.datasets[4].data.push(<?php echo $configarray["hmax"]?>);
 						chart.data.datasets[5].data.push(<?php echo $configarray["hmin"]?>);
 						chart.data.labels.push(result.timestamp);
-						
-						chart.update(); */
+						var lastIndex = chart.data.labels.length - 1;
+						var doorStatus = "O";
+						var pointBackgroundColor = doorStatus === "O" ? "rgba(255, 0, 0, 1)" : "rgba(0, 0, 0, 0.1)";
+						var pointRadius = doorStatus === "O" ? 6 : 3;
+						chart.data.datasets[0].pointBackgroundColor[lastIndex] = pointBackgroundColor;
+						chart.data.datasets[1].pointBackgroundColor[lastIndex] = pointBackgroundColor;
+						chart.data.datasets[0].pointRadius[lastIndex] = pointRadius;
+						chart.data.datasets[1].pointRadius[lastIndex] = pointRadius;
+						chart.update();
 					}
 					txtTemp.innerHTML=result.temperature;
 					txtHumid.innerHTML=result.humidity;
@@ -276,69 +302,6 @@
 					}
 					
 				}).catch(err => console.error(err));
-				
-			}
-			
-			function handleInputData(timearray, temperaturearray, humidityarray) {
-				//console.log(timearray);
-				inputData = {};
-				for (let i = 0; i < timearray.length; i++){
-					const time = new Date(timearray[i]);
-					time.setUTCHours(time.getUTCHours() + 7);
-					//console.log(time);
-					const roundedTime = new Date(Math.ceil(time.getTime() / (15 * 60 * 1000)) * 15 * 60 * 1000);
-					const roundedTimeString = roundedTime.toISOString();
-					//console.log(roundedTimeString);
-					
-					if (inputData[roundedTimeString]) {
-						inputData[roundedTimeString].tempsum += temperaturearray[i];
-						inputData[roundedTimeString].humidsum += humidityarray[i];
-						inputData[roundedTimeString].count++;
-						} else {
-						inputData[roundedTimeString] = {
-							tempsum: temperaturearray[i],
-							humidsum: humidityarray[i],
-							count: 1
-						};
-					}
-				}
-				
-				console.log(inputData);
-			}
-			
-			function updateChart() {
-				const timedata = [];
-				const tempdata = [];
-				const humiddata = [];
-				const tmaxdata = [];
-				const tmindata = [];
-				const hmaxdata = [];
-				const hmindata = [];
-				
-				for (const time in inputData) {
-					const tempaverage = inputData[time].tempsum / inputData[time].count;
-					const humidaverage = inputData[time].humidsum / inputData[time].count;
-					timedata.push(time);
-					tempdata.push(tempaverage);
-					humiddata.push(humidaverage);
-					tmaxdata.push(<?php echo $configarray["tmax"]?>);
-					tmindata.push(<?php echo $configarray["tmin"]?>);
-					hmaxdata.push(<?php echo $configarray["hmax"]?>);
-					hmindata.push(<?php echo $configarray["hmin"]?>);
-				}
-				/* console.log(timedata);
-				console.log(tempdata);
-				console.log(humiddata); */
-				
-				chart.data.labels = timedata;
-				chart.data.datasets[0].data = tempdata;
-				chart.data.datasets[1].data = humiddata;
-				chart.data.datasets[2].data = tmaxdata;
-				chart.data.datasets[3].data = tmindata;
-				chart.data.datasets[4].data = hmaxdata;
-				chart.data.datasets[5].data = hmindata;
-				//console.log(chart.data.labels);
-				chart.update();
 			}
 			
 			
@@ -355,29 +318,16 @@
 				var s=("0" + (date.getSeconds())).slice(-2);
 				var ary = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 				d.innerHTML=year+'-'+mon+'-'+da+' '+' '+h+':'+m+':'+s+'  '+ary[day];
-					//console.log(time);
-				date.setUTCHours(date.getUTCHours() + 7);
-				const roundedTime = new Date(Math.ceil(date.getTime() / (15 * 60 * 1000)) * 15 * 60 * 1000);
-				const roundedTimeString = roundedTime.toISOString();
-				if (roundedTimeString != chart.data.labels[chart.data.labels.length - 1]){
-					console.log(roundedTimeString);
-					console.log(chart.data.labels[chart.data.labels.length - 1]);
-					handleInputData(timeArray, temperatureArray, humidityArray);
-					updateChart();
-				}
 			}
 			
 			window.onload=function(){
-				handleInputData(timeArray, temperatureArray, humidityArray);
 				setInterval(printTime,1000);
 				setInterval(updateChartData,60000);
 				updateChartData();
-				updateChart();
-				console.log("set");
 			}
 			/* // Call updateChartData function every 10 seconds
-				setInterval(function() {
-			updateChartData();}, 60000); */ // Update every 10 seconds
+			setInterval(function() {
+				updateChartData();}, 60000); */ // Update every 10 seconds
 			document.getElementById("reset-zoom-button").addEventListener("click", function() {
 				chart.resetZoom();
 			});
