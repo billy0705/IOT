@@ -102,8 +102,8 @@
 		<div style="float:right; width:30%;">
 			<button id="reset-zoom-button">Reset Zoom</button>
 			<a id="simple" href="./roomMoniter.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>">Simple Moniter</a>
-			<div class="" style="display:inline-block; float:right; margin: auto;">
-				<a style = "width : 150px" class="modify" href="./locationStatusBoard/locationStatusBoard.php?locationid=<?php echo $locationid;?>">Back</a>
+			<div class="" style="float:right; margin: auto;">
+				<a style = "width : 150px" class="modify" href="../locationStatusBoard/locationStatusBoard.php?locationid=<?php echo $locationid;?>">Back</a>
 			</div>
 			<table border="1" style="width:100%; height:50vh;">
 				<tbody style="width:100%; height:100%;">
