@@ -15,17 +15,7 @@
 					if (isset($_GET['locationid'])){
 						$locationid=$_GET['locationid'];
 					}
-					$file = fopen("../../location.csv","r");
-					$sensor_array = Array();
-					while(! feof($file)){
-						 
-						$array = fgetcsv($file);
-						if ($array[0] == $locationid){
-							$locationName = $array[1];
-							break;
-						}
-					}
-					fclose($file);
+					require "../../php/LocationID2Name.php";
 					
 				?>
 				<div class="sensordashboard" style="background-color: CornflowerBlue;">
@@ -46,6 +36,20 @@
 							for ($i = 0; $i < $acount; $i++){
 								//echo print_r($obj->lstSensorConfigs[$i])."<br>";
 								$array = json_decode(json_encode($obj->lstSensorConfigs[$i]), true);
+								$array = json_decode(json_encode($obj->lstSensorConfigs[$i]), true);
+								$Temparray = Array();
+								$Temparray[] = $array["sensorID"];
+								$Temparray[] = $array["locationID"];
+								$Temparray[] = $array["hmin"];
+								$Temparray[] = $array["hmax"];
+								$Temparray[] = $array["tmin"];
+								$Temparray[] = $array["tmax"];
+								$Temparray[] = $array["createdate"];
+								$Temparray[] = $array["createby"];
+								$Temparray[] = $array["status"];
+								$Temparray[] = $array["intervalTime"];
+								// echo print_r($Temparray)."<br>";
+								$sensor_array[] = $Temparray;
 								if ($array["status"] = 'A'){
 									$active += 1;
 								}
@@ -64,36 +68,7 @@
 					<a style="display:block; width:15%">Now Stop : <br><?php echo $stop;?></a>
 				</div>
 				<hr>
-				<?php 
-					$url = 'http://10.10.2.108/fromsensor/api/SensorConfig/GetSensorByLoc/'.$locationid;
-					$json = file_get_contents($url);
-					$obj = json_decode($json);
-					$acount = 0;
-					if ($obj->statusMessage == "Sensor Config Found"){
-						$acount = count($obj->lstSensorConfigs);
-						$sensor_array = Array();
-						for ($i = 0; $i < $acount; $i++){
-							//echo print_r($obj->lstSensorConfigs[$i])."<br>";
-							$array = json_decode(json_encode($obj->lstSensorConfigs[$i]), true);
-							$Temparray = Array();
-							$Temparray[] = $array["sensorID"];
-							$Temparray[] = $array["locationID"];
-							$Temparray[] = $array["hmin"];
-							$Temparray[] = $array["hmax"];
-							$Temparray[] = $array["tmin"];
-							$Temparray[] = $array["tmax"];
-							$Temparray[] = $array["createdate"];
-							$Temparray[] = $array["createby"];
-							$Temparray[] = $array["status"];
-							$Temparray[] = $array["intervalTime"];
-							// echo print_r($Temparray)."<br>";
-							$sensor_array[] = $Temparray;
-						}
-						require "sensorStatus.php";
-					}
-					else {
-						echo $obj->statusMessage;
-					}?>
+				<?php require "sensorStatus.php"; ?>
 			</main>
 		</div>
 		
