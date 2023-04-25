@@ -78,6 +78,7 @@
 			$tmin = array();
 			$hmax = array();
 			$hmin = array();
+			$door = array();
 			for ($i = 0; $i < $acount; $i++){
 				//echo print_r($obj->lstDht_Value[$i])."<br>";
 				$array = json_decode(json_encode($obj->lstDht_Value[$i]), true);
@@ -88,10 +89,12 @@
 				$tmin[] = $configarray["tmin"];
 				$hmax[] = $configarray["hmax"];
 				$hmin[] = $configarray["hmin"];
+				$door[] = $array["door"];
 			}
 			$temperatures = array_reverse($temperatures);
 			$humidities = array_reverse($humidities);
 			$timestamps = array_reverse($timestamps);
+			$door = array_reverse($door);
 		}
 		else {
 			echo $obj->statusMessage;
@@ -155,8 +158,17 @@
 			timeArray = <?php echo json_encode($timestamps); ?>;
 			temperatureArray = <?php echo json_encode($temperatures); ?>;
 			humidityArray = <?php echo json_encode($humidities); ?>;
+			doorArray = <?php echo json_encode($door); ?>;
 			var timeInterval = <?php echo $timeInterval; ?>;
 			var newesttime;
+			
+			console.log(doorArray);
+			// var doorStatusColorData = doorArray.map(function (item) {
+            // 	return item === "O" ? "rgba(255, 0, 0, 1)" : "rgba(0, 0, 0, 0.1)";
+        	// });
+			// var doorStatusRadiusData = doorArray.map(function (item) {
+            // 	return item === "O" ? 6 : 3;
+        	// });
 			inputData = {};
 			
 			var timeoffset = 7;
@@ -259,12 +271,12 @@
 					
 					last_date = timeArray[timeArray.length - 1];
 					
-					//console.log(last_date);
+					console.log(result.door);
 					if (last_date != result.timestamp){
 						timeArray.push(result.timestamp);
 						temperatureArray.push(result.temperature);
 						humidityArray.push(result.humidity);
-						doordata.push("O");
+						doorArray.push(result.door);
 						handleInputData();
 					}
 					txtTemp.innerHTML=result.temperature;
@@ -299,16 +311,22 @@
 					//console.log(typeof time);
 					var roundedTime = new Date(Math.ceil(time.valueOf() / (timeInterval * 60 * 1000)) * timeInterval * 60 * 1000);
 					var roundedTimeString = roundedTime.toISOString();
+					var doorS = 0;
+					if (doorArray[i] == "O"){
+						doorS = 1;
+					}
 					//console.log(roundedTimeString);
 					
 					 if (inputData[roundedTimeString]) {
 						inputData[roundedTimeString].tempsum += temperatureArray[i];
 						inputData[roundedTimeString].humidsum += humidityArray[i];
+						inputData[roundedTimeString].doorStatus += doorS;
 						inputData[roundedTimeString].count++;
 					} else {
 						inputData[roundedTimeString] = {
 							tempsum: temperatureArray[i],
 							humidsum: humidityArray[i],
+							doorStatus: doorS,
 							count: 1
 						};
 					} 
@@ -327,6 +345,8 @@
 				var tmindata = [];
 				var hmaxdata = [];
 				var hmindata = [];
+				var doorStatusColorData = [];
+				var doorStatusRadiusData = [];
 				
 				for (var time in inputData) {
 					var tempaverage = inputData[time].tempsum / inputData[time].count;
@@ -338,6 +358,14 @@
 					tmindata.push(<?php echo $configarray["tmin"]?>);
 					hmaxdata.push(<?php echo $configarray["hmax"]?>);
 					hmindata.push(<?php echo $configarray["hmin"]?>);
+					if (inputData[time].doorStatus != 0){
+						doorStatusColorData.push("rgba(255, 0, 0, 1)");
+						doorStatusRadiusData.push(6);
+					}
+					else{
+						doorStatusColorData.push("rgba(0, 0, 0, 0.1)");
+						doorStatusRadiusData.push(3);
+					}
 				}
 				/* console.log(timedata);
 				console.log(tempdata);
@@ -346,7 +374,11 @@
 				
 				chart.data.labels = timedata;
 				chart.data.datasets[0].data = tempdata;
+				chart.data.datasets[0].pointBackgroundColor = doorStatusColorData;
+				chart.data.datasets[0].pointRadius = doorStatusRadiusData;
 				chart.data.datasets[1].data = humiddata;
+				chart.data.datasets[1].pointBackgroundColor = doorStatusColorData;
+				chart.data.datasets[1].pointRadius = doorStatusRadiusData;
 				chart.data.datasets[2].data = tmaxdata;
 				chart.data.datasets[3].data = tmindata;
 				chart.data.datasets[4].data = hmaxdata;

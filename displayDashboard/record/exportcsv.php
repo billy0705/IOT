@@ -26,13 +26,13 @@
 		$f = fopen('php://memory', 'w'); 
 		
 		// Set column headers 
-		$fields = array('SensorID', 'LocationID', 'DataDate', 'Humidity', 'Temperature', 'Ahmin', 'Ahmax', 'Atmin', 'Atmax'); 
+		$fields = array('SensorID', 'LocationID', 'DataDate', 'Humidity', 'Temperature', 'Ahmin', 'Ahmax', 'Atmin', 'Atmax', 'door'); 
 		fputcsv($f, $fields, $delimiter);
 		
 		for ($i = 0; $i < $acount; $i++){
 			//echo print_r($obj->lstDht_Value[$i])."<br>";
 			$array = json_decode(json_encode($obj->lstDht_Value[$i]), true);
-			$lineData = array($array['sensorID'], $array['locationID'], $array['dataDate'], $array['humidity'], $array['temperature'], $array['ahmin'], $array['ahmax'], $array['atmin'], $array['atmax']); 
+			$lineData = array($array['sensorID'], $array['locationID'], $array['dataDate'], $array['humidity'], $array['temperature'], $array['ahmin'], $array['ahmax'], $array['atmin'], $array['atmax'], $array['door']); 
 			fputcsv($f, $lineData, $delimiter);
 		}
 		fseek($f, 0); 
