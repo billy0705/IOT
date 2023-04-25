@@ -107,13 +107,13 @@
 			<button id="reset-zoom-button">Reset Zoom</button>
 			<a id="simple" href="./roomMoniter.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>">Simple Moniter</a>
 			<?php if ($timeInterval != 5){ ?>
-				<a id="simple" href="./roomMoniterPro2.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>&timeInterval=5">5 Min</a>
+				<a id="simple" href="./roomMoniterPro.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>&timeInterval=5">5 Min</a>
 			<?php } ?>
 			<?php if ($timeInterval != 15){ ?>
-				<a id="simple" href="./roomMoniterPro2.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>&timeInterval=15">15 Min</a>
+				<a id="simple" href="./roomMoniterPro.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>&timeInterval=15">15 Min</a>
 			<?php } ?>
 			<?php if ($timeInterval != 30){ ?>
-				<a id="simple" href="./roomMoniterPro2.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>&timeInterval=30">30 Min</a>
+				<a id="simple" href="./roomMoniterPro.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>&timeInterval=30">30 Min</a>
 			<?php } ?>
 			<div class="" style="float:right; margin: auto;">
 				<a style = "width : 150px" class="modify" href="../locationStatusBoard/locationStatusBoard.php?locationid=<?php echo $locationid;?>">Back</a>
@@ -157,23 +157,6 @@
 			humidityArray = <?php echo json_encode($humidities); ?>;
 			var timeInterval = <?php echo $timeInterval; ?>;
 			var newesttime;
-			var doordata = [];
-			for (var i = 0; i < timeArray.length; i++){
-				if (i%10 == 0){
-					//console.log(i);
-					doordata.push("O");
-				}
-				else{
-					doordata.push("C");
-				}
-			}
-			//console.log(doordata);
-			var doorStatusColorData = doordata.map(function (item) {
-            	return item === "O" ? "rgba(255, 0, 0, 1)" : "rgba(0, 0, 0, 0.1)";
-        	});
-			var doorStatusRadiusData = doordata.map(function (item) {
-            	return item === "O" ? 6 : 3;
-        	});
 			inputData = {};
 			
 			var timeoffset = 7;
@@ -316,22 +299,16 @@
 					//console.log(typeof time);
 					var roundedTime = new Date(Math.ceil(time.valueOf() / (timeInterval * 60 * 1000)) * timeInterval * 60 * 1000);
 					var roundedTimeString = roundedTime.toISOString();
-					var doorS = 0;
-					if (doordata[i] == "O"){
-						doorS = 1;
-					}
 					//console.log(roundedTimeString);
 					
 					 if (inputData[roundedTimeString]) {
 						inputData[roundedTimeString].tempsum += temperatureArray[i];
 						inputData[roundedTimeString].humidsum += humidityArray[i];
-						inputData[roundedTimeString].doorStatus += doorS;
 						inputData[roundedTimeString].count++;
 					} else {
 						inputData[roundedTimeString] = {
 							tempsum: temperatureArray[i],
 							humidsum: humidityArray[i],
-							doorStatus: doorS,
 							count: 1
 						};
 					} 
@@ -350,8 +327,6 @@
 				var tmindata = [];
 				var hmaxdata = [];
 				var hmindata = [];
-				var doorStatusColorData = [];
-				var doorStatusRadiusData = [];
 				
 				for (var time in inputData) {
 					var tempaverage = inputData[time].tempsum / inputData[time].count;
@@ -363,14 +338,6 @@
 					tmindata.push(<?php echo $configarray["tmin"]?>);
 					hmaxdata.push(<?php echo $configarray["hmax"]?>);
 					hmindata.push(<?php echo $configarray["hmin"]?>);
-					if (inputData[time].doorStatus != 0){
-						doorStatusColorData.push("rgba(255, 0, 0, 1)");
-						doorStatusRadiusData.push(6);
-					}
-					else{
-						doorStatusColorData.push("rgba(0, 0, 0, 0.1)");
-						doorStatusRadiusData.push(3);
-					}
 				}
 				/* console.log(timedata);
 				console.log(tempdata);
@@ -379,11 +346,7 @@
 				
 				chart.data.labels = timedata;
 				chart.data.datasets[0].data = tempdata;
-				chart.data.datasets[0].pointBackgroundColor = doorStatusColorData;
-				chart.data.datasets[0].pointRadius = doorStatusRadiusData;
 				chart.data.datasets[1].data = humiddata;
-				chart.data.datasets[1].pointBackgroundColor = doorStatusColorData;
-				chart.data.datasets[1].pointRadius = doorStatusRadiusData;
 				chart.data.datasets[2].data = tmaxdata;
 				chart.data.datasets[3].data = tmindata;
 				chart.data.datasets[4].data = hmaxdata;
@@ -416,7 +379,7 @@
 					updateChart();
 				}
 				//d.innerHTML = Intl.DateTimeFormat().resolvedOptions().timeZone;
-				d.innerHTML=roundedTimeString + newesttime;
+				//d.innerHTML=roundedTimeString + newesttime;
 			}
 			
 			window.onload=function(){
