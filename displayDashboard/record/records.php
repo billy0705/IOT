@@ -46,15 +46,7 @@
 			if (isset($_GET['timeInterval'])){
 				$timeInterval=$_GET['timeInterval'];
 			}
-			$file = fopen("../../location.csv","r");
-			while(! feof($file)){
-				$array = fgetcsv($file);
-				if ($array[0] == $locationid){
-					$locationName = $array[1];
-					break;
-				}
-			}
-			fclose($file);
+			require "../../php/LocationID2Name.php";
 			$url = 'http://10.10.2.108/fromsensor/api/SensorConfig/GetSensorByID/'.$sensorid;
 			$json = file_get_contents($url);
 			$obj = json_decode($json);
