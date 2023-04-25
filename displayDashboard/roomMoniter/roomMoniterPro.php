@@ -395,7 +395,7 @@
 				d.innerHTML=year+'-'+mon+'-'+da+' '+' '+h+':'+m+':'+s+'  '+ary[day];
 					//console.log(time);
 				date.setUTCHours(date.getUTCHours() + timeoffset);
-				var roundedTime = new Date(Math.ceil(date.getTime() / (1 * 1 * 1000)) * 1 * 1 * 1000);
+				var roundedTime = new Date(Math.ceil(date.getTime() / (1 * 2 * 1000)) * 1 * 2 * 1000);
 				var roundedTimeString = roundedTime.toISOString();
 				if (roundedTimeString == newesttime){
 					console.log("roundedTimeString:", roundedTimeString);
@@ -403,7 +403,7 @@
 					updateChart();
 				}
 				//d.innerHTML = Intl.DateTimeFormat().resolvedOptions().timeZone;
-				//d.innerHTML=roundedTimeString + newesttime;
+				d.innerHTML=roundedTimeString + newesttime;
 			}
 			
 			window.onload=function(){
