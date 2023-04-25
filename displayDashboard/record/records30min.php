@@ -136,7 +136,7 @@
 				<input type="submit" name="download butten" value="Download CSV" formaction = "exportcsv.php" />
 			</p>
 		</form>
-		<div class="" style="display:inline-block; float:right; margin: auto;">
+		<div class="" style="float:right; margin: auto;">
 		<a style = "width : 150px" class="modify" href="./records.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>&selectdate=<?php echo $selectdate;?>">5min</a>
 			<a style = "width : 150px" class="modify" href="./records15min.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>&selectdate=<?php echo $selectdate;?>">15min</a>
 			<a style = "width : 150px" class="modify" href="../locationStatusBoard/locationStatusBoard.php?locationid=<?php echo $locationid;?>">Back</a>
