@@ -12,15 +12,24 @@
 			<main>
 				<hr>
 				<?php
-					$file = fopen("../location.csv","r");
-					$sensor_array = Array();
+					$url = 'http://10.10.2.108/fromsensor/api/Location/GetListLocationConfig';
+					$json = file_get_contents($url);
+					$obj = json_decode($json);
+					//$acount = 0;
 					$count = 0;
-					while(! feof($file)){
-						//print_r(fgetcsv($file));
-						$sensor_array[] = fgetcsv($file);
-						$count = $count + 1;
+					$sensor_array = array();
+					// echo $obj->statusMessage;
+					if ($obj->statusMessage == "Data Found"){
+						$acount = count($obj->lstLocationConfigs);
+						for ($i = 0; $i < $acount; $i++){
+							$array = json_decode(json_encode($obj->lstLocationConfigs[$i]), true);
+							$Temparray = array();
+							$Temparray[] = $array["locationID"];
+							$Temparray[] = $array["locationName"];
+							$sensor_array[] = $Temparray;
+							$count = $count + 1;
+						}
 					}
-					fclose($file);
 					require "locationStatus.php";
 					
 				?>

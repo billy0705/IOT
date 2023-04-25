@@ -20,6 +20,7 @@
 		$h = $array["humidity"];
 		$t = $array["temperature"];
 		$time = $array["dataDate"];
+		$door = $array["door"];
 		$hStatus = 0;
 		$tStatus = 0;
 		if ($h > $configarray["hmax"] or $h < $configarray["hmin"]){
@@ -33,7 +34,8 @@
 			"humidity" => $h,
 			"tStatus" => $tStatus,
 			"hStatus" => $hStatus,
-			"timestamp" => $time
+			"timestamp" => $time,
+			"door" => $door
 		));
 	}
 	else {

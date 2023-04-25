@@ -39,6 +39,7 @@
 		// Set database connection details
 		$locationid = "10";
 		$sensorid = "1234";
+		$timeInterval = 5;
 		$currentdate = date("Y-m-d");
 		if (isset($_GET['locationid'])){
 			$locationid=$_GET['locationid'];
@@ -46,15 +47,10 @@
 		if (isset($_GET['sensorid'])){
 			$sensorid=$_GET['sensorid'];
 		}
-		$file = fopen("../../location.csv","r");
-		while(! feof($file)){
-			$array = fgetcsv($file);
-			if ($array[0] == $locationid){
-				$locationName = $array[1];
-				break;
-			}
+		if (isset($_GET['timeInterval'])){
+			$timeInterval=$_GET['timeInterval'];
 		}
-		fclose($file);
+		require "../../php/LocationID2Name.php";
 		$url = 'http://10.10.2.108/fromsensor/api/SensorConfig/GetSensorByID/'.$sensorid;
 		$json = file_get_contents($url);
 		$obj = json_decode($json);
@@ -102,8 +98,15 @@
 		<div style="float:right; width:30%;">
 			<button id="reset-zoom-button">Reset Zoom</button>
 			<a id="simple" href="./roomMoniter.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>">Simple Moniter</a>
-			<a id="simple" href="./roomMoniterPro.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>">5 Min</a>
-			<a id="simple" href="./roomMoniterPro30min.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>">30 Min</a>
+			<?php if ($timeInterval != 5){ ?>
+				<a id="simple" href="./roomMoniterPro.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>&timeInterval=5">5 Min</a>
+			<?php } ?>
+			<?php if ($timeInterval != 15){ ?>
+				<a id="simple" href="./roomMoniterPro.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>&timeInterval=15">15 Min</a>
+			<?php } ?>
+			<?php if ($timeInterval != 30){ ?>
+				<a id="simple" href="./roomMoniterPro.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>&timeInterval=30">30 Min</a>
+			<?php } ?>
 			<div class="" style="float:right; margin: auto;">
 				<a style = "width : 150px" class="modify" href="../locationStatusBoard/locationStatusBoard.php?locationid=<?php echo $locationid;?>">Back</a>
 			</div>
@@ -144,6 +147,8 @@
 			timeArray = <?php echo json_encode($timestamps); ?>;
 			temperatureArray = <?php echo json_encode($temperatures); ?>;
 			humidityArray = <?php echo json_encode($humidities); ?>;
+			var timeInterval = <?php echo $timeInterval; ?>;
+			var newesttime;
 			inputData = {};
 			
 			var timeoffset = 7;
@@ -228,7 +233,7 @@
 			// Function to update chart data
 			function updateChartData() {
 				var url = "../THnow.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>";
-				console.log(url);
+				//console.log(url);
 				var txtTemp=document.getElementById('txtTemp');
 				var txtHumid=document.getElementById('txtHumid');
 				fetch(url,{
@@ -251,16 +256,8 @@
 						timeArray.push(result.timestamp);
 						temperatureArray.push(result.temperature);
 						humidityArray.push(result.humidity);
-						
-						/* chart.data.datasets[0].data.push(result.temperature);
-						chart.data.datasets[1].data.push(result.humidity);
-						chart.data.datasets[2].data.push(<?php echo $configarray["tmax"]?>);
-						chart.data.datasets[3].data.push(<?php echo $configarray["tmin"]?>);
-						chart.data.datasets[4].data.push(<?php echo $configarray["hmax"]?>);
-						chart.data.datasets[5].data.push(<?php echo $configarray["hmin"]?>);
-						chart.data.labels.push(result.timestamp);
-						
-						chart.update(); */
+						doordata.push("O");
+						handleInputData();
 					}
 					txtTemp.innerHTML=result.temperature;
 					txtHumid.innerHTML=result.humidity;
@@ -277,7 +274,6 @@
 					else{
 						txtHumid.style.backgroundColor="lightgreen";
 					}
-					
 				}).catch(err => console.error(err));
 				
 			}
@@ -293,7 +289,7 @@
 					time.add(timeoffset, 'hours');
 					//console.log(time);
 					//console.log(typeof time);
-					var roundedTime = new Date(Math.ceil(time.valueOf() / (15 * 60 * 1000)) * 15 * 60 * 1000);
+					var roundedTime = new Date(Math.ceil(time.valueOf() / (timeInterval * 60 * 1000)) * timeInterval * 60 * 1000);
 					var roundedTimeString = roundedTime.toISOString();
 					//console.log(roundedTimeString);
 					
@@ -309,6 +305,7 @@
 						};
 					} 
 				}
+				newesttime = roundedTimeString;
 				//d.innerHTML=time.getUTCHours();
 				
 				//console.log(inputData);
@@ -337,6 +334,7 @@
 				/* console.log(timedata);
 				console.log(tempdata);
 				console.log(humiddata); */ 
+				//console.log(doorStatusColorData);
 				
 				chart.data.labels = timedata;
 				chart.data.datasets[0].data = tempdata;
@@ -365,16 +363,15 @@
 				d.innerHTML=year+'-'+mon+'-'+da+' '+' '+h+':'+m+':'+s+'  '+ary[day];
 					//console.log(time);
 				date.setUTCHours(date.getUTCHours() + timeoffset);
-				var roundedTime = new Date(Math.ceil(date.getTime() / (15 * 60 * 1000)) * 15 * 60 * 1000);
+				var roundedTime = new Date(Math.ceil(date.getTime() / (1 * 1 * 1000)) * 1 * 1 * 1000);
 				var roundedTimeString = roundedTime.toISOString();
-				if (roundedTimeString != chart.data.labels[chart.data.labels.length - 1]){
-					console.log(roundedTimeString);
-					console.log(chart.data.labels[chart.data.labels.length - 1]);
-					handleInputData();
+				if (roundedTimeString == newesttime){
+					console.log("roundedTimeString:", roundedTimeString);
+					console.log("labels:", newesttime);
 					updateChart();
 				}
 				//d.innerHTML = Intl.DateTimeFormat().resolvedOptions().timeZone;
-				//d.innerHTML=roundedTimeString + chart.data.labels[chart.data.labels.length - 1];
+				//d.innerHTML=roundedTimeString + newesttime;
 			}
 			
 			window.onload=function(){
