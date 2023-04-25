@@ -403,7 +403,7 @@
 					updateChart();
 				}
 				//d.innerHTML = Intl.DateTimeFormat().resolvedOptions().timeZone;
-				d.innerHTML=roundedTimeString + newesttime;
+				//d.innerHTML=roundedTimeString + newesttime;
 			}
 			
 			window.onload=function(){
