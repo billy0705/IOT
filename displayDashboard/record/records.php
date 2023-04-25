@@ -149,7 +149,7 @@
 			<?php if ($timeInterval != 30){ ?>
 			<a style = "width : 150px" class="modify" href="./records.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>&selectdate=<?php echo $selectdate;?>&timeInterval=30">30min</a>
 			<?php } ?>
-			
+			<a style = "width : 150px" class="modify" href="../locationStatusBoard/locationStatusBoard.php?locationid=<?php echo $locationid;?>">back</a>
 		</div>
 		<!-- <div id="datatable" style="height:200px"></div> -->
 		<div class="app" style="height: 50vh;">
@@ -350,11 +350,12 @@
 				data_alarm.addColumn('string', 'Humidity Max. Alarm');
 				data_alarm.addColumn('string', 'Temperature Min. Alarm');
 				data_alarm.addColumn('string', 'Temperature Max. Alarm');
+				data_alarm.addColumn('string', 'Door Status');
 				for(i = my_2d.length - 1; i >= 0; i--){
 					// console.log(i);
 					if(my_2d[i][5] == "Y" || my_2d[i][6] == "Y" || my_2d[i][7] == "Y" || my_2d[i][8] == "Y"){
 						// console.log(my_2d[i][0]);
-						data_alarm.addRow([my_2d[i][2], my_2d[i][0].toString(), my_2d[i][1].toString(), parseFloat(my_2d[i][3]), parseFloat(my_2d[i][4]), my_2d[i][5], my_2d[i][6], my_2d[i][7], my_2d[i][8]]);
+						data_alarm.addRow([my_2d[i][2], my_2d[i][0].toString(), my_2d[i][1].toString(), parseFloat(my_2d[i][3]), parseFloat(my_2d[i][4]), my_2d[i][5], my_2d[i][6], my_2d[i][7], my_2d[i][8], my_2d[i][9]]);
 					}
 				};
 				var chartoptions = {
