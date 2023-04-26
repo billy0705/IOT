@@ -21,6 +21,9 @@
 			<div class="choosebutton" style="background-color: #00d9ff;">
 				<a href="./displayDashboard">Display Dashboard</a>
 			</div>
+			<div class="choosebutton" style="background-color: #ffd900;">
+				<a href="./solderOven">Solder Oven</a>
+			</div>
 		</div>
 		
 		<footer>
