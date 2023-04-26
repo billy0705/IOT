@@ -52,7 +52,11 @@ table, th, td {
 
 body { 
 	margin: 0;
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: Roboto, sans-serif;  /*Arial, Helvetica, */
+}
+
+hr {
+	margin: 0.5px 0;
 }
 
 .header {

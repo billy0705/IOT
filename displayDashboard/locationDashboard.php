@@ -4,12 +4,26 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Location DashBoard</title>
-		<link rel="stylesheet" href="../css/styles.css">
+		<link rel="stylesheet" href="../css/styles.css?">
 	</head>
 	<body>
 		<?php require "header.php"?>
 		<div >
 			<main>
+				
+				<div class="sensordashboard">
+					<a  style="display:block; width:10%; font-size:1.5em; font-weight:bold;">LocationID</a>
+					<a style="display:block; width:18%; font-size:1.5em; font-weight:bold;">Location Name</a>
+					<a style="display:block; width:8%; font-size:1.5em; font-weight:bold;">Total</a>
+					<a style="display:block; width:8%; font-size:1.5em; font-weight:bold;">Active</a>
+					<a style="display:block; width:8%; font-size:1.5em; font-weight:bold;">Stop</a>
+					<a style="display:block; width:15%; font-size:1.5em; font-weight:bold;">Temperature</a>
+					<a style="display:block; width:10px"></a>
+					<a style="display:block; width:15%; font-size:1.5em; font-weight:bold;">Humidity</a>
+					<div class="sensordashboard-right" style = "width:10%">
+						<!-- <a style = "width:100%" class="modify"></a> -->
+					</div>
+				</div>
 				<hr>
 				<?php
 					$url = 'http://10.10.2.108/fromsensor/api/Location/GetListLocationConfig';
@@ -30,6 +44,7 @@
 							$count = $count + 1;
 						}
 					}
+					
 					require "locationStatus.php";
 					
 				?>

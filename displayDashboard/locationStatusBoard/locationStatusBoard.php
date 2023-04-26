@@ -68,6 +68,22 @@
 					<a style="display:block; width:15%">Now Stop : <br><?php echo $stop;?></a>
 				</div>
 				<hr>
+				<div class="sensordashboard">
+					<a style="display:block; width:10%">Sensor ID</a>
+					<a style="display:block; width:10%">Sensor Status</a>
+					<a style="display:block; width:1px"></a>
+					<a style="display:block; width:15%">Temperature</a>
+					<a style="display:block; width:1px"></a>
+					<a style="display:block; width:15%">Hunidity</a>
+							
+					<div class="sensordashboard-right" style = "width:28%">
+						<!-- <a style = "display:block; width:40%" class="modify" ></a>
+						<a style="display:block; width:5px"></a> -->
+						<!--<a style = "display:block; width:25%" class="modify" href="../displayDashboard.php?locationid=<?php echo $row[1];?>&sensorid=<?php echo $row[0];?>">All-time<br>Display</a>-->
+						<!-- <a style = "display:block; width:40%" class="modify"></a> -->
+					</div>
+				</div>
+				<hr>
 				<?php require "sensorStatus.php"; ?>
 			</main>
 		</div>
