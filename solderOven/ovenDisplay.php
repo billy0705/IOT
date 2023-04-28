@@ -33,6 +33,26 @@
 
 <body>
     <?php require "header.php"; ?>
+    <?php
+        $url = 'http://10.10.2.108/Solder/api/JT_WS450/JT_WS450Values';
+        $json = file_get_contents($url);
+        $obj = json_decode($json);
+        if ($obj->statusCode == 200){
+            $data = json_decode(json_encode($obj->jT_WS450_Values[0]), true);
+            $tsv = $data["transportSpeedValue"];
+            $rwv = $data["railWidthValue"];
+            $ph1bv = $data["preheater1BValue"];
+            $ph2bv = $data["preheater2BValue"];
+            $ph3bv = $data["preheater3BValue"];
+            $ph1tv = $data["preheater1TValue"];
+            $ph2tv = $data["preheater2TValue"];
+            $ph3tv = $data["preheater3TValue"];
+            $spv = $data["solderPotValue"];
+            $w1v = $data["wave1Value"];
+            $w2v = $data["wave2Value"];
+        }
+
+    ?>
     <!-- <h1>Solder Wave Machine 監控</h1> -->
     <div style="display:flex; height:100vh">
         <table style="width:50vw; height:100%; margin: 5px;">
@@ -48,61 +68,61 @@
                 <tr>
                     <td>Preheat B1</td>
                     <td>100</td>
-                    <td>98</td>
+                    <td><?php echo $ph1bv;?></td>
                     <td>Deg C</td>
                 </tr>
                 <tr>
                     <td>Preheat B2</td>
                     <td>120</td>
-                    <td>119</td>
+                    <td><?php echo $ph2bv;?></td>
                     <td>Deg C</td>
                 </tr>
                 <tr>
                     <td>Preheat B3</td>
                     <td>120</td>
-                    <td>119</td>
+                    <td><?php echo $ph3bv;?></td>
                     <td>Deg C</td>
                 </tr>
                 <tr>
                     <td>Preheat T2</td>
                     <td>120</td>
-                    <td>Close</td>
+                    <td><?php echo $ph2tv;?></td>
                     <td>Deg C</td>
                 </tr>
                 <tr>
                     <td>Preheat T3</td>
                     <td>120</td>
-                    <td>Close</td>
+                    <td><?php echo $ph3tv;?></td>
                     <td>Deg C</td>
                 </tr>
                 <tr>
                     <td>Solder Pot</td>
                     <td>250</td>
-                    <td>251</td>
+                    <td><?php echo $spv;?></td>
                     <td>Deg C</td>
                 </tr>
                 <tr>
                     <td>Conveyor</td>
                     <td>1200</td>
-                    <td>1200</td>
+                    <td><?php echo $tsv;?></td>
                     <td>mm/min</td>
                 </tr>
                 <tr>
                     <td>Rail Width</td>
                     <td>347</td>
-                    <td>346.5</td>
+                    <td><?php echo $rwv;?></td>
                     <td>mm</td>
                 </tr>
                 <tr>
                     <td>Wave1</td>
                     <td>12</td>
-                    <td>Close</td>
+                    <td><?php echo $w1v;?></td>
                     <td>Hz</td>
                 </tr>
                 <tr>
                     <td>Wave2</td>
                     <td>24</td>
-                    <td>Close</td>
+                    <td><?php echo $w2v;?></td>
                     <td>Hz</td>
                 </tr>
             </tbody>
