@@ -4,7 +4,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Location DashBoard</title>
-		<link rel="stylesheet" href="../../css/styles.css">
+		<link rel="stylesheet" href="../../css/styles.css?">
 	</head>
 	<body>
 		<?php require "../header.php"?>
@@ -69,12 +69,12 @@
 				</div>
 				<hr>
 				<div class="sensordashboard">
-					<a style="display:block; width:10%">Sensor ID</a>
-					<a style="display:block; width:10%">Sensor Status</a>
+					<a style="display:block; width:10%; font-size:1.5em; font-weight:bold;">Sensor ID</a>
+					<a style="display:block; width:10%; font-size:1.5em; font-weight:bold;">Status</a>
 					<a style="display:block; width:1px"></a>
-					<a style="display:block; width:15%">Temperature</a>
+					<a style="display:block; width:15%; font-size:1.5em; font-weight:bold;">Temperature</a>
 					<a style="display:block; width:1px"></a>
-					<a style="display:block; width:15%">Hunidity</a>
+					<a style="display:block; width:15%; font-size:1.5em; font-weight:bold;">Hunidity</a>
 							
 					<div class="sensordashboard-right" style = "width:28%">
 						<!-- <a style = "display:block; width:40%" class="modify" ></a>

@@ -4,15 +4,23 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Sensor DashBoard</title>
-		<link rel="stylesheet" href="../css/styles.css">
+		<link rel="stylesheet" href="../css/styles.css?">
 	</head>
 	<body>
 		<?php require "header.php"?>
 		<div >
 			<main>
 				<hr>
-				<div class="sensordashboard" style="background-color: Gainsboro;">
-				<a href="../sensorDashboard/addSensor.php" style="display:block; width:100%;"> + Add Sensor</a>
+				<div class="sensordashboard">
+					<a style="display:block; width:150px; font-size:1.5em; font-weight:bold;">Sensor ID</a>
+					<a style="display:block; width:100px; font-size:1.5em; font-weight:bold;">Status</a>
+					<a style="display:block; width:10px"></a>
+					<a style="display:block; width:200px; font-size:1.5em; font-weight:bold;">Temperature</a>
+					<a style="display:block; width:10px"></a>
+					<a style="display:block; width:180px; font-size:1.5em; font-weight:bold;">Humidity</a>
+					<div class="sensordashboard-right">
+						
+					</div>
 				</div>
 				<hr>
 				<?php
@@ -47,6 +55,11 @@
 						echo $obj->statusMessage;
 					}
 					?>
+				<hr>
+				<div class="sensordashboard" style="background-color: Gainsboro;">
+				<a href="../sensorDashboard/addSensor.php" style="display:block; width:100%;"> + Add Sensor</a>
+				</div>
+				<hr>
 				
 			</main>
 		</div>
