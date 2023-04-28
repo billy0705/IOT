@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Solder Wave Machine</title>
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/styles.css?">
     <style>
         /* 設定表格樣式 */
         svg {

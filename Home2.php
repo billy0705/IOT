@@ -18,6 +18,9 @@
 			<div class="choosebutton" style="background-color: #00d9ff;">
 				<a href="./displayDashboard">DHT Dashboard</a>
 			</div>
+			<div class="choosebutton" style="background-color: #ffd900;">
+				<a href="./solderOven">Solder Oven</a>
+			</div>
 			<div class="choosebutton" style="background-color: #00ff30;">
 				<a href="./sensorDashboard/">Sensor Dashboard</a>
 			</div>
