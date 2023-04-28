@@ -9,14 +9,12 @@
         /* 設定表格樣式 */
         svg {
             display: inline-block;
-            width: 50vw;
-            height: 50vh;
+            width: 100%;
+            height: 70%;
         }
 
         table {
             border-collapse: collapse;
-            width: 50vw;
-            max-width: 800px;
         }
 
         th,
@@ -36,8 +34,8 @@
 <body>
     <?php require "header.php"; ?>
     <!-- <h1>Solder Wave Machine 監控</h1> -->
-    <div style="display:flex">
-        <table>
+    <div style="display:flex; height:100vh">
+        <table style="width:50vw; height:100%; margin: 5px;">
             <thead>
                 <tr>
                     <th>Parameter Name</th>
@@ -109,34 +107,61 @@
                 </tr>
             </tbody>
         </table>
-        <svg viewBox="0 0 970 400">
-            <!-- 機器外框 -->
-            <rect x="10" y="20" width="950" height="350" fill="#c7d1cc" stroke="#000" stroke-width="2" />
+        <div style="width:50vw; height:100%">
+            <table style="height:30%; width:98%; margin: 5px;">
+                <thead>
+                    <tr>
+                        <th>Parameter Name</th>
+                        <th>State</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Location Name</td>
+                        <td>PCBA Line 4</td>
+                    </tr>
+                    <tr>
+                        <td>Oven Model</td>
+                        <td>JT WS450</td>
+                    </tr>
+                    <tr>
+                        <td>Time now</td>
+                        <td>2023-04-27 07:42:13 Thursday</td>
+                    </tr>
+                    <tr>
+                        <td>PCB in Count</td>
+                        <td>349</td>
+                    </tr>
+                </tbody>
+            </table>
+            <svg viewBox="0 0 970 400">
+                <!-- machine outer box -->
+                <rect x="10" y="20" width="950" height="350" fill="#c7d1cc" stroke="#000" stroke-width="2" />
 
-            <!-- 機器內部區塊 -->
-            <rect x="20" y="30" width="200" height="330" fill="#e6e6e6" stroke="#000" stroke-width="2" />
-            <rect x="230" y="30" width="200" height="330" fill="#e6e6e6" stroke="#000" stroke-width="2" />
-            <rect x="440" y="30" width="200" height="330" fill="#e6e6e6" stroke="#000" stroke-width="2" />
-            <rect x="650" y="30" width="300" height="330" fill="#e6e6e6" stroke="#000" stroke-width="2" />
-            <line x1="20" y1="195" x2="220" y2="195" stroke="black" stroke-width="2" />
-            <line x1="230" y1="195" x2="430" y2="195" stroke="black" stroke-width="2" />
-            <line x1="440" y1="195" x2="640" y2="195" stroke="black" stroke-width="2" />
-            <line x1="650" y1="195" x2="950" y2="195" stroke="black" stroke-width="2" />
-            <line x1="800" y1="30" x2="800" y2="195" stroke="black" stroke-width="2" />
+                <!-- machine inner box -->
+                <rect x="20" y="30" width="200" height="165" fill="gray" stroke="#000" stroke-width="2" />
+                <rect x="20" y="195" width="200" height="165" fill="#e6e6e6" stroke="#000" stroke-width="2" />
+                <rect x="230" y="30" width="200" height="165" fill="#e6e6e6" stroke="#000" stroke-width="2" />
+                <rect x="230" y="195" width="200" height="165" fill="#e6e6e6" stroke="#000" stroke-width="2" />
+                <rect x="440" y="30" width="200" height="165" fill="#e6e6e6" stroke="#000" stroke-width="2" />
+                <rect x="440" y="195" width="200" height="165" fill="#e6e6e6" stroke="#000" stroke-width="2" />
+                <rect x="650" y="30" width="150" height="165" fill="#e6e6e6" stroke="#000" stroke-width="2" />
+                <rect x="800" y="30" width="150" height="165" fill="#e6e6e6" stroke="#000" stroke-width="2" />
+                <rect x="650" y="195" width="300" height="165" fill="#e6e6e6" stroke="#000" stroke-width="2" />
 
-            <!-- 機器各段標籤 -->
-            <text class="section-label" id="preheat-label" x="75" y="120">Preheat T1</text>
-            <text class="section-label" id="preheat-label" x="285" y="120">Preheat T2</text>
-            <text class="section-label" id="preheat-label" x="495" y="120">Preheat T3</text>
-            <text class="section-label" id="preheat-label" x="75" y="285">Preheat B1</text>
-            <text class="section-label" id="preheat-label" x="285" y="285">Preheat B2</text>
-            <text class="section-label" id="preheat-label" x="495" y="285">Preheat B3</text>
-            <text class="section-label" id="preheat-label" x="700" y="120">Wave1</text>
-            <text class="section-label" id="preheat-label" x="850" y="120">Wave2</text>
-            <text class="section-label" id="preheat-label" x="760" y="285">Solder Pot</text>
+                <!-- machine section label -->
+                <text class="section-label" id="preheat-label" x="75" y="120">Preheat T1</text>
+                <text class="section-label" id="preheat-label" x="285" y="120">Preheat T2</text>
+                <text class="section-label" id="preheat-label" x="495" y="120">Preheat T3</text>
+                <text class="section-label" id="preheat-label" x="75" y="285">Preheat B1</text>
+                <text class="section-label" id="preheat-label" x="285" y="285">Preheat B2</text>
+                <text class="section-label" id="preheat-label" x="495" y="285">Preheat B3</text>
+                <text class="section-label" id="preheat-label" x="700" y="120">Wave1</text>
+                <text class="section-label" id="preheat-label" x="850" y="120">Wave2</text>
+                <text class="section-label" id="preheat-label" x="760" y="285">Solder Pot</text>
 
-        </svg>
-    </div>
+            </svg>
+        </div>
 </body>
 
 </html>

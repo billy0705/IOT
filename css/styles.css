@@ -130,7 +130,7 @@ main .sensordashboard .sensordashboard-right {
 .choosebutton {
 	float: left;
 	width: 50%;
-	height: 100vh;
+	height: 50vh;
 	text-align: center;
 	padding: 12px;
 	text-decoration: none;
@@ -146,9 +146,9 @@ main .sensordashboard .sensordashboard-right {
 	text-align: center;
 	padding: 12px;
 	text-decoration: none;
-	font-size: 28px; 
+	font-size: 3rem; 
 	line-height: 25px;
 	border-radius: 4px;
 	width: 100%;
-	height: 100vh;
+	height: 100%;
 }
