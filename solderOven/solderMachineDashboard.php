@@ -55,7 +55,7 @@
 					?>
 				<hr>
 				<div class="sensordashboard" style="background-color: Gainsboro;">
-				<a href="../sensorDashboard/addSensor.php" style="display:block; width:100%;"> + Add Machine</a>
+				<a href="addmachine.php" style="display:block; width:100%;"> + Add Machine</a>
 				</div>
 				<hr>
 				

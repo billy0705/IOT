@@ -66,13 +66,13 @@
                 <tr>
                     <td>Preheat T2</td>
                     <td>120</td>
-                    <td>119</td>
+                    <td>Close</td>
                     <td>Deg C</td>
                 </tr>
                 <tr>
                     <td>Preheat T3</td>
                     <td>120</td>
-                    <td>119</td>
+                    <td>Close</td>
                     <td>Deg C</td>
                 </tr>
                 <tr>
@@ -96,13 +96,13 @@
                 <tr>
                     <td>Wave1</td>
                     <td>12</td>
-                    <td>12</td>
+                    <td>Close</td>
                     <td>Hz</td>
                 </tr>
                 <tr>
                     <td>Wave2</td>
                     <td>24</td>
-                    <td>24.5</td>
+                    <td>Close</td>
                     <td>Hz</td>
                 </tr>
             </tbody>
@@ -134,31 +134,39 @@
                     </tr>
                 </tbody>
             </table>
-            <svg viewBox="0 0 970 400">
+            <svg viewBox="0 0 970 450">
                 <!-- machine outer box -->
                 <rect x="10" y="20" width="950" height="350" fill="#c7d1cc" stroke="#000" stroke-width="2" />
 
                 <!-- machine inner box -->
-                <rect x="20" y="30" width="200" height="165" fill="gray" stroke="#000" stroke-width="2" />
-                <rect x="20" y="195" width="200" height="165" fill="#e6e6e6" stroke="#000" stroke-width="2" />
-                <rect x="230" y="30" width="200" height="165" fill="#e6e6e6" stroke="#000" stroke-width="2" />
-                <rect x="230" y="195" width="200" height="165" fill="#e6e6e6" stroke="#000" stroke-width="2" />
-                <rect x="440" y="30" width="200" height="165" fill="#e6e6e6" stroke="#000" stroke-width="2" />
-                <rect x="440" y="195" width="200" height="165" fill="#e6e6e6" stroke="#000" stroke-width="2" />
-                <rect x="650" y="30" width="150" height="165" fill="#e6e6e6" stroke="#000" stroke-width="2" />
-                <rect x="800" y="30" width="150" height="165" fill="#e6e6e6" stroke="#000" stroke-width="2" />
-                <rect x="650" y="195" width="300" height="165" fill="#e6e6e6" stroke="#000" stroke-width="2" />
+                <rect id="preheatT1-rect" x="20" y="30" width="200" height="165" fill="gray" stroke="#000" stroke-width="2" />
+                <rect id="preheatB1-rect" x="20" y="195" width="200" height="165" fill="green" stroke="#000" stroke-width="2" />
+                <rect id="preheatT2-rect" x="230" y="30" width="200" height="165" fill="#e6e6e6" stroke="#000" stroke-width="2" />
+                <rect id="preheatB2-rect" x="230" y="195" width="200" height="165" fill="green" stroke="#000" stroke-width="2" />
+                <rect id="preheatT3-rect" x="440" y="30" width="200" height="165" fill="#e6e6e6" stroke="#000" stroke-width="2" />
+                <rect id="preheatB3-rect" x="440" y="195" width="200" height="165" fill="green" stroke="#000" stroke-width="2" />
+                <rect id="wave1-rect" x="650" y="30" width="150" height="165" fill="#e6e6e6" stroke="#000" stroke-width="2" />
+                <rect id="wave2-rect" x="800" y="30" width="150" height="165" fill="#e6e6e6" stroke="#000" stroke-width="2" />
+                <rect id="solderpot-rect"x="650" y="195" width="300" height="165" fill="green" stroke="#000" stroke-width="2" />
+
+                <rect id="unused-rect"x="100" y="380" width="80" height="30" fill="gray" stroke="#000" stroke-width="4" />
+                <rect id="close-rect"x="300" y="380" width="80" height="30" fill="#e6e6e6" stroke="#000" stroke-width="4" />
+                <rect id="open-rect"x="500" y="380" width="80" height="30" fill="green" stroke="#000" stroke-width="4" />
 
                 <!-- machine section label -->
-                <text class="section-label" id="preheat-label" x="75" y="120">Preheat T1</text>
-                <text class="section-label" id="preheat-label" x="285" y="120">Preheat T2</text>
-                <text class="section-label" id="preheat-label" x="495" y="120">Preheat T3</text>
-                <text class="section-label" id="preheat-label" x="75" y="285">Preheat B1</text>
-                <text class="section-label" id="preheat-label" x="285" y="285">Preheat B2</text>
-                <text class="section-label" id="preheat-label" x="495" y="285">Preheat B3</text>
-                <text class="section-label" id="preheat-label" x="700" y="120">Wave1</text>
-                <text class="section-label" id="preheat-label" x="850" y="120">Wave2</text>
-                <text class="section-label" id="preheat-label" x="760" y="285">Solder Pot</text>
+                <text class="section-label" id="preheatT1-label" x="75" y="120">Preheat T1</text>
+                <text class="section-label" id="preheatT2-label" x="285" y="120">Preheat T2</text>
+                <text class="section-label" id="preheatT3-label" x="495" y="120">Preheat T3</text>
+                <text class="section-label" id="preheatB1-label" x="75" y="285">Preheat B1</text>
+                <text class="section-label" id="preheatB2-label" x="285" y="285">Preheat B2</text>
+                <text class="section-label" id="preheatB3-label" x="495" y="285">Preheat B3</text>
+                <text class="section-label" id="wave1-label" x="700" y="120">Wave1</text>
+                <text class="section-label" id="wave2-label" x="850" y="120">Wave2</text>
+                <text class="section-label" id="solderpot-label" x="760" y="285">Solder Pot</text>
+
+                <text class="status-label" id="unused-label" x="190" y="405" style=" font-size:1.5em; font-weight:bold;">Unused</text>
+                <text class="status-label" id="unused-label" x="390" y="405" style=" font-size:1.5em; font-weight:bold;">Closed</text>
+                <text class="status-label" id="unused-label" x="590" y="405" style=" font-size:1.5em; font-weight:bold;">Opened</text>
 
             </svg>
         </div>
