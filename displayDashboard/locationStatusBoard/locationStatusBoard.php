@@ -4,7 +4,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Location DashBoard</title>
-		<link rel="stylesheet" href="../../css/styles.css">
+		<link rel="stylesheet" href="../../css/styles.css?">
 	</head>
 	<body>
 		<?php require "../header.php"?>
@@ -66,6 +66,22 @@
 					<a style="display:block; width:15%">Total Number: <br><?php echo $total;?></a>
 					<a style="display:block; width:15%">Now Active : <br><?php echo $active;?></a>
 					<a style="display:block; width:15%">Now Stop : <br><?php echo $stop;?></a>
+				</div>
+				<hr>
+				<div class="sensordashboard">
+					<a style="display:block; width:10%; font-size:1.5em; font-weight:bold;">Sensor ID</a>
+					<a style="display:block; width:10%; font-size:1.5em; font-weight:bold;">Status</a>
+					<a style="display:block; width:1px"></a>
+					<a style="display:block; width:15%; font-size:1.5em; font-weight:bold;">Temperature</a>
+					<a style="display:block; width:1px"></a>
+					<a style="display:block; width:15%; font-size:1.5em; font-weight:bold;">Hunidity</a>
+							
+					<div class="sensordashboard-right" style = "width:28%">
+						<!-- <a style = "display:block; width:40%" class="modify" ></a>
+						<a style="display:block; width:5px"></a> -->
+						<!--<a style = "display:block; width:25%" class="modify" href="../displayDashboard.php?locationid=<?php echo $row[1];?>&sensorid=<?php echo $row[0];?>">All-time<br>Display</a>-->
+						<!-- <a style = "display:block; width:40%" class="modify"></a> -->
+					</div>
 				</div>
 				<hr>
 				<?php require "sensorStatus.php"; ?>

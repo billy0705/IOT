@@ -1,7 +1,7 @@
 <?php foreach ($sensor_array as $row) { ?>
 	<div class="sensordashboard">
-		<a href="sensorStatusBoard/sensorStatusBoard.php?sensorid=<?php echo $row[0];?>" style="display:block; width:150px">Sensor ID.<?php echo $row[0];?></a>
-		<a <?php if ($row[8] == 'A') echo ' class="active"'; else echo ' class = "down"'?>><?php if ($row[8] == 'A') echo 'Sensor<br>Active'; else echo 'Sensor<br>Stop'?></a>
+		<a style="display:block; width:150px" href="sensorStatusBoard/sensorStatusBoard.php?sensorid=<?php echo $row[0];?>" ><?php echo $row[0];?></a>
+		<a style="display:block; width:100px" <?php if ($row[8] == 'A') echo ' class="active"'; else echo ' class = "down"'?>><?php if ($row[8] == 'A') echo 'Active'; else echo 'Stop'?></a>
 		<?php if ($row[8] == 'A'){ ?>
 			<?php
 				$url = 'http://10.10.2.108/fromsensor/api/DhtValue/GetDhtValueByLocationSensor?SensorId='.$row[0].'&locationId='.$row[1];
@@ -24,9 +24,9 @@
 					}
 				?>
 				<a style="display:block; width:10px"></a>
-				<a style="display:block; width:200px" <?php if ($tStatus == 0) echo ' class="active"'; else echo ' class = "down"'?>>Temperature Status<br><?php echo $t?></a>
+				<a style="display:block; width:200px" <?php if ($tStatus == 0) echo ' class="active"'; else echo ' class = "down"'?>><?php echo $t?></a>
 				<a style="display:block; width:10px"></a>
-				<a style="display:block; width:180px" <?php if ($hStatus == 0) echo ' class="active"'; else echo ' class = "down"'?>>Humidity Status<br><?php echo $h?></a>
+				<a style="display:block; width:180px" <?php if ($hStatus == 0) echo ' class="active"'; else echo ' class = "down"'?>><?php echo $h?></a>
 				<?php
 				}
 				else {
@@ -35,9 +35,9 @@
 			?>
 			<?php } ?>
 		<div class="sensordashboard-right">
-			<a class="modify" href="sensorStatusBoard/sensorStatusBoard.php?sensorid=<?php echo $row[0]?>">Sensor<br>Config.</a>
+			<a class="modify" href="sensorStatusBoard/sensorStatusBoard.php?sensorid=<?php echo $row[0]?>">Config</a>
 			<a style="display:block; width:10px"></a>
-			<a class="modify" href="../sensorDashboard/modify.php?sensorid=<?php echo $row[0]?>">Modify<br>Config.</a>
+			<a class="modify" href="../sensorDashboard/modify.php?sensorid=<?php echo $row[0]?>">Modify</a>
 		</div>
 	</div>
 	<hr>
