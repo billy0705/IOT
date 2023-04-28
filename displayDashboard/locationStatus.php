@@ -46,7 +46,7 @@
 			//echo $obj->statusMessage;
 		}
 	?>
-	<?php if ($active != 0) { ?>
+	<?php if ($total != 0) { ?>
 		<div class="sensordashboard" style="height:20%">
 			<a style="display:block; width:10%; font-size:1em;"><?php echo $row[0];?></a>
 			<a style="display:block; width:18%; font-size:1em;"><?php echo $row[1];?></a>
