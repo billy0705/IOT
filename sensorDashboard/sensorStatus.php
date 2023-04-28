@@ -35,9 +35,9 @@
 			?>
 			<?php } ?>
 		<div class="sensordashboard-right">
-			<a class="modify" href="sensorStatusBoard/sensorStatusBoard.php?sensorid=<?php echo $row[0]?>">Config</a>
+			<a class="modify" href="./sensorStatusBoard/sensorStatusBoard.php?sensorid=<?php echo $row[0]?>">Config</a>
 			<a style="display:block; width:10px"></a>
-			<a class="modify" href="../sensorDashboard/modify.php?sensorid=<?php echo $row[0]?>">Modify</a>
+			<a class="modify" href="./modify.php?sensorid=<?php echo $row[0]?>">Modify</a>
 		</div>
 	</div>
 	<hr>

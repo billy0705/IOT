@@ -77,10 +77,7 @@
 					<a style="display:block; width:15%; font-size:1.5em; font-weight:bold;">Hunidity</a>
 							
 					<div class="sensordashboard-right" style = "width:28%">
-						<!-- <a style = "display:block; width:40%" class="modify" ></a>
-						<a style="display:block; width:5px"></a> -->
-						<!--<a style = "display:block; width:25%" class="modify" href="../displayDashboard.php?locationid=<?php echo $row[1];?>&sensorid=<?php echo $row[0];?>">All-time<br>Display</a>-->
-						<!-- <a style = "display:block; width:40%" class="modify"></a> -->
+					
 					</div>
 				</div>
 				<hr>
