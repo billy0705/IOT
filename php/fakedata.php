@@ -10,6 +10,7 @@
             // echo "min \t". ($min - $a)."<br>";
         }
         // echo $ans."<br>";
+        $ans = number_format($ans, 1);
         return $ans;
     }
 ?>
