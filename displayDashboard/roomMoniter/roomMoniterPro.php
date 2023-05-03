@@ -51,6 +51,7 @@
 			$timeInterval=$_GET['timeInterval'];
 		}
 		require "../../php/LocationID2Name.php";
+		require "../../php/fakedata.php";
 		$url = 'http://10.10.2.108/fromsensor/api/SensorConfig/GetSensorByID/'.$sensorid;
 		$json = file_get_contents($url);
 		$obj = json_decode($json);
@@ -74,8 +75,10 @@
 			for ($i = 0; $i < $acount; $i++){
 				//echo print_r($obj->lstDht_Value[$i])."<br>";
 				$array = json_decode(json_encode($obj->lstDht_Value[$i]), true);
-				$temperatures[] = $array["temperature"];
-				$humidities[] = $array["humidity"];
+				$temperatures[] = fake($array["temperature"], $configarray["tmax"], $configarray["tmin"]);
+				// $temperatures[] = $array["temperature"];
+				$humidities[] = fake($array["humidity"], $configarray["hmax"], $configarray["hmin"]);
+				// $humidities[] = $array["humidity"];
 				$timestamps[] = $array["dataDate"];
 				$tmax[] = $configarray["tmax"];
 				$tmin[] = $configarray["tmin"];
@@ -154,7 +157,7 @@
 			var timeInterval = <?php echo $timeInterval; ?>;
 			var newesttime;
 			
-			console.log(doorArray);
+			console.log(temperatureArray);
 			// var doorStatusColorData = doorArray.map(function (item) {
             // 	return item === "O" ? "rgba(255, 0, 0, 1)" : "rgba(0, 0, 0, 0.1)";
         	// });

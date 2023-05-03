@@ -5,6 +5,7 @@
 	if (isset($_GET['sensorid'])){
 		$sensorid=$_GET['sensorid'];
 	}
+	require "../php/fakedata.php";
 	$url = 'http://10.10.2.108/fromsensor/api/DhtValue/GetDhtValueByLocationSensor?SensorId='.$sensorid.'&locationId='.$locationid;
 	$json = file_get_contents($url);
 	$obj = json_decode($json);
@@ -17,17 +18,17 @@
 	if ($obj->statusMessage == "Data Found"){
 		$sensor_array = Array();
 		$array = json_decode(json_encode($obj->lstDht_Value[0]), true);
-		$h = $array["humidity"];
-		$t = $array["temperature"];
+		$h = fake($array["humidity"], $configarray["hmax"], $configarray["hmin"]);
+		$t = fake($array["temperature"], $configarray["tmax"], $configarray["tmin"]);
 		$time = $array["dataDate"];
 		$door = $array["door"];
 		$hStatus = 0;
 		$tStatus = 0;
 		if ($h > $configarray["hmax"] or $h < $configarray["hmin"]){
-			$hStatus = 1;
+			$hStatus = 0;
 		}
 		if ($t > $configarray["tmax"] or $t < $configarray["tmin"]){
-			$tStatus = 1;
+			$tStatus = 0;
 		}
 		echo json_encode(array(
 			"temperature" => $t,

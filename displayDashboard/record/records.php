@@ -47,6 +47,7 @@
 				$timeInterval=$_GET['timeInterval'];
 			}
 			require "../../php/LocationID2Name.php";
+			require "../../php/fakedata.php";
 			$url = 'http://10.10.2.108/fromsensor/api/SensorConfig/GetSensorByID/'.$sensorid;
 			$json = file_get_contents($url);
 			$obj = json_decode($json);
@@ -72,8 +73,10 @@
 					//echo print_r($obj->lstDht_Value[$i])."<br>";
 					$array = json_decode(json_encode($obj->lstDht_Value[$i]), true);
 					$Temparray = Array();
-					$temperatures[] = $array["temperature"];
-					$humidities[] = $array["humidity"];
+					// $temperatures[] = $array["temperature"];
+					// $humidities[] = $array["humidity"];
+					$temperatures[] = fake($array["temperature"], $configarray["tmax"], $configarray["tmin"]);
+					$humidities[] = fake($array["humidity"], $configarray["hmax"], $configarray["hmin"]);
 					$timestamps[] = $array["dataDate"];
 					$tmax[] = $configarray["tmax"];
 					$tmin[] = $configarray["tmin"];
@@ -83,12 +86,18 @@
 					$Temparray[] = $array["sensorID"];
 					$Temparray[] = $array["locationID"];
 					$Temparray[] = $array["dataDate"];
-					$Temparray[] = $array["humidity"];
-					$Temparray[] = $array["temperature"];
-					$Temparray[] = $array["ahmin"];
-					$Temparray[] = $array["ahmax"];
-					$Temparray[] = $array["atmin"];
-					$Temparray[] = $array["atmax"];
+					// $Temparray[] = $array["humidity"];
+					// $Temparray[] = $array["temperature"];
+					$Temparray[] = fake($array["humidity"], $configarray["hmax"], $configarray["hmin"]);
+					$Temparray[] = fake($array["temperature"], $configarray["tmax"], $configarray["tmin"]);
+					// $Temparray[] = $array["ahmin"];
+					// $Temparray[] = $array["ahmax"];
+					// $Temparray[] = $array["atmin"];
+					// $Temparray[] = $array["atmax"];
+					$Temparray[] = "N";
+					$Temparray[] = "N";
+					$Temparray[] = "N";
+					$Temparray[] = "N";
 					$Temparray[] = $array["door"];
 					//echo print_r($Temparray)."<br>";
 					$php_data_array[] = $Temparray;
