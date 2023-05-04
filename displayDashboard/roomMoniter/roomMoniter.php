@@ -35,12 +35,6 @@
 				$t = $array["temperature"];
 				$hStatus = 0;
 				$tStatus = 0;
-				/* if ($h > $row[3] or $h < $row[2]){
-					$hStatus = 1;
-					}
-					if ($t > $row[5] or $t < $row[4]){
-					$tStatus = 1;
-				} */
 			}
 			else {
 				echo "<a>".$obj->statusMessage."</a>";
@@ -51,7 +45,7 @@
 				printTime();
 				setInterval(printTime,1000);
 				printSensorData();
-				setInterval(printSensorData,120000);
+				// setInterval(printSensorData,120000);
 			}
 			function printTime() {
 				
@@ -66,6 +60,10 @@
 				var s=("0" + (date.getSeconds())).slice(-2);
 				var ary = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 				d.innerHTML=year+'-'+mon+'-'+da+' '+' '+h+':'+m+':'+s+'  '+ary[day];
+				if (s === "00"){
+					console.log(date);
+					printSensorData();
+				}
 			}
 			function printSensorData(){
 				var url = "../THnow.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>";
