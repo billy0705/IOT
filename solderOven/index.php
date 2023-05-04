@@ -1,3 +1,3 @@
 <?php
-	require "ovenDisplay.php";
+	require "solderMachineDashboard.php";
 ?>
