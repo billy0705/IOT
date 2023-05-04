@@ -22,23 +22,17 @@
 				$array = json_decode(json_encode($obj->lstSensorConfigs[$i]), true);
 				if ($array["status"] == 'A'){
 					$active += 1;
-					$url = 'http://10.10.2.108/fromsensor/api/DhtValue/GetDhtValueByLocationSensor?SensorId='.$array["sensorID"].'&locationId='.$array["locationID"];
+					$url = 'http://localhost/displayDashboard/THnow.php?locationid='. $array["locationID"] .'&sensorid=' . $array["sensorID"];
 					$json = file_get_contents($url);
 					$obj2 = json_decode($json);
-					if ($obj2->statusMessage == "Data Found"){
-						$data = json_decode(json_encode($obj2->lstDht_Value[0]), true);
-						$h = $data["humidity"];
-						$t = $data["temperature"];
-					}
+					$data = json_decode(json_encode($obj2), true);
+					$h = $data["humidity"];
+					$t = $data["temperature"];
+					$hStatus = $data["hStatus"];
+					$tStatus = $data["tStatus"];
 				}
 				else{
 					$stop += 1;
-				}
-				if ($h > $array["hmax"] or $h < $array["hmin"]){
-					$hStatus += 1;
-				}
-				if ($t > $array["tmax"] or $t < $array["tmin"]){
-					$tStatus += 1;
 				}
 			}
 		}
