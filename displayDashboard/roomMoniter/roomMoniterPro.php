@@ -157,13 +157,7 @@
 			var timeInterval = <?php echo $timeInterval; ?>;
 			var newesttime;
 			
-			console.log(temperatureArray);
-			// var doorStatusColorData = doorArray.map(function (item) {
-            // 	return item === "O" ? "rgba(255, 0, 0, 1)" : "rgba(0, 0, 0, 0.1)";
-        	// });
-			// var doorStatusRadiusData = doorArray.map(function (item) {
-            // 	return item === "O" ? 6 : 3;
-        	// });
+			console.log(doorArray);
 			inputData = {};
 			
 			var timeoffset = 7;
@@ -260,9 +254,6 @@
 				})
 				.then(result  => {
 					console.log(result);
-					/* console.log(result.temperature);
-					console.log(result.humidity);
-					console.log(result.timestamp); */
 					
 					last_date = timeArray[timeArray.length - 1];
 					
@@ -362,10 +353,6 @@
 						doorStatusRadiusData.push(3);
 					}
 				}
-				/* console.log(timedata);
-				console.log(tempdata);
-				console.log(humiddata); */ 
-				//console.log(doorStatusColorData);
 				
 				chart.data.labels = timedata;
 				chart.data.datasets[0].data = tempdata;
@@ -396,17 +383,10 @@
 				var s=("0" + (date.getSeconds())).slice(-2);
 				var ary = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 				d.innerHTML=year+'-'+mon+'-'+da+' '+' '+h+':'+m+':'+s+'  '+ary[day];
-					//console.log(time);
-				date.setUTCHours(date.getUTCHours() + timeoffset);
-				var roundedTime = new Date(Math.ceil(date.getTime() / (1 * 2 * 1000)) * 1 * 2 * 1000);
-				var roundedTimeString = roundedTime.toISOString();
-				if (roundedTimeString == newesttime){
-					console.log("roundedTimeString:", roundedTimeString);
-					console.log("labels:", newesttime);
+				if (date.getMinutes() % 5 == 0 && date.getSeconds() == 0){
+					console.log(date);
 					updateChart();
 				}
-				//d.innerHTML = Intl.DateTimeFormat().resolvedOptions().timeZone;
-				//d.innerHTML=roundedTimeString + newesttime;
 			}
 			
 			window.onload=function(){
@@ -418,9 +398,6 @@
 				console.log("set");
 				//console.log("JavaScript version: " + (typeof BigInt === "function" ? "ES2020+" : "ES5 or ES6"));
 			}
-			/* // Call updateChartData function every 10 seconds
-				setInterval(function() {
-			updateChartData();}, 60000); */ // Update every 10 seconds
 			document.getElementById("reset-zoom-button").addEventListener("click", function() {
 				chart.resetZoom();
 			});
