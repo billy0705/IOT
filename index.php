@@ -1,3 +1,3 @@
 <?php
-	require "Home.php";
+	require "Home.html";
 ?>

@@ -48,37 +48,13 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            /* position: absolute; */
-            /* top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0; */
         }
     </style>
     </style>
 </head>
 
 <body>
-    <?php require "header.php"; ?>
-    <?php
-    $machineID = '40001';
-    if (isset($_GET['machineID'])){
-        $machineID=$_GET['machineID'];
-    }
-    $configurl = "http://10.10.2.108/Solder/api/JT_WS450/JT_WS450Config/" . $machineID;
-    $json = file_get_contents($configurl);
-    $obj = json_decode($json);
-    if ($obj->statusCode == 200) {
-        $machineConfig = json_decode(json_encode($obj->jT_WS450_Configs[0]), true);
-    }
-    $locationid = $machineConfig["locationID"];
-    $locationurl = "http://10.10.2.108/Solder/api/JT_WS450/Location/" . $locationid;
-    $json = file_get_contents($locationurl);
-    $obj = json_decode($json);
-    if ($obj->statusCode == 200){
-        $locationname = json_decode(json_encode($obj->locationConfigs[0]), true)["locationName"];
-    }
-    ?>
+    <div id="header"></div>
     <!-- <h1>Solder Wave Machine</h1> -->
     <div style="display:flex; height:100%; background-color: #32CD32;">
         <table style="width:50vw; height:100vh; margin: 5px;">
@@ -93,61 +69,61 @@
             <tbody>
                 <tr>
                     <td>Preheat B1</td>
-                    <td><span><?php echo $machineConfig["preheater1BSetting"]; ?></span></td>
+                    <td><span id="preheater1BSetting"></span></td>
                     <td><span id = "txtPh1bv"></span></td>
                     <td>Deg C</td>
                 </tr>
                 <tr>
                     <td>Preheat B2</td>
-                    <td><span><?php echo $machineConfig["preheater2BSetting"]; ?></span></td>
+                    <td><span id="preheater2BSetting"></span></td>
                     <td><span id = "txtPh2bv"></span></td>
                     <td>Deg C</td>
                 </tr>
                 <tr>
                     <td>Preheat B3</td>
-                    <td><span><?php echo $machineConfig["preheater3BSetting"]; ?></span></td>
+                    <td><span id="preheater3BSetting"></span></td>
                     <td><span id = "txtPh3bv"></span></td>
                     <td>Deg C</td>
                 </tr>
                 <tr>
                     <td>Preheat T2</td>
-                    <td><span><?php echo $machineConfig["preheater2TSetting"]; ?></span></td>
+                    <td><span id="preheater2TSetting"></span></td>
                     <td><span id = "txtPh2tv"></span></td>
                     <td>Deg C</td>
                 </tr>
                 <tr>
                     <td>Preheat T3</td>
-                    <td><span><?php echo $machineConfig["preheater3TSetting"]; ?></span></td>
+                    <td><span id="preheater3TSetting"></span></td>
                     <td><span id = "txtPh3tv"></span></td>
                     <td>Deg C</td>
                 </tr>
                 <tr>
                     <td>Solder Pot</td>
-                    <td><span><?php echo $machineConfig["solderPotSetting"]; ?></span></td>
+                    <td><span id="solderPotSetting"></span></td>
                     <td><span id = "txtSpv"></span></td>
                     <td>Deg C</td>
                 </tr>
                 <tr>
                     <td>Conveyor</td>
-                    <td><span><?php echo $machineConfig["transportSpeedSetting"]; ?></span></td>
+                    <td><span id="transportSpeedSetting"></span></td>
                     <td><span id = "txtTsv"></span></td>
                     <td>mm/min</td>
                 </tr>
                 <tr>
                     <td>Rail Width</td>
-                    <td><span><?php echo $machineConfig["railWidthSetting"]; ?></span></td>
+                    <td><span id="railWidthSetting"></span></td>
                     <td><span id = "txtRwv"></span></td>
                     <td>mm</td>
                 </tr>
                 <tr>
                     <td>Wave1</td>
-                    <td><span><?php echo $machineConfig["wave1Setting"]; ?></span></td>
+                    <td><span id="wave1Setting"></span></td>
                     <td><span id = "txtW1v"></span></td>
                     <td>Hz</td>
                 </tr>
                 <tr>
                     <td>Wave2</td>
-                    <td><span><?php echo $machineConfig["wave2Setting"]; ?></span></td>
+                    <td><span id="wave2Setting"></span></td>
                     <td><span id = "txtW2v"></span></td>
                     <td>Hz</td>
                 </tr>
@@ -164,15 +140,15 @@
                 <tbody>
                     <tr>
                         <td>Location Name</td>
-                        <td><?php echo $locationname; ?></td>
+                        <td id="locationName"></td>
                     </tr>
                     <tr>
                         <td>Oven Model</td>
-                        <td><?php echo $machineConfig["machineModel"]; ?></td>
+                        <td id="machineModel"></td>
                     </tr>
                     <tr>
                         <td>Time now</td>
-                        <td id='Date'>2023-04-27 07:42:13 Thursday</td>
+                        <td id='Date'></td>
                     </tr>
                     <tr>
                         <td>Time update</td>
@@ -187,14 +163,14 @@
                 <!-- machine inner box -->
                 <!-- <?php if ($data["preheater1B"] == "Close") echo ' fill="gray"'; else echo ' fill="green"'?> -->
                 <rect id="preheatT1_rect" x="20" y="30" width="200" height="165" fill="gray" stroke="#000" stroke-width="2" />
-                <rect id="preheatB1_rect" x="20" y="195" width="200" height="165" fill="<?php if ($data["preheater1B"] == "Close") echo '#e6e6e6'; else echo 'green'?>" stroke="#000" stroke-width="2" />
-                <rect id="preheatT2_rect" x="230" y="30" width="200" height="165" fill="<?php if ($data["preheater2T"] == "Close") echo '#e6e6e6'; else echo 'green'?>" stroke="#000" stroke-width="2" />
-                <rect id="preheatB2_rect" x="230" y="195" width="200" height="165" fill="<?php if ($data["preheater2B"] == "Close") echo '#e6e6e6'; else echo 'green'?>" stroke="#000" stroke-width="2" />
-                <rect id="preheatT3_rect" x="440" y="30" width="200" height="165" fill="<?php if ($data["preheater3T"] == "Close") echo '#e6e6e6'; else echo 'green'?>" stroke="#000" stroke-width="2" />
-                <rect id="preheatB3_rect" x="440" y="195" width="200" height="165" fill="<?php if ($data["preheater3B"] == "Close") echo '#e6e6e6'; else echo 'green'?>" stroke="#000" stroke-width="2" />
-                <rect id="wave1_rect" x="650" y="30" width="150" height="165" fill="<?php if ($data["wave1Value"] == "0.00") echo '#e6e6e6'; else echo 'green'?>" stroke="#000" stroke-width="2" />
-                <rect id="wave2_rect" x="800" y="30" width="150" height="165" fill="<?php if ($data["wave2Value"] == "0.00") echo '#e6e6e6'; else echo 'green'?>" stroke="#000" stroke-width="2" />
-                <rect id="solderpot_rect" x="650" y="195" width="300" height="165" fill="<?php if ($data["solderPot"] == "Close") echo '#e6e6e6'; else echo 'green'?>" stroke="#000" stroke-width="2" />
+                <rect id="preheatB1_rect" x="20" y="195" width="200" height="165" fill="gray" stroke="#000" stroke-width="2" />
+                <rect id="preheatT2_rect" x="230" y="30" width="200" height="165" fill="gray" stroke="#000" stroke-width="2" />
+                <rect id="preheatB2_rect" x="230" y="195" width="200" height="165" fill="gray" stroke="#000" stroke-width="2" />
+                <rect id="preheatT3_rect" x="440" y="30" width="200" height="165" fill="gray" stroke="#000" stroke-width="2" />
+                <rect id="preheatB3_rect" x="440" y="195" width="200" height="165" fill="gray" stroke="#000" stroke-width="2" />
+                <rect id="wave1_rect" x="650" y="30" width="150" height="165" fill="gray" stroke="#000" stroke-width="2" />
+                <rect id="wave2_rect" x="800" y="30" width="150" height="165" fill="gray" stroke="#000" stroke-width="2" />
+                <rect id="solderpot_rect" x="650" y="195" width="300" height="165" fill="gray" stroke="#000" stroke-width="2" />
 
                 <rect id="unused_rect" x="100" y="380" width="80" height="30" fill="gray" stroke="#000" stroke-width="4" />
                 <rect id="close_rect" x="300" y="380" width="80" height="30" fill="#e6e6e6" stroke="#000" stroke-width="4" />
@@ -220,6 +196,9 @@
 
 </body>
 <script type="text/javascript">
+    var urlParams = new URLSearchParams(window.location.search);
+    var machineID = urlParams.get("machineID"); 
+    // console.log(machineID)
 
     var txtPh1bv=document.getElementById('txtPh1bv');
     var txtPh2bv=document.getElementById('txtPh2bv');
@@ -233,6 +212,20 @@
     var txtW1v=document.getElementById('txtW1v');
     var txtW2v=document.getElementById('txtW2v');
     var txtDT=document.getElementById('txtDT');
+
+    var txtLocationName=document.getElementById('locationName');
+    var txtMachineModel=document.getElementById('machineModel');
+    var txtPreheater1BSetting=document.getElementById('preheater1BSetting');
+    var txtPreheater2BSetting=document.getElementById('preheater2BSetting');
+    var txtPreheater3BSetting=document.getElementById('preheater3BSetting');
+    var txtPreheater2TSetting=document.getElementById('preheater2TSetting');
+    var txtPreheater3TSetting=document.getElementById('preheater3TSetting');
+    var txtSolderPotSetting=document.getElementById('solderPotSetting');
+    var txtTransportSpeedSetting=document.getElementById('transportSpeedSetting');
+    var txtRailWidthSetting=document.getElementById('railWidthSetting');
+    var txtWave1Setting=document.getElementById('wave1Setting');
+    var txtWave2Setting=document.getElementById('wave2Setting');
+
     var preheatB1_rect = document.getElementById("preheatB1_rect");
     var preheatT2_rect = document.getElementById("preheatT2_rect");
     var preheatB2_rect = document.getElementById("preheatB2_rect");
@@ -241,16 +234,12 @@
     var wave1_rect = document.getElementById("wave1_rect");
     var wave2_rect = document.getElementById("wave2_rect");
     var solderpot_rect = document.getElementById("solderpot_rect");
-    // var now = new Date();
-    // var secondsUntilNextMinute = 60 - now.getSeconds();
-    // var millisecondsUntilNextUpdate = secondsUntilNextMinute * 1000;
-    // console.log(millisecondsUntilNextUpdate)
 
     window.onload = function() {
         printTime();
         setInterval(printTime, 1000);
-        printSensorData();
-        // setInterval(printSensorData, 60000, millisecondsUntilNextUpdate);
+        showMachineValue();
+        showConfig();
     }
 
     function printTime() {
@@ -267,88 +256,119 @@
         d.innerHTML = year + '-' + mon + '-' + da + ' ' + ' ' + h + ':' + m + ':' + s + '  ' + ary[day];
         if(s === "00"){
             console.log(date)
-            printSensorData()
+            showMachineValue()
         }
     }
 
-    function printSensorData(){
-				var url = "/php/getJTWS450Value.php?machineID=<?php echo $machineID;?>";
-				console.log(url);
-				
-				// var txtHumid=document.getElementById('txtHumid');
-				fetch(url,{
-					method: "GET",
-					mode: "no-cors",
-				})
-				.then(res => {
-                    // console.log(url);
-                    console.log(res);
-					return res.json(); 
-				})
-				.then(result  => {
-					console.log(result);
-					txtPh1bv.innerHTML=result.preheater1BValue;
-                    txtPh2bv.innerHTML=result.preheater2BValue;
-                    txtPh3bv.innerHTML=result.preheater3BValue;
-                    txtPh2tv.innerHTML=result.preheater2TValue;
-                    txtPh3tv.innerHTML=result.preheater3TValue;
-                    txtSpv.innerHTML=result.solderPotValue;
-                    txtTsv.innerHTML=result.transportSpeedValue;
-                    txtRwv.innerHTML=result.railWidthValue;
-                    txtW1v.innerHTML=result.wave1Value;
-                    txtW2v.innerHTML=result.wave2Value;
-                    txtDT.innerHTML=result.dataDate;
-                    if (result.preheater1B == "Close"){
-                        preheatB1_rect.style.fill = "#e6e6e6";
-                    }
-                    else{
-                        preheatB1_rect.style.fill = "green";
-                    }
-                    if (result.preheater2T == "Close"){
-                        preheatT2_rect.style.fill = "#e6e6e6";
-                    }
-                    else{
-                        preheatT2_rect.style.fill = "green";
-                    }
-                    if (result.preheater2B == "Close"){
-                        preheatB2_rect.style.fill = "#e6e6e6";
-                    }
-                    else{
-                        preheatB2_rect.style.fill = "green";
-                    }
-                    if (result.preheater3T == "Close"){
-                        preheatT3_rect.style.fill = "#e6e6e6";
-                    }
-                    else{
-                        preheatT3_rect.style.fill = "green";
-                    }
-                    if (result.preheater3B == "Close"){
-                        preheatB3_rect.style.fill = "#e6e6e6";
-                    }
-                    else{
-                        preheatB3_rect.style.fill = "green";
-                    }
-                    if (result.wave1Value == 0){
-                        wave1_rect.style.fill = "#e6e6e6";
-                    }
-                    else{
-                        wave1_rect.style.fill = "green";
-                    }
-                    if (result.wave2Value == 0){
-                        wave2_rect.style.fill = "#e6e6e6";
-                    }
-                    else{
-                        wave2_rect.style.fill = "green";
-                    }
-                    if (result.solderPot == "Close"){
-                        solderpot_rect.style.fill = "#e6e6e6";
-                    }
-                    else{
-                        solderpot_rect.style.fill = "green";
-                    }
+    function showMachineValue(){
+        var url = "/api/machine/WS450/machineValueWS450.php?machineID="+ machineID;
+        // console.log(url);
+        
+        fetch(url,{
+            method: "GET",
+            mode: "no-cors",
+        })
+        .then(res => {
+            return res.json(); 
+        })
+        .then(result  => {
+            // console.log(result);
+            txtPh1bv.innerHTML=result.preheater1BValue;
+            txtPh2bv.innerHTML=result.preheater2BValue;
+            txtPh3bv.innerHTML=result.preheater3BValue;
+            txtPh2tv.innerHTML=result.preheater2TValue;
+            txtPh3tv.innerHTML=result.preheater3TValue;
+            txtSpv.innerHTML=result.solderPotValue;
+            txtTsv.innerHTML=result.transportSpeedValue;
+            txtRwv.innerHTML=result.railWidthValue;
+            txtW1v.innerHTML=result.wave1Value;
+            txtW2v.innerHTML=result.wave2Value;
+            txtDT.innerHTML=result.dataDate;
+            if (result.preheater1B == "Close"){
+                preheatB1_rect.style.fill = "#e6e6e6";
+            }
+            else{
+                preheatB1_rect.style.fill = "green";
+            }
+            if (result.preheater2T == "Close"){
+                preheatT2_rect.style.fill = "#e6e6e6";
+            }
+            else{
+                preheatT2_rect.style.fill = "green";
+            }
+            if (result.preheater2B == "Close"){
+                preheatB2_rect.style.fill = "#e6e6e6";
+            }
+            else{
+                preheatB2_rect.style.fill = "green";
+            }
+            if (result.preheater3T == "Close"){
+                preheatT3_rect.style.fill = "#e6e6e6";
+            }
+            else{
+                preheatT3_rect.style.fill = "green";
+            }
+            if (result.preheater3B == "Close"){
+                preheatB3_rect.style.fill = "#e6e6e6";
+            }
+            else{
+                preheatB3_rect.style.fill = "green";
+            }
+            if (result.wave1Value == 0){
+                wave1_rect.style.fill = "#e6e6e6";
+            }
+            else{
+                wave1_rect.style.fill = "green";
+            }
+            if (result.wave2Value == 0){
+                wave2_rect.style.fill = "#e6e6e6";
+            }
+            else{
+                wave2_rect.style.fill = "green";
+            }
+            if (result.solderPot == "Close"){
+                solderpot_rect.style.fill = "#e6e6e6";
+            }
+            else{
+                solderpot_rect.style.fill = "green";
+            }
 
-				}).catch(err => console.error(err));
-			}
+        }).catch(err => console.error(err));
+    }
+
+    function showConfig(){
+        var url = "/api/machine/WS450/machineConfigWS450.php?machineID="+ machineID;
+        
+        fetch(url,{
+            method: "GET",
+            mode: "no-cors",
+        })
+        .then(res => {
+            return res.json(); 
+        })
+        .then(result  => {
+            // console.log(result);
+            txtLocationName.innerHTML = result.locationName;
+            txtMachineModel.innerHTML = result.machineConfig["machineModel"];
+            txtPreheater1BSetting.innerHTML = result.machineConfig["preheater1BSetting"];
+            txtPreheater2BSetting.innerHTML = result.machineConfig["preheater2BSetting"];
+            txtPreheater3BSetting.innerHTML = result.machineConfig["preheater3BSetting"];
+            txtPreheater2TSetting.innerHTML = result.machineConfig["preheater2TSetting"];
+            txtPreheater3TSetting.innerHTML = result.machineConfig["preheater3TSetting"];
+            txtSolderPotSetting.innerHTML = result.machineConfig["solderPotSetting"];
+            txtTransportSpeedSetting.innerHTML = result.machineConfig["transportSpeedSetting"];
+            txtRailWidthSetting.innerHTML = result.machineConfig["railWidthSetting"];
+            txtWave1Setting.innerHTML = result.machineConfig["wave1Setting"];
+            txtWave2Setting.innerHTML = result.machineConfig["wave2Setting"];
+
+        }).catch(err => console.error(err));
+    }
+
+    fetch('header.html')
+    .then(response => response.text())
+    .then(html => {
+        document.getElementById('header').innerHTML = html;
+    });
 </script>
 
 </html>

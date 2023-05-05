@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Solder Machine DashBoard</title>
+		<link rel="stylesheet" href="../css/styles.css?">
+	</head>
+	<body>
+		<div id="header"></div>
+		<div >
+			<main>
+				<hr>
+				<div class="sensordashboard">
+					<a  style="display:block; width:15%; font-size:1.5em; font-weight:bold;">LocationID</a>
+					<a style="display:block; width:15%; font-size:1.5em; font-weight:bold;">MachineID</a>
+					<a style="display:block; width:15%; font-size:1.5em; font-weight:bold;">LocationName</a>
+					<a style="display:block; width:15%; font-size:1.5em; font-weight:bold;">Model</a>
+					<a style="display:block; width:10%; font-size:1.5em; font-weight:bold;">Status</a>
+					<div class="sensordashboard-right"></div>
+				</div>
+				<hr>
+				<div id="container"></div>
+				<div class="sensordashboard" style="background-color: Gainsboro;">
+					<a href="#" style="display:block; width:100%;"> + Add Machine</a>
+				</div>
+				
+			</main>
+		</div>
+		
+		<script>
+			fetch('header.html')
+			.then(response => response.text())
+			.then(html => {
+                document.getElementById('header').innerHTML = html;
+            });
+
+			fetch('/api/machine/machinelist.php')
+			.then(res => res.json())
+			.then(data => {
+				var divCount = data.locationCounts;
+				for (var i = 0; i < divCount; i++) {
+					var div = document.createElement('div');
+					div.className = 'sensordashboard'
+						var a = document.createElement('a');
+						a.style = 'display:block; width:15%; font-size:1em;'
+						a.textContent = data.locationLists[i].locationID;
+						div.appendChild(a);
+						var a = document.createElement('a');
+						a.style = 'display:block; width:15%; font-size:1em;'
+						a.textContent = data.locationLists[i].machineID;
+						div.appendChild(a);
+						var a = document.createElement('a');
+						a.style = 'display:block; width:15%; font-size:1em;'
+						a.textContent = data.locationLists[i].locationName;
+						div.appendChild(a);
+						var a = document.createElement('a');
+						a.style = 'display:block; width:15%; font-size:1em;'
+						a.textContent = data.locationLists[i].machineModel;
+						div.appendChild(a);
+						var a = document.createElement('a');
+						a.style = 'display:block; width:10%; font-size:1em;'
+						a.className = 'active'
+						a.textContent = 'Active';
+						div.appendChild(a);
+						var div_right = document.createElement('div');
+						div_right.className = 'sensordashboard-right'
+							var a = document.createElement('a');
+							a.href = 'ovenDisplay.html?machineID=' + data.locationLists[i].machineID;
+							a.className = 'modify';
+							a.textContent = 'DashBoard';
+							div_right.appendChild(a)
+						div.appendChild(div_right);
+					document.getElementById('container').appendChild(div);
+					document.getElementById('container').appendChild(document.createElement('hr'));
+				}
+			});
+		</script>
+		
+	</body>
+</html>					

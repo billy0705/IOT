@@ -1,3 +1,3 @@
 <?php
-	require "solderMachineDashboard.php";
+	require "solderMachineDashboard.html";
 ?>
