@@ -275,14 +275,14 @@
 					}
 					
 					 if (inputData[roundedTimeString]) {
-						inputData[roundedTimeString].tempsum += temperatureArray[i];
-						inputData[roundedTimeString].humidsum += humidityArray[i];
+						inputData[roundedTimeString].tempsum += parseFloat(temperatureArray[i]);
+						inputData[roundedTimeString].humidsum += parseFloat(humidityArray[i]);
 						inputData[roundedTimeString].doorStatus += doorS;
 						inputData[roundedTimeString].count++;
 					} else {
 						inputData[roundedTimeString] = {
-							tempsum: temperatureArray[i],
-							humidsum: humidityArray[i],
+							tempsum: parseFloat(temperatureArray[i]),
+							humidsum: parseFloat(humidityArray[i]),
 							doorStatus: doorS,
 							count: 1
 						};
