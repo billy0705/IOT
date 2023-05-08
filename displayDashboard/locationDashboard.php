@@ -4,12 +4,13 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Location DashBoard</title>
-		<link rel="stylesheet" href="../css/styles.css?">
+		<script src="/js/jquery-3.6.4.min.js"></script>
+		<link rel="stylesheet" href="/css/styles.css?">
 	</head>
 	<body>
-		<?php require "header.php"?>
 		<div >
 			<main>
+			<div class="header"></div>
 				
 				<div class="sensordashboard">
 					<a  style="display:block; width:10%; font-size:1.5em; font-weight:bold;">LocationID</a>
@@ -57,4 +58,8 @@
 		</footer>
 		
 	</body>
+	<script src="/js/script.js"></script>
+	<!-- ionicon link -->
+	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+	<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </html>					

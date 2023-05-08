@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Solder Wave Machine</title>
-    <link rel="stylesheet" href="../css/styles.css?">
+    <script src="/js/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css?version=">
     <style>
         /* 設定表格樣式 */
         svg {
@@ -50,11 +51,11 @@
             align-items: center;
         }
     </style>
-    </style>
+    <!-- </style> -->
 </head>
 
 <body>
-    <div id="header"></div>
+    <div class="header"></div>
     <!-- <h1>Solder Wave Machine</h1> -->
     <div style="display:flex; height:100%; background-color: #32CD32;">
         <table style="width:50vw; height:100vh; margin: 5px;">
@@ -370,5 +371,9 @@
         document.getElementById('header').innerHTML = html;
     });
 </script>
+<script src="/js/script.js"></script>
+	<!-- ionicon link -->
+	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+	<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
 </html>
