@@ -3,11 +3,12 @@
 	<head>
 		<title>Temperature and Humidity Records</title>
 		<link rel="stylesheet" href="/css/styles.css">
+		<script src="/js/jquery-3.6.4.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 	</head>
 	<body >
-		<?php require "../header.php"?>
+	<div class="header"></div>
 		<?Php
 			//header("Refresh: 10;");
 			// require "config.php";// Database connection
@@ -378,4 +379,8 @@
 		<div id = "alarmtable"style="height:200px"></div>
 		<br><br>
 		</body>
+		<script src="/js/script.js"></script>
+	<!-- ionicon link -->
+	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+	<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 	</html>

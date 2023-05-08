@@ -12,10 +12,11 @@
 				background-color:#FF0000
 			}
 		</style>
+		<script src="/js/jquery-3.6.4.min.js"></script>
 		<link rel="stylesheet" href="/css/styles.css">
 	</head>
 	<body >
-		<?php require "header.php"?>
+	<div class="header"></div>
 		<?Php
 			
 			$locationid = "10";
@@ -270,6 +271,10 @@
 		<div id = "alarmtable"style="height:200px"></div>
 		<br><br>
 	</body>
+	<script src="/js/script.js"></script>
+	<!-- ionicon link -->
+	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+	<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </html>
 
 

@@ -2,7 +2,8 @@
 <html>
 	<head>
 		<title>24-Hour Temperature and Humidity Chart</title>
-		<link rel="stylesheet" href="../../../css/styles.css">
+		<link rel="stylesheet" href="/css/styles.css">
+		<script src="/js/jquery-3.6.4.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 		
@@ -95,7 +96,7 @@
 		}
 	?>
 	<body>
-		<?php require "../header.php"?>
+	<div class="header"></div>
 		
 		<div id="chart-container">
 			<canvas id="chart"></canvas>
@@ -402,4 +403,8 @@
 			});
 		</script>
 	</body>
+	<script src="/js/script.js"></script>
+	<!-- ionicon link -->
+	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+	<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </html>

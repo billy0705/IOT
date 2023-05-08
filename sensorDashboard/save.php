@@ -1,10 +1,11 @@
 <html>
 	<head>
 		<title>SQL Server (PDO)</title>
+		<script src="/js/jquery-3.6.4.min.js"></script>
 		<link rel="stylesheet" href="../css/styles.css">
 	</head>
 	<body>
-		<?php require "header.php"?>
+	<div class="header"></div>
 		<?php
 			$url = "http://10.10.2.108/fromsensor/api/SensorConfig/AddSensorConfig?sid=".$_POST["txtSensorID"]
 					."&lid=".$_POST["txtLocationID"]
@@ -26,4 +27,8 @@
 			echo $result;
 			?>
 		</body>
+		<script src="/js/script.js"></script>
+	<!-- ionicon link -->
+	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+	<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 	</html>	

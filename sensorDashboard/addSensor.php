@@ -1,10 +1,11 @@
 <html>
 	<head>
 		<title>Add Sensor</title>
+		<script src="/js/jquery-3.6.4.min.js"></script>
 		<link rel="stylesheet" href="../css/styles.css">
 	</head>
 	<body>
-		<?php require "header.php"?>
+	<div class="header"></div>
 		<form action="save.php" name="frmAdd" method="post">
 			<table width="284" border="1">
 				<tr>
@@ -47,4 +48,8 @@
 			<input type="submit" name="submit" value="submit">
 		</form>
 	</body>
+	<script src="/js/script.js"></script>
+	<!-- ionicon link -->
+	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+	<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </html>
