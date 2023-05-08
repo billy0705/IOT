@@ -1,6 +1,6 @@
 <?php 
     function fake($a, $max, $min) {
-        $ans = $a;
+        $ans = $a - 1.5;
         if ($a >= $max){
             $ans = $a - 1.5 * ($a - $max);
             // echo "max \t".($a - 1.5* $max)."<br>";
