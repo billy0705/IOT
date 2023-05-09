@@ -1,12 +1,12 @@
 <?php 
     function fake($a, $max, $min) {
         $ans = $a - 1.5;
-        if ($a >= $max){
-            $ans = $a - 1.5 * ($a - $max);
+        if ($ans >= $max){
+            $ans = $ans - 1.5 * ($ans - $max);
             // echo "max \t".($a - 1.5* $max)."<br>";
         }
-        else if ($a < $min){
-            $ans = $a + 1.5 * ($min - $a);
+        if ($ans < $min){
+            $ans = $ans + 1.5 * ($min - $ans);
             // echo "min \t". ($min - $a)."<br>";
         }
         // echo $ans."<br>";
