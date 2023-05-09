@@ -2,7 +2,7 @@
 	<head>
 		<title>Modify Sensor</title>
 		<script src="/js/jquery-3.6.4.min.js"></script>
-		<link rel="stylesheet" href="../css/styles.css">
+		<link rel="stylesheet" href="/css/styles.css">
 	</head>
 	<body>
 	<div class="header"></div>
