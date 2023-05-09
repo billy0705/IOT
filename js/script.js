@@ -32,9 +32,4 @@ $(document).ready(function () {
             });
         }
     });
-
-    
-
-
-    
 });

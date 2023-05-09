@@ -338,10 +338,10 @@ main .sensordashboard .sensordashboard-right {
     }
 }
 
-@media screen and (min-width: 400px) {
-    .navbar-link samp {
+@media screen and (min-width: 450px) {
+    /* .navbar-link samp {
       display:block;
-    }
+    } */
 
     .navbar-link {
         flex-direction: row;
