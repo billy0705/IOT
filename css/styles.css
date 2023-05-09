@@ -230,7 +230,7 @@ body {
     --ionicon-stroke-width: 35px;
 }
 
-/* main page */
+/*=============== Home ===============*/
 .choose-list {
     position: absolute;
     width: 100%;
@@ -309,6 +309,48 @@ body {
 .navbar-link.active samp{
     color: var(--orange-yellow-crayola);
 }
+
+
+/*=============== list bar ===============*/
+.list-bar {
+    /* overflow: hidden; */
+    background-color: skyblue;
+    margin: 20px 10px;;
+    /* padding: 20px 10px; */
+    font-size: var(--fs-6);
+    margin-bottom: 1px;
+}
+
+.list-item {
+    /* overflow: hidden; */
+    background-color: skyblue;
+    /* padding: 20px 10px; */
+    font-size: var(--fs-8);
+}
+
+/*=============== Sensor-location ===============*/
+
+.sensor-location {
+    display: table-row;
+    /* justify-content: space-around;
+    align-items: center; */
+    /* margin: 20px 10px; */
+}
+
+.sensor-location-locationID
+, .sensor-location-locationName
+, .sensor-location-temperature
+, .sensor-location-humidity
+, .sensor-location-dashboard
+, .sensor-location-total
+, .sensor-location-active
+, .sensor-location-stop  {
+    text-align: center;
+    display: table-cell;
+    width: 10%;
+    padding: 20px 10px;
+}
+
 
 
 /* ************************************* */
@@ -459,7 +501,7 @@ main .sensordashboard .sensordashboard-right {
 }
 
 
-@media screen and (min-width: 1200px) {
+/* @media screen and (min-width: 1200px) {
 
     :root {
         --fs-1: 60px;
@@ -475,4 +517,4 @@ main .sensordashboard .sensordashboard-right {
         padding: 15px 10px;
         justify-content: space-between;
     }
-}
+} */
