@@ -35,10 +35,14 @@ foreach ($location_array as $row){
     $total = 0;
     $active = 0;
     $stop = 0;
-    $hStatus = 0;
-    $tStatus = 0;
+    $hStatus = 1;
+    $tStatus = 1;
     $h = "";
     $t = "";
+    $Temparray = array();
+    $locationID = $row[0];
+    $locationName = $row[1];
+    // echo $row[0]."<br>".$row[1]."<br>";
     if ($sensor_obj->statusMessage == "Sensor Config Found"){
         $acount = count($sensor_obj->lstSensorConfigs);
         $total = $acount;
@@ -46,8 +50,8 @@ foreach ($location_array as $row){
         for ($i = 0; $i < $acount; $i++){
             $h = 0;
             $t = 0;
-            $Temparray = array();
-            //echo print_r($obj->lstSensorConfigs[$i])."<br>";
+            
+            // echo print_r($sensor_obj->lstSensorConfigs[$i])."<br>";
             $array = json_decode(json_encode($sensor_obj->lstSensorConfigs[$i]), true);
             if ($array["status"] == 'A'){
                 $active += 1;
@@ -55,26 +59,31 @@ foreach ($location_array as $row){
                 $json = file_get_contents($url);
                 $obj2 = json_decode($json);
                 $data = json_decode(json_encode($obj2), true);
-                $Temparray["locationID"] = $array["locationID"];
-                $Temparray["locationName"] = $row[1];
-                $Temparray["humidity"] = $data["humidity"];
-                $Temparray["temperature"] = $data["temperature"];
-                $Temparray["hStatus"] = $data["hStatus"];
-                $Temparray["tStatus"] = $data["tStatus"];
+                $h = $data["humidity"];
+                $t = $data["temperature"];
+                $hStatus = $data["hStatus"];
+                $tStatus = $data["tStatus"];
                 $activeLocationCount += 1;
             }
             else{
                 $stop += 1;
             }
+            $Temparray["locationID"] = $locationID;
+            $Temparray["locationName"] = $locationName;
+            $Temparray["humidity"] = $h;
+            $Temparray["temperature"] = $t;
+            $Temparray["hStatus"] = $hStatus;
+            $Temparray["tStatus"] = $tStatus;
             $Temparray["total"] = $active + $stop;
             $Temparray["active"] = $active;
             $Temparray["stop"] = $stop;
-            $location_info_array[] = $Temparray;
         }
+        $location_info_array[] = $Temparray;
     }
     else {
         // $statusCode = $sensor_obj->statusCode;
     }
+    
 }
 
 echo json_encode(array(
