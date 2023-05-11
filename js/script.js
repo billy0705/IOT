@@ -6,15 +6,16 @@ $(document).ready(function () {
     
     // header.html import
     $.ajax({
-        url: '/header.html',
+        url: '/template/header.html',
+        async: false,
         success: function (data) {
             $('.header').html(data);
-            
+            console.log("header load succsee!!");
         }
     });
 
     // Login BTN
-    changeLogBtn(loginStatus);
+    // changeLogBtn(loginStatus);
     if (loginStatus){
         $('.login-btn').text('Logout');
     }
@@ -28,23 +29,24 @@ $(document).ready(function () {
             $(this).text('Login');
         }
         else {
-            setCookie('username', 'billy', 7);
-            loginStatus = isLoggedIn();
-            $(this).text('Logout');
+            // setCookie('username', 'billy', 7);
+            // loginStatus = isLoggedIn();
+            // $(this).text('Logout');
+            $(".popup-window").fadeIn();
         }
-        changeLogBtn(loginStatus);
+        // changeLogBtn(loginStatus);
     });
 
     // Current Link display
     var url = window.location.pathname;
     console.log(url);
     var links = $('.navbar-link');
-    console.log(links);
+    // console.log(links);
     links.each(function() {
         var href = $(this).attr('href');
-        console.log(href);
-        console.log(url.indexOf(href));
-        console.log($(this))
+        // console.log(href);
+        // console.log("url-indexOf:",url.indexOf(href));
+        // console.log("this:",$(this));
         if (href === '/'){
             if (url === href){
                 $(this).addClass("active");
@@ -62,24 +64,42 @@ $(document).ready(function () {
             }
         }
     });
+
+    // $("#myBtn").click(function() {
+        
+    // });
+    
+    $(".popup-close, .popup-modal").click(function() {
+        $(".popup-window").fadeOut();
+    });
+    
+    $(".popup-content").click(function(e) {
+        e.stopPropagation();
+    });
+
+    $(".login-form").submit(function(event) {
+
+        event.preventDefault();
+        var username = document.getElementById('username').value;
+        var password = document.getElementById('password').value;
+        // Check if username and password are correct
+        if (username === 'user' && password === '123') {
+            alert("Login successful!");
+            setCookie('username', username, 7);
+            // console.log('Login successful!');
+            $('.login-btn').text('Logout');
+        } else {
+            console.log('Invalid username or password.');
+            alert("Login fail !\nInvalid username or password.");
+        }
+        // $(this).reset();
+        $(this).trigger("reset");
+        $(".popup-window").fadeOut();
+        loginStatus = isLoggedIn();
+    });
+
+
 });
-
-
-
-// Get the login form and message element
-// const loginForm = document.querySelector('form');
-// const message = document.getElementById('message');
-
-function changeLogBtn(loginStatus) {
-    if (loginStatus){
-        document.getElementsByClassName("login-btn").innerHTML = 'Logout';
-        // $('.login-btn').textContent('Login');
-    }
-    else {
-        document.getElementsByClassName("login-btn").innerHTML = 'Login';
-        // $('.login-btn').textContent('Logout');
-    }
-}
 
 // Function to set a cookie
 function setCookie(name, value, days) {
@@ -113,10 +133,10 @@ function isLoggedIn() {
     var username = getCookie('username');
     var loginStatus = username !== null
     if (loginStatus) {
-        console.log("Login Successful");
+        console.log("Login");
     }
     else {
-        console.log("Login Fail");
+        console.log("Logout");
     }
     return loginStatus;
 }
@@ -124,22 +144,5 @@ function isLoggedIn() {
 // Function to handle login form submission
 function handleLogin(event) {
     event.preventDefault();
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-    // Check if username and password are correct
-    if (username === 'user' && password === '123') {
-        setCookie('username', username, 7);
-        message.innerText = 'Login successful!';
-        loginForm.reset();
-    } else {
-        message.innerText = 'Invalid username or password.';
-    }
+    
 }
-
-// Add event listener to login form
-// loginForm.addEventListener('submit', handleLogin);
-
-// Check if user is already logged in
-// if (isLoggedIn()) {
-//     message.innerText = 'Welcome back, ' + getCookie('username') + '!';
-// }
