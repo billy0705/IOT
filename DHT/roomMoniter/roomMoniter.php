@@ -2,8 +2,7 @@
 <html>
 	<head>
 		<title>Room Moniter</title>
-		<script src="/js/jquery-3.6.4.min.js"></script>
-		<link rel="stylesheet" href="../../css/styles.css">
+		<link rel="stylesheet" href="/DHT/styles.css">
 		<style>
 			th {
 			text-align: center;
@@ -14,7 +13,7 @@
 		
 	</head>
 	<body >
-	<div class="header"></div>
+		<?php require "../header.php"?>
 		<?php
 			if (isset($_GET['locationid'])){
 				$locationid=$_GET['locationid'];
@@ -130,10 +129,6 @@
 				</tbody>
 		</table>
 	</body>
-	<script src="../js/script.js"></script>
-	<!-- ionicon link -->
-	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-	<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </html>
 
 
