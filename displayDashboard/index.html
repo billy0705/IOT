@@ -15,14 +15,17 @@
 				<div class="sensor-location list-bar">
 					<a class="sensor-location-locationID">LocationID</a>
 					<a class="sensor-location-locationName">Location Name</a>
+					<a class="sensor-location-locationName-short">Location</a>
 					<a class="sensor-location-total">Total</a>
 					<a class="sensor-location-active">Active</a>
 					<a class="sensor-location-stop">Stop</a>
 					<a class="sensor-location-temperature">Temperature</a>
+					<a class="sensor-location-temperature-short">T</a>
 					<a class="sensor-location-humidity">Humidity</a>
-					<a class="sensor-location-dashboard">Dashboard</a>
+					<a class="sensor-location-humidity-short">H</a>
+					<a class="sensor-location-dashboard"></a>
 				</div>
-				<hr>
+				<!-- <hr> -->
 			</div>
 			
 			<!-- <div id="sensor-location-container"></div> -->
@@ -39,53 +42,74 @@
 				for (var i = 0; i < divCount; i++) {
 					var div = document.createElement('div');
 					div.className = 'sensor-location list-item'
-					var a = document.createElement('a');
-					a.textContent = data.locationLists[i].locationID;
-					a.className= 'sensor-location-locationID';
-					div.appendChild(a);
-					var a = document.createElement('a');
-					a.textContent = data.locationLists[i].locationName;
-					a.className= 'sensor-location-locationName';
-					div.appendChild(a);
-					var a = document.createElement('a');
-					a.textContent = data.locationLists[i].total;
-					a.className= 'sensor-location-total';
-					div.appendChild(a);
-					var a = document.createElement('a');
-					a.textContent = data.locationLists[i].active;
-					a.className= 'sensor-location-active';
-					div.appendChild(a);
-					var a = document.createElement('a');
-					a.textContent = data.locationLists[i].stop;
-					a.className= 'sensor-location-stop';
-					div.appendChild(a);
-					var a = document.createElement('a');
-					a.textContent = data.locationLists[i].temperature;
-					a.className= 'sensor-location-temperature';
-					if (data.locationLists[i].tStatus != 0) {
-						a.addClass = 'down';
-					}
-					else {
-						a.addClass = 'active';
-					}
-					div.appendChild(a);
-					var a = document.createElement('a');
-					a.textContent = data.locationLists[i].humidity;
-					a.className= 'sensor-location-humidity';
-					if (data.locationLists[i].hStatus != 0) {
-						a.addClass = 'down';
-					}
-					else {
-						a.addClass = 'active';
-					}
-					div.appendChild(a);
-					var a = document.createElement('a');
-					a.href = './locationStatusBoard/locationStatusBoard.php?locationid=' + data.locationLists[i].locationID;
-					a.className = 'sensor-location-dashboard'
-					a.textContent = 'DashBoard';
-					div.appendChild(a)
+						var divItem = document.createElement('div');
+						divItem.className= 'sensor-location-locationID';
+						var a = document.createElement('a');
+							a.textContent = data.locationLists[i].locationID;
+						divItem.appendChild(a);
+					div.appendChild(divItem);
+						var divItem = document.createElement('div');
+						divItem.className= 'sensor-location-locationName';
+							var a = document.createElement('a');
+							a.textContent = data.locationLists[i].locationName;
+						divItem.appendChild(a);
+					div.appendChild(divItem);
+						var divItem = document.createElement('div');
+						divItem.className= 'sensor-location-total';
+							var a = document.createElement('a');
+							a.textContent = data.locationLists[i].total;
+						divItem.appendChild(a);
+					div.appendChild(divItem);
+						var divItem = document.createElement('div');
+						divItem.className= 'sensor-location-active';
+							var a = document.createElement('a');
+							a.textContent = data.locationLists[i].active;
+						divItem.appendChild(a);
+					div.appendChild(divItem);
+						var divItem = document.createElement('div');
+						divItem.className= 'sensor-location-stop';
+							var a = document.createElement('a');
+							a.textContent = data.locationLists[i].stop;
+						divItem.appendChild(a);
+					div.appendChild(divItem);
+						var divItem = document.createElement('div');
+							var a = document.createElement('a');
+							a.textContent = data.locationLists[i].temperature;
+							a.className = 'value-status';
+						divItem.appendChild(a);
+						divItem.className= 'sensor-location-temperature';
+						if (data.locationLists[i].tStatus != 0) {
+							console.log(data.locationLists[i].tStatus);
+							divItem.classList.add('abnormal');
+						}
+						else {
+							console.log(data.locationLists[i].tStatus);
+							divItem.classList.add('normal');
+						}
+					div.appendChild(divItem);
+						var divItem = document.createElement('div');
+							var a = document.createElement('a');
+							a.className = 'value-status';
+							a.textContent = data.locationLists[i].humidity;
+						divItem.appendChild(a);
+						divItem.className= 'sensor-location-humidity';
+						if (data.locationLists[i].hStatus != 0) {
+							divItem.classList.add('abnormal');
+						}
+						else {
+							divItem.classList.add('normal');
+						}
+					div.appendChild(divItem);
+						var divItem = document.createElement('div');
+						divItem.href = './locationStatusBoard/locationStatusBoard.php?locationid=' + data.locationLists[i].locationID;
+						divItem.className = 'sensor-location-dashboard'
+							var a = document.createElement('a');
+							a.className = 'a-link-btn';
+							a.textContent = 'Detail';
+						divItem.appendChild(a);
+					div.appendChild(divItem)
 					document.getElementById('sensor-location-table').appendChild(div);
-					document.getElementById('sensor-location-table').appendChild(document.createElement('hr'));
+					// document.getElementById('sensor-location-table').appendChild(document.createElement('hr'));
 				}
 			});
 	</script>

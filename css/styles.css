@@ -406,7 +406,7 @@ button:hover {
     background-color: skyblue;
     margin: 20px 10px;;
     /* padding: 20px 10px; */
-    font-size: var(--fs-6);
+    font-size: var(--fs-4);
     margin-bottom: 1px;
 }
 
@@ -414,32 +414,81 @@ button:hover {
     /* overflow: hidden; */
     background-color: skyblue;
     /* padding: 20px 10px; */
-    font-size: var(--fs-8);
+    font-size: var(--fs-7);
 }
 
 /*=============== Sensor-location ===============*/
 
+.sensor-location-table {
+    display: table;
+    border-collapse: collapse;
+    width: 100%;
+}
+
 .sensor-location {
     display: table-row;
-    /* justify-content: space-around;
-    align-items: center; */
-    /* margin: 20px 10px; */
+}
+
+.list-item div a {
+    padding: 10px 10px;
+    border-radius: 10px;
+}
+
+.a-link-btn {
+    background: var(--light-gray-70);
+    color: var(--smoky-black);
+}
+
+.a-link-btn:focus,
+.a-link-btn:hover {
+    scale: 1.1;
+    background: var(--light-gray);
+    color: var(--eerie-black-1);
+}
+
+.normal .value-status
+, .normal .value-status{
+    background: lightgreen;
+}
+
+.abnormal .value-status
+, .abnormal .value-status{
+    background: red;
 }
 
 .sensor-location-locationID
 , .sensor-location-locationName
+, .sensor-location-locationName-short
 , .sensor-location-temperature
 , .sensor-location-humidity
+, .sensor-location-temperature-short
+, .sensor-location-humidity-short
 , .sensor-location-dashboard
 , .sensor-location-total
 , .sensor-location-active
 , .sensor-location-stop  {
     text-align: center;
     display: table-cell;
-    width: 10%;
-    padding: 20px 10px;
+    /* width: 10%; */
+    padding: 20px 4px;
+    border-bottom: 1px solid black;
 }
 
+
+
+.sensor-location-locationID
+, .sensor-location-total
+, .sensor-location-active
+, .sensor-location-stop
+{
+    display: none;
+}
+
+.list-bar .sensor-location-locationName
+, .list-bar .sensor-location-temperature
+, .list-bar .sensor-location-humidity {
+    display: none;
+}
 
 
 /* ************************************* */
@@ -527,6 +576,18 @@ main .sensordashboard .sensordashboard-right {
     .navbar-link {
         flex-direction: row;
     }
+
+    .list-bar .sensor-location-locationName
+    , .list-bar .sensor-location-temperature
+    , .list-bar .sensor-location-humidity {
+        display:table-cell;
+    }
+
+    .list-bar .sensor-location-locationName-short
+    , .list-bar .sensor-location-temperature-short
+    , .list-bar .sensor-location-humidity-short {
+        display: none;
+    }
 }
 
 @media screen and (min-width: 720px) {
@@ -588,24 +649,33 @@ main .sensordashboard .sensordashboard-right {
         background-color: var(--green-active);
         border-radius: 50%;
       }
+
+    
     
 }
 
 
-/* @media screen and (min-width: 1200px) {
+@media screen and (min-width: 1100px) {
 
-    :root {
-        --fs-1: 60px;
-        --fs-2: 56px;
-        --fs-3: 52px;
-        --fs-4: 44px;
-        --fs-6: 36px;
-        --fs-7: 28px;
-        --fs-8: 20px;
+    .sensor-location-locationID
+    , .sensor-location-total
+    , .sensor-location-active
+    , .sensor-location-stop
+    {
+        display: table-cell;
     }
 
-    .header {
-        padding: 15px 10px;
-        justify-content: space-between;
+    .sensor-location-locationID
+    , .sensor-location-locationName
+    , .sensor-location-locationName-short
+    , .sensor-location-temperature
+    , .sensor-location-humidity
+    , .sensor-location-temperature-short
+    , .sensor-location-humidity-short
+    , .sensor-location-dashboard
+    , .sensor-location-total
+    , .sensor-location-active
+    , .sensor-location-stop  {
+        padding: 20px 10px;
     }
-} */
+}
