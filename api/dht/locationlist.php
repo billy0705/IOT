@@ -55,7 +55,8 @@ foreach ($location_array as $row){
             $array = json_decode(json_encode($sensor_obj->lstSensorConfigs[$i]), true);
             if ($array["status"] == 'A'){
                 $active += 1;
-                $url = 'http://localhost/displayDashboard/THnow.php?locationid='. $array["locationID"] .'&sensorid=' . $array["sensorID"];
+                $url = 'http://localhost/api/dht/lastdatafake.php?locationid='. $array["locationID"] .'&sensorid=' . $array["sensorID"];
+                // echo $url;
                 $json = file_get_contents($url);
                 $obj2 = json_decode($json);
                 $data = json_decode(json_encode($obj2), true);
@@ -63,21 +64,22 @@ foreach ($location_array as $row){
                 $t = $data["temperature"];
                 $hStatus = $data["hStatus"];
                 $tStatus = $data["tStatus"];
-                $activeLocationCount += 1;
+                // $activeLocationCount += 1;
             }
             else{
                 $stop += 1;
             }
-            $Temparray["locationID"] = $locationID;
-            $Temparray["locationName"] = $locationName;
-            $Temparray["humidity"] = $h;
-            $Temparray["temperature"] = $t;
-            $Temparray["hStatus"] = $hStatus;
-            $Temparray["tStatus"] = $tStatus;
-            $Temparray["total"] = $active + $stop;
-            $Temparray["active"] = $active;
-            $Temparray["stop"] = $stop;
         }
+        $Temparray["locationID"] = $locationID;
+        $Temparray["locationName"] = $locationName;
+        $Temparray["humidity"] = $h;
+        $Temparray["temperature"] = $t;
+        $Temparray["hStatus"] = $hStatus;
+        $Temparray["tStatus"] = $tStatus;
+        $Temparray["total"] = $active + $stop;
+        $Temparray["active"] = $active;
+        $Temparray["stop"] = $stop;
+        $activeLocationCount += 1;
         $location_info_array[] = $Temparray;
     }
     else {

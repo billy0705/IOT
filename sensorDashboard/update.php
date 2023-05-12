@@ -15,7 +15,9 @@
 					."&tmax=".$_POST["txtTmax"]
 					."&interval=".$_POST["txtIntervalTime"]
 					."&status=".$_POST["txtStatus"]
-					."&RowID=".$_POST["txtRowID"];
+					."&RowID=".$_POST["txtRowID"]
+					."&toffset=".$_POST["txtTOffset"]
+					."&hoffset=".$_POST["txtHOffset"];
 					/*http://10.10.2.108/fromsensor/api/SensorConfig/UpdateSensorConfig?sid=14
 					&lid=10
 					&hmin=31
@@ -24,6 +26,7 @@
 					&tmax=28
 					&interval=300
 					&RowID=4d3ee533-1cb6-43b7-b8cc-f4019c9e2179 */
+			// echo $url;
 			$opts = array('http' =>
 				array(
 					'method' => 'PUT',
