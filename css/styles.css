@@ -514,16 +514,20 @@ hr {
 	padding: 20px 10px;
     z-index: 5;
     justify-content: space-between;
+    align-items: center;
 }
 
 .logo {
-    display: flex;
-	font-size: var(--fs-1);
-    color: var(--eerie-black-1);
-	font-weight: bold;
+    display: block;
     text-align: center;
     justify-content: center;
     align-items: center;
+    margin-left: 5%;
+    padding: 10px;
+}
+
+.logo img {
+    transform: scale(1.4, 1.2);
 }
 
 main .sensordashboard{
@@ -605,6 +609,10 @@ main .sensordashboard .sensordashboard-right {
     .header {
         padding: 15px 10px;
         justify-content: space-between;
+    }
+
+    .logo img {
+        transform: scale(1.6, 1.4);
     }
 
     .navbar {
