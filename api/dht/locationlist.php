@@ -69,16 +69,16 @@ foreach ($location_array as $row){
             else{
                 $stop += 1;
             }
-            $Temparray["locationID"] = $locationID;
-            $Temparray["locationName"] = $locationName;
-            $Temparray["humidity"] = $h;
-            $Temparray["temperature"] = $t;
-            $Temparray["hStatus"] = $hStatus;
-            $Temparray["tStatus"] = $tStatus;
-            $Temparray["total"] = $active + $stop;
-            $Temparray["active"] = $active;
-            $Temparray["stop"] = $stop;
         }
+        $Temparray["locationID"] = $locationID;
+        $Temparray["locationName"] = $locationName;
+        $Temparray["humidity"] = $h;
+        $Temparray["temperature"] = $t;
+        $Temparray["hStatus"] = $hStatus;
+        $Temparray["tStatus"] = $tStatus;
+        $Temparray["total"] = $active + $stop;
+        $Temparray["active"] = $active;
+        $Temparray["stop"] = $stop;
         $activeLocationCount += 1;
         $location_info_array[] = $Temparray;
     }
