@@ -230,7 +230,7 @@ body {
     --ionicon-stroke-width: 35px;
 }
 
-/* main page */
+/*=============== Home ===============*/
 .choose-list {
     position: absolute;
     width: 100%;
@@ -402,6 +402,102 @@ button:hover {
   }
 
 
+/*=============== list bar ===============*/
+.list-bar {
+    /* overflow: hidden; */
+    background-color: skyblue;
+    margin: 20px 10px;;
+    /* padding: 20px 10px; */
+    font-size: var(--fs-4);
+    margin-bottom: 1px;
+}
+
+.list-content {
+    /* overflow: hidden; */
+    background-color: skyblue;
+    /* padding: 20px 10px; */
+    font-size: var(--fs-7);
+}
+
+/*=============== Sensor-location ===============*/
+
+.sensor-location-table {
+    display: table;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.sensor-location {
+    display: table-row;
+}
+
+.list-content div a {
+    padding: 10px 10px;
+    border-radius: 10px;
+}
+
+.a-link-btn {
+    background: var(--light-gray-70);
+    color: var(--smoky-black);
+}
+
+.a-link-btn:focus,
+.a-link-btn:hover {
+    scale: 1.1;
+    background: var(--light-gray);
+    color: var(--eerie-black-1);
+}
+
+.normal .value-status
+, .normal .value-status{
+    background: lightgreen;
+}
+
+.abnormal .value-status
+, .abnormal .value-status{
+    background: red;
+}
+
+.list-item  {
+    text-align: center;
+    display: table-cell;
+    padding: 20px 4px;
+    border-bottom: 1px solid black;
+}
+
+.sensor-location-locationID
+, .sensor-location-total
+, .sensor-location-active
+, .sensor-location-stop
+{
+    display: none;
+}
+
+.list-bar .sensor-location-locationName
+, .list-bar .sensor-location-temperature
+, .list-bar .sensor-location-humidity {
+    display: none;
+}
+
+.machine-location-table {
+    display: table;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.machine-location {
+    display: table-row;
+}
+
+.machine-location-locationID
+, .machine-location-MachineID {
+    display: none;
+}
+
+.list-bar .machine-location-LocationName {
+    display: none;
+}
+
 /* ************************************* */
 table, th, td {
 		border: 1px solid black;
@@ -496,6 +592,26 @@ main .sensordashboard .sensordashboard-right {
         flex-direction: row;
     }
 
+    .list-bar .sensor-location-locationName
+    , .list-bar .sensor-location-temperature
+    , .list-bar .sensor-location-humidity {
+        display:table-cell;
+    }
+
+    .list-bar .sensor-location-locationName-short
+    , .list-bar .sensor-location-temperature-short
+    , .list-bar .sensor-location-humidity-short {
+        display: none;
+    }
+
+    .list-bar .machine-location-LocationName {
+        display:table-cell;
+    }
+
+    .list-bar .machine-location-LocationName-short {
+        display:none;
+    }
+    
     .logo {
         transform: scale(0.5, 0.5);
     }
@@ -564,22 +680,32 @@ main .sensordashboard .sensordashboard-right {
         background-color: var(--green-active);
         border-radius: 50%;
       }
+
+    
     
 }
 
 
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1100px) {
 
-    :root {
-        --fs-1: 60px;
-        --fs-2: 56px;
-        --fs-3: 52px;
-        --fs-4: 44px;
-        --fs-6: 36px;
-        --fs-7: 28px;
-        --fs-8: 20px;
+    .sensor-location-locationID
+    , .sensor-location-total
+    , .sensor-location-active
+    , .sensor-location-stop
+    {
+        display: table-cell;
     }
 
+    .machine-location-locationID
+    , .machine-location-MachineID
+    {
+        display: table-cell;
+    }
+
+    .list-item  {
+        padding: 20px 10px;
+    }
+    
     .header {
         padding: 5vh 10px;
         /* justify-content: space-between; */

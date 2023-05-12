@@ -4,11 +4,10 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Location DashBoard</title>
-		<script src="/js/jquery-3.6.4.min.js"></script>
-		<link rel="stylesheet" href="/css/styles.css?">
+		<link rel="stylesheet" href="/DHT/styles.css?">
 	</head>
 	<body>
-	<div class="header"></div>
+		<?php require "../header.php"?>
 		<div >
 			<main>
 				<hr>
@@ -91,8 +90,4 @@
 		</footer>
 		
 	</body>
-	<script src="../js/script.js"></script>
-	<!-- ionicon link -->
-	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-	<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </html>					

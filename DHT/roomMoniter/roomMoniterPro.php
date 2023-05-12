@@ -2,8 +2,7 @@
 <html>
 	<head>
 		<title>24-Hour Temperature and Humidity Chart</title>
-		<script src="/js/jquery-3.6.4.min.js"></script>
-		<link rel="stylesheet" href="../../css/styles.css">
+		<link rel="stylesheet" href="/DHT/styles.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 		
@@ -33,11 +32,6 @@
 			text-align: center;
 			vertical-align: middle;
 			font-size:25px;
-			}
-
-			.link-bar {
-				display: flex;
-				gap: 50px;
 			}
 		</style>
 	</head>
@@ -102,27 +96,26 @@
 		}
 	?>
 	<body>
-	<div class="header"></div>
+		<?php require "../header.php"?>
 		
 		<div id="chart-container">
 			<canvas id="chart"></canvas>
 		</div>
 		<div style="float:right; width:30%;">
-			<div class="link-bar">
-				<button id="reset-zoom-button">Reset Zoom</button>
-				<a id="simple" href="./roomMoniter.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>">Simple Moniter</a>
-				<?php if ($timeInterval != 5){ ?>
-					<a id="simple" href="./roomMoniterPro.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>&timeInterval=5">5 Min</a>
-				<?php } ?>
-				<?php if ($timeInterval != 15){ ?>
-					<a id="simple" href="./roomMoniterPro.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>&timeInterval=15">15 Min</a>
-				<?php } ?>
-				<?php if ($timeInterval != 30){ ?>
-					<a id="simple" href="./roomMoniterPro.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>&timeInterval=30">30 Min</a>
-				<?php } ?>
-					<a style = "width : 150px" class="modify" href="../locationStatusBoard/locationStatusBoard.php?locationid=<?php echo $locationid;?>">Back</a>
+			<button id="reset-zoom-button">Reset Zoom</button>
+			<a id="simple" href="./roomMoniter.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>">Simple Moniter</a>
+			<?php if ($timeInterval != 5){ ?>
+				<a id="simple" href="./roomMoniterPro.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>&timeInterval=5">5 Min</a>
+			<?php } ?>
+			<?php if ($timeInterval != 15){ ?>
+				<a id="simple" href="./roomMoniterPro.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>&timeInterval=15">15 Min</a>
+			<?php } ?>
+			<?php if ($timeInterval != 30){ ?>
+				<a id="simple" href="./roomMoniterPro.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>&timeInterval=30">30 Min</a>
+			<?php } ?>
+			<div class="" style="float:right; margin: auto;">
+				<a style = "width : 150px" class="modify" href="../locationStatusBoard/locationStatusBoard.php?locationid=<?php echo $locationid;?>">Back</a>
 			</div>
-			
 			<table border="1" style="width:100%; height:50vh;">
 				<tbody style="width:100%; height:100%;">
 					<tr>
@@ -410,8 +403,4 @@
 			});
 		</script>
 	</body>
-	<script src="../js/script.js"></script>
-	<!-- ionicon link -->
-	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-	<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </html>

@@ -22,7 +22,7 @@
 				$array = json_decode(json_encode($obj->lstSensorConfigs[$i]), true);
 				if ($array["status"] == 'A'){
 					$active += 1;
-					$url = 'http://localhost/displayDashboard/company/THnow.php?locationid='. $array["locationID"] .'&sensorid=' . $array["sensorID"];
+					$url = 'http://localhost/displayDashboard/THnow.php?locationid='. $array["locationID"] .'&sensorid=' . $array["sensorID"];
 					$json = file_get_contents($url);
 					$obj2 = json_decode($json);
 					$data = json_decode(json_encode($obj2), true);
