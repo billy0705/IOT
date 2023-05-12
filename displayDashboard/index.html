@@ -13,17 +13,17 @@
 			<div class="header"></div>
 			<div class="sensor-location-table" id="sensor-location-table">
 				<div class="sensor-location list-bar">
-					<a class="sensor-location-locationID">LocationID</a>
-					<a class="sensor-location-locationName">Location Name</a>
-					<a class="sensor-location-locationName-short">Location</a>
-					<a class="sensor-location-total">Total</a>
-					<a class="sensor-location-active">Active</a>
-					<a class="sensor-location-stop">Stop</a>
-					<a class="sensor-location-temperature">Temperature</a>
-					<a class="sensor-location-temperature-short">T</a>
-					<a class="sensor-location-humidity">Humidity</a>
-					<a class="sensor-location-humidity-short">H</a>
-					<a class="sensor-location-dashboard"></a>
+					<a class="sensor-location-locationID list-item">LocationID</a>
+					<a class="sensor-location-locationName list-item">Location Name</a>
+					<a class="sensor-location-locationName-short list-item">Location</a>
+					<a class="sensor-location-total list-item">Total</a>
+					<a class="sensor-location-active list-item">Active</a>
+					<a class="sensor-location-stop list-item">Stop</a>
+					<a class="sensor-location-temperature list-item">Temperature</a>
+					<a class="sensor-location-temperature-short list-item">T</a>
+					<a class="sensor-location-humidity list-item">Humidity</a>
+					<a class="sensor-location-humidity-short list-item">H</a>
+					<a class="sensor-location-dashboard list-item"></a>
 				</div>
 				<!-- <hr> -->
 			</div>
@@ -41,33 +41,33 @@
 				var divCount = data.locationCounts;
 				for (var i = 0; i < divCount; i++) {
 					var div = document.createElement('div');
-					div.className = 'sensor-location list-item'
+					div.className = 'sensor-location list-content'
 						var divItem = document.createElement('div');
-						divItem.className= 'sensor-location-locationID';
+						divItem.className= 'sensor-location-locationID list-item';
 						var a = document.createElement('a');
 							a.textContent = data.locationLists[i].locationID;
 						divItem.appendChild(a);
 					div.appendChild(divItem);
 						var divItem = document.createElement('div');
-						divItem.className= 'sensor-location-locationName';
+						divItem.className= 'sensor-location-locationName list-item';
 							var a = document.createElement('a');
 							a.textContent = data.locationLists[i].locationName;
 						divItem.appendChild(a);
 					div.appendChild(divItem);
 						var divItem = document.createElement('div');
-						divItem.className= 'sensor-location-total';
+						divItem.className= 'sensor-location-total list-item';
 							var a = document.createElement('a');
 							a.textContent = data.locationLists[i].total;
 						divItem.appendChild(a);
 					div.appendChild(divItem);
 						var divItem = document.createElement('div');
-						divItem.className= 'sensor-location-active';
+						divItem.className= 'sensor-location-active list-item';
 							var a = document.createElement('a');
 							a.textContent = data.locationLists[i].active;
 						divItem.appendChild(a);
 					div.appendChild(divItem);
 						var divItem = document.createElement('div');
-						divItem.className= 'sensor-location-stop';
+						divItem.className= 'sensor-location-stop list-item';
 							var a = document.createElement('a');
 							a.textContent = data.locationLists[i].stop;
 						divItem.appendChild(a);
@@ -77,7 +77,7 @@
 							a.textContent = data.locationLists[i].temperature;
 							a.className = 'value-status';
 						divItem.appendChild(a);
-						divItem.className= 'sensor-location-temperature';
+						divItem.className= 'sensor-location-temperature list-item';
 						if (data.locationLists[i].tStatus != 0) {
 							console.log(data.locationLists[i].tStatus);
 							divItem.classList.add('abnormal');
@@ -92,7 +92,7 @@
 							a.className = 'value-status';
 							a.textContent = data.locationLists[i].humidity;
 						divItem.appendChild(a);
-						divItem.className= 'sensor-location-humidity';
+						divItem.className= 'sensor-location-humidity list-item';
 						if (data.locationLists[i].hStatus != 0) {
 							divItem.classList.add('abnormal');
 						}
@@ -101,7 +101,7 @@
 						}
 					div.appendChild(divItem);
 						var divItem = document.createElement('div');
-						divItem.className = 'sensor-location-dashboard'
+						divItem.className = 'sensor-location-dashboard list-item'
 							var a = document.createElement('a');
 							a.className = 'a-link-btn';
 							a.href = './locationStatusBoard/locationStatusBoard.php?locationid=' + data.locationLists[i].locationID;

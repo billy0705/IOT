@@ -412,7 +412,7 @@ button:hover {
     margin-bottom: 1px;
 }
 
-.list-item {
+.list-content {
     /* overflow: hidden; */
     background-color: skyblue;
     /* padding: 20px 10px; */
@@ -431,7 +431,7 @@ button:hover {
     display: table-row;
 }
 
-.list-item div a {
+.list-content div a {
     padding: 10px 10px;
     border-radius: 10px;
 }
@@ -458,25 +458,12 @@ button:hover {
     background: red;
 }
 
-.sensor-location-locationID
-, .sensor-location-locationName
-, .sensor-location-locationName-short
-, .sensor-location-temperature
-, .sensor-location-humidity
-, .sensor-location-temperature-short
-, .sensor-location-humidity-short
-, .sensor-location-dashboard
-, .sensor-location-total
-, .sensor-location-active
-, .sensor-location-stop  {
+.list-item  {
     text-align: center;
     display: table-cell;
-    /* width: 10%; */
     padding: 20px 4px;
     border-bottom: 1px solid black;
 }
-
-
 
 .sensor-location-locationID
 , .sensor-location-total
@@ -492,6 +479,24 @@ button:hover {
     display: none;
 }
 
+.machine-location-table {
+    display: table;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.machine-location {
+    display: table-row;
+}
+
+.machine-location-locationID
+, .machine-location-MachineID {
+    display: none;
+}
+
+.list-bar .machine-location-LocationName {
+    display: none;
+}
 
 /* ************************************* */
 table, th, td {
@@ -598,6 +603,14 @@ main .sensordashboard .sensordashboard-right {
     , .list-bar .sensor-location-humidity-short {
         display: none;
     }
+
+    .list-bar .machine-location-LocationName {
+        display:table-cell;
+    }
+
+    .list-bar .machine-location-LocationName-short {
+        display:none;
+    }
     
     .logo {
         transform: scale(0.5, 0.5);
@@ -683,17 +696,13 @@ main .sensordashboard .sensordashboard-right {
         display: table-cell;
     }
 
-    .sensor-location-locationID
-    , .sensor-location-locationName
-    , .sensor-location-locationName-short
-    , .sensor-location-temperature
-    , .sensor-location-humidity
-    , .sensor-location-temperature-short
-    , .sensor-location-humidity-short
-    , .sensor-location-dashboard
-    , .sensor-location-total
-    , .sensor-location-active
-    , .sensor-location-stop  {
+    .machine-location-locationID
+    , .machine-location-MachineID
+    {
+        display: table-cell;
+    }
+
+    .list-item  {
         padding: 20px 10px;
     }
     
