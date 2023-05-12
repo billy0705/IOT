@@ -23,8 +23,10 @@
 				$LocationID = $array["locationID"];
 				$hmin = $array["hmin"];
 				$hmax = $array["hmax"];
+				$hoffset = $array["hoffset"];
 				$tmin = $array["tmin"];
 				$tmax = $array["tmax"];
+				$toffset = $array["toffset"];
 				$createdate = $array["createdate"];
 				$creatby = $array["createby"];
 				$status = $array["status"];
@@ -60,12 +62,20 @@
 					<td><input type="text" name="txtHmax" size="6" value=<?php echo $hmax?>></td>
 				</tr>
 				<tr>
+					<th width="120">Humidity Offset</th>
+					<td><input type="text" name="txtHOffset" size="6" value=<?php echo $hoffset?>></td>
+				</tr>
+				<tr>
 					<th width="120">Temperature Min.</th>
 					<td><input type="text" name="txtTmin" size="6" value=<?php echo $tmin?>></td>
 				</tr>
 				<tr>
 					<th width="120">Temperature Max.</th>
 					<td><input type="text" name="txtTmax" size="6" value=<?php echo $tmax?>></td>
+				</tr>
+				<tr>
+					<th width="120">Temperature Offset</th>
+					<td><input type="text" name="txtTOffset" size="6" value=<?php echo $toffset?>></td>
 				</tr>
 				<tr>
 					<th width="120">Create By</th>

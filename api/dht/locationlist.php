@@ -55,7 +55,8 @@ foreach ($location_array as $row){
             $array = json_decode(json_encode($sensor_obj->lstSensorConfigs[$i]), true);
             if ($array["status"] == 'A'){
                 $active += 1;
-                $url = 'http://localhost/displayDashboard/THnow.php?locationid='. $array["locationID"] .'&sensorid=' . $array["sensorID"];
+                $url = 'http://localhost/api/dht/lastdatafake.php?locationid='. $array["locationID"] .'&sensorid=' . $array["sensorID"];
+                // echo $url;
                 $json = file_get_contents($url);
                 $obj2 = json_decode($json);
                 $data = json_decode(json_encode($obj2), true);
