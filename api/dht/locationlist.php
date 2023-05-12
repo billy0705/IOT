@@ -63,7 +63,7 @@ foreach ($location_array as $row){
                 $t = $data["temperature"];
                 $hStatus = $data["hStatus"];
                 $tStatus = $data["tStatus"];
-                $activeLocationCount += 1;
+                // $activeLocationCount += 1;
             }
             else{
                 $stop += 1;
@@ -78,6 +78,7 @@ foreach ($location_array as $row){
             $Temparray["active"] = $active;
             $Temparray["stop"] = $stop;
         }
+        $activeLocationCount += 1;
         $location_info_array[] = $Temparray;
     }
     else {
