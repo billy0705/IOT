@@ -101,10 +101,10 @@
 						}
 					div.appendChild(divItem);
 						var divItem = document.createElement('div');
-						divItem.href = './locationStatusBoard/locationStatusBoard.php?locationid=' + data.locationLists[i].locationID;
 						divItem.className = 'sensor-location-dashboard'
 							var a = document.createElement('a');
 							a.className = 'a-link-btn';
+							a.href = './locationStatusBoard/locationStatusBoard.php?locationid=' + data.locationLists[i].locationID;
 							a.textContent = 'Detail';
 						divItem.appendChild(a);
 					div.appendChild(divItem)
