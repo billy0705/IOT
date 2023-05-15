@@ -410,6 +410,7 @@ button:hover {
     /* padding: 20px 10px; */
     font-size: var(--fs-4);
     margin-bottom: 1px;
+    display: table-row;
 }
 
 .list-content {
@@ -417,6 +418,7 @@ button:hover {
     background-color: skyblue;
     /* padding: 20px 10px; */
     font-size: var(--fs-7);
+    display: table-row;
 }
 
 /*=============== Sensor-location ===============*/
@@ -496,6 +498,13 @@ button:hover {
 
 .list-bar .machine-location-LocationName {
     display: none;
+}
+
+/*=============== location-Sensor ===============*/
+.location-senosr-table{
+    display: table;
+    border-collapse: collapse;
+    width: 100%;
 }
 
 /* ************************************* */

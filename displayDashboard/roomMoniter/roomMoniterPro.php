@@ -120,7 +120,7 @@
 				<?php if ($timeInterval != 30){ ?>
 					<a id="simple" href="./roomMoniterPro.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>&timeInterval=30">30 Min</a>
 				<?php } ?>
-					<a style = "width : 150px" class="modify" href="../locationStatusBoard/locationStatusBoard.php?locationid=<?php echo $locationid;?>">Back</a>
+					<a style = "width : 150px" class="modify" href="../locationStatusBoard/locationStatusBoard.html?locationid=<?php echo $locationid;?>">Back</a>
 			</div>
 			
 			<table border="1" style="width:100%; height:50vh;">

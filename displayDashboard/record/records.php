@@ -204,7 +204,7 @@
 				<?php if ($timeInterval != 30){ ?>
 				<a style = "width : 70px" class="modify" href="./records.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>&selectdate=<?php echo $selectdate;?>&timeInterval=30">30min</a>
 				<?php } ?>
-				<a style = "width : 70px" class="modify" href="../locationStatusBoard/locationStatusBoard.php?locationid=<?php echo $locationid;?>">back</a>
+				<a style = "width : 70px" class="modify" href="../locationStatusBoard/locationStatusBoard.html?locationid=<?php echo $locationid;?>">back</a>
 			</div>
 		</div>
 		
