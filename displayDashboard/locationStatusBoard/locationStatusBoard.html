@@ -12,18 +12,18 @@
 		<div >
 			<main>
 				<hr>
-				<div class="sensordashboard" style="background-color: CornflowerBlue;">
-					<div class="location-detail-item"><a>Location ID:</a><a id="location-detail-locationID"></a></div>
+				<div class="location-detail">
+					<div class="location-detail-item locationID"><a>Location ID:</a><a id="location-detail-locationID"></a></div>
 					<div class="location-detail-item"><a>Name : </a><a id="location-detail-locationName"></a></div>
-					<div class="location-detail-item"><a>Total Number: </a><a id="location-detail-total"></a></div>
-					<div class="location-detail-item"><a>Now Active : </a><a id="location-detail-active"></a></div>
-					<div class="location-detail-item"><a>Now Stop : </a><a id="location-detail-stop"></a></div>
+					<div class="location-detail-item"><a>Total: </a><a id="location-detail-total"></a></div>
+					<div class="location-detail-item"><a>Active : </a><a id="location-detail-active"></a></div>
+					<div class="location-detail-item"><a>Stop : </a><a id="location-detail-stop"></a></div>
 				</div>
 				<hr>
                 <div class="location-senosr-table" id="location-senosr-table">
                     <div class="location-senosr list-bar">
                         <a class="location-senosr-locationID list-item">SensorID</a>
-                        <a class="location-senosr-locationName list-item">Status</a>
+                        <a class="location-senosr-status list-item">Status</a>
                         <a class="location-senosr-temperature list-item">Temperature</a>
                         <a class="location-senosr-temperature-short list-item">T</a>
                         <a class="location-senosr-humidity list-item">Humidity</a>
@@ -65,7 +65,7 @@
                         divItem.appendChild(a);
                     div.appendChild(divItem);
                         var divItem = document.createElement('div');
-                        divItem.className= 'location-senosr-Status list-item';
+                        divItem.className= 'location-senosr-status list-item';
                             var a = document.createElement('a');
                             a.className = 'value-status';
 							if (data.sensor_array[i].status === "A") {
@@ -109,7 +109,7 @@
                             var a = document.createElement('a');
                             a.className = 'a-link-btn';
                             a.href = "../roomMoniter/roomMoniterPro.php?locationid="+ data.sensor_array[i].locationID+"&sensorid=" + data.sensor_array[i].sensorID;
-                            a.textContent = 'Monitors';
+                            a.textContent = 'Monitor';
                         divItem.appendChild(a);
                     div.appendChild(divItem)
                         var divItem = document.createElement('div');
@@ -117,7 +117,7 @@
                             var a = document.createElement('a');
                             a.className = 'a-link-btn';
                             a.href = "../record/records.php?locationid="+ data.sensor_array[i].locationID+"&sensorid=" + data.sensor_array[i].sensorID;
-                            a.textContent = 'Records';
+                            a.textContent = 'Record';
                         divItem.appendChild(a);
                     div.appendChild(divItem)
                     document.getElementById('location-senosr-table').appendChild(div);

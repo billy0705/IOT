@@ -501,10 +501,37 @@ button:hover {
 }
 
 /*=============== location-Sensor ===============*/
+.location-detail {
+    background: CornflowerBlue;
+    display: flex;
+    padding: 20px 20px;
+    justify-content: space-around;
+}
+
+.location-detail-item {
+    display: flex;
+    font-size: var(--fs-4);
+    flex-direction: column;
+    align-items: center;
+}
+
+.location-detail-item.locationID {
+    display: none;
+}
+
 .location-senosr-table{
     display: table;
     border-collapse: collapse;
     width: 100%;
+}
+
+.list-bar .location-senosr-temperature
+, .list-bar .location-senosr-humidity {
+    display: none;
+}
+
+.location-senosr-status {
+    display: none;
 }
 
 /* ************************************* */
@@ -620,6 +647,16 @@ main .sensordashboard .sensordashboard-right {
     .list-bar .machine-location-LocationName-short {
         display:none;
     }
+
+    .list-bar .location-senosr-temperature
+    , .list-bar .location-senosr-humidity {
+        display: table-cell;
+    }
+
+    .list-bar .location-senosr-temperature-short
+    , .list-bar .location-senosr-humidity-short {
+        display: none;
+    }
     
     .logo {
         transform: scale(0.5, 0.5);
@@ -709,6 +746,17 @@ main .sensordashboard .sensordashboard-right {
     .machine-location-locationID
     , .machine-location-MachineID
     {
+        display: table-cell;
+    }
+
+    .location-detail-item.locationID {
+        display: flex;
+        font-size: var(--fs-4);
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .location-senosr-status {
         display: table-cell;
     }
 
