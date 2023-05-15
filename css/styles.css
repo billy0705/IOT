@@ -527,7 +527,7 @@ hr {
 
 .logo {
     position: absolute;
-    left: -60px;
+    left: -120px;
     display: block;
     text-align: center;
     justify-content: center;
@@ -614,6 +614,7 @@ main .sensordashboard .sensordashboard-right {
     
     .logo {
         transform: scale(0.5, 0.5);
+        left: -100px;
     }
 }
 
