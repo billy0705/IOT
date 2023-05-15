@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    // setCookie('username', 'user', 1);
     
     
     var loginStatus = isLoggedIn();
@@ -23,13 +22,14 @@ $(document).ready(function () {
         $('.login-btn').text('Login');
     }
     $('.login-btn').click(function() {
+        loginStatus = isLoggedIn();
         if (loginStatus){
-            deleteCookie('username');
+            deleteCookie('auth_token');
             loginStatus = isLoggedIn();
             $(this).text('Login');
+            location.reload();
         }
         else {
-            // setCookie('username', 'billy', 7);
             // loginStatus = isLoggedIn();
             // $(this).text('Logout');
             $(".popup-window").fadeIn();
@@ -65,9 +65,6 @@ $(document).ready(function () {
         }
     });
 
-    // $("#myBtn").click(function() {
-        
-    // });
     
     $(".popup-close, .popup-modal").click(function() {
         $(".popup-window").fadeOut();
@@ -82,38 +79,77 @@ $(document).ready(function () {
         event.preventDefault();
         var username = document.getElementById('username').value;
         var password = document.getElementById('password').value;
-        // Check if username and password are correct
-        if (username === 'user' && password === '123') {
-            alert("Login successful!");
-            setCookie('username', username, 7);
-            // console.log('Login successful!');
-            $('.login-btn').text('Logout');
-        } else {
-            console.log('Invalid username or password.');
-            alert("Login fail !\nInvalid username or password.");
-        }
-        // $(this).reset();
+        login(username, password);
         $(this).trigger("reset");
         $(".popup-window").fadeOut();
-        loginStatus = isLoggedIn();
     });
 
 
 });
 
+function login(username, password){
+    message = '';
+    var url = '/api/login.php';
+    var data = {
+        "username": username,
+        "password": password
+    };
+
+    fetch(url, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+    })
+    .then(function(response) {
+    if (response.ok) {
+        return response.json();
+    } else {
+        throw new Error('POST 請求失敗');
+    }
+    })
+    .then(function(data) {
+        console.log(data);
+        if (data.success == true){
+            console.log(data.message);
+            alert("Login successful!");
+            setCookie(data.username, data.role, data.token, 1);
+            $('.login-btn').text('Logout');
+            message = "Login successful!";
+            location.reload();
+        }
+        else{
+            message = data.message;
+            alert(data.message);
+            console.log(data.message);
+        }
+        loginStatus = isLoggedIn();
+        console.log("login status", loginStatus);
+        return message;
+    })
+    .catch(function(error) {
+        console.error(error);
+    });
+    
+}
+
 // Function to set a cookie
-function setCookie(name, value, days) {
+function setCookie(value, role, token, days) {
     let expires = "";
     if (days) {
         let date = new Date();
         date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        expires = "; expires=" + date.toUTCString();
+        expires = " expires=" + date.toUTCString();
     }
-    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    token = "auth_token" + "=" + (token || "") + ";";
+    document.cookie = token + expires + "; path=/";
+    // role=${userInfo.role}
 }
 
 function deleteCookie(name) {
     document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
 }
 
 // Function to get a cookie
@@ -130,7 +166,7 @@ function getCookie(name) {
 
 // Function to check if user is logged in
 function isLoggedIn() {
-    var username = getCookie('username');
+    var username = getCookie('auth_token');
     var loginStatus = username !== null
     if (loginStatus) {
         console.log("Login");

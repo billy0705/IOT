@@ -1,7 +1,20 @@
 <?php
     $statusCode = 200;
+    $username = '';
+    $role = '';
     if (isset($_GET['locationid'])){
         $locationid=$_GET['locationid'];
+    }
+    if (isset($_COOKIE['auth_token'])) {
+        $token = $_COOKIE['auth_token'];
+        $userInfo = json_decode(base64_decode($token), true);
+        if ($userInfo !== null) {
+            $username = $userInfo['username'];
+            $role = $userInfo['role'];
+        } else {
+            $username = '';
+            $role = '';
+        }
     }
     require "./GetLocationName.php";
     $url = 'http://10.10.2.108/fromsensor/api/SensorConfig/GetSensorByLoc/'.$locationid;
@@ -34,9 +47,14 @@
             $Temparray["createby"] = $array["createby"];
             $Temparray["status"] = $array["status"];
             $Temparray["intervalTime"] = $array["intervalTime"];
-            $url = 'http://localhost/api/dht/lastdatafake.php?locationid='. $array["locationID"] .'&sensorid=' . $array["sensorID"];
+            if ($role === ''){
+                $lastdataurl = 'http://localhost/api/dht/lastdatafake.php?locationid='. $array["locationID"] .'&sensorid=' . $array["sensorID"];
+            }
+            else{
+                $lastdataurl = 'http://localhost/api/dht/lastdata.php?locationid='. $array["locationID"] .'&sensorid=' . $array["sensorID"];
+            }
             // echo $url;
-            $json = file_get_contents($url);
+            $json = file_get_contents($lastdataurl);
             $last_obj = json_decode($json);
             $last_obj = json_decode(json_encode($last_obj), true);
             $Temparray["humidity"] = $last_obj["humidity"];

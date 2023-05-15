@@ -2,7 +2,20 @@
 $statusCode = 200;
 $activeLocationCount = 0;
 $location_info_array = array();
+$username = '';
+$role = '';
 
+if (isset($_COOKIE['auth_token'])) {
+    $token = $_COOKIE['auth_token'];
+    $userInfo = json_decode(base64_decode($token), true);
+    if ($userInfo !== null) {
+        $username = $userInfo['username'];
+        $role = $userInfo['role'];
+    } else {
+        $username = '';
+        $role = '';
+    }
+}
 
 $url = 'http://10.10.2.108/fromsensor/api/Location/GetListLocationConfig';
 $json = file_get_contents($url);
@@ -55,9 +68,14 @@ foreach ($location_array as $row){
             $array = json_decode(json_encode($sensor_obj->lstSensorConfigs[$i]), true);
             if ($array["status"] == 'A'){
                 $active += 1;
-                $url = 'http://localhost/api/dht/lastdatafake.php?locationid='. $array["locationID"] .'&sensorid=' . $array["sensorID"];
+                if ($role === ''){
+                    $lastdataurl = 'http://localhost/api/dht/lastdatafake.php?locationid='. $array["locationID"] .'&sensorid=' . $array["sensorID"];
+                }
+                else{
+                    $lastdataurl = 'http://localhost/api/dht/lastdata.php?locationid='. $array["locationID"] .'&sensorid=' . $array["sensorID"];
+                }
                 // echo $url;
-                $json = file_get_contents($url);
+                $json = file_get_contents($lastdataurl);
                 $obj2 = json_decode($json);
                 $data = json_decode(json_encode($obj2), true);
                 $h = $data["humidity"];
@@ -91,7 +109,8 @@ foreach ($location_array as $row){
 echo json_encode(array(
     "statusCode" => $statusCode,
     "locationCounts" => $activeLocationCount,
-    "locationLists" => $location_info_array
+    "locationLists" => $location_info_array,
+    "role" => $role
 ));
 
 

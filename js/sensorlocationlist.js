@@ -1,5 +1,8 @@
 fetch('/api/dht/locationlist.php')
-	.then(res => res.json())
+	.then(res => {
+		// console.log(res);
+		return res.json();
+	})
 	.then(data => {
 		console.log(data)
 		var divCount = data.locationCounts;
