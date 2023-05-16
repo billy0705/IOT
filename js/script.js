@@ -1,8 +1,7 @@
 $(document).ready(function () {
-    
-    
+
     var loginStatus = isLoggedIn();
-    
+
     // header.html import
     $.ajax({
         url: '/template/header.html',
@@ -15,15 +14,15 @@ $(document).ready(function () {
 
     // Login BTN
     // changeLogBtn(loginStatus);
-    if (loginStatus){
+    if (loginStatus) {
         $('.login-btn').text('Logout');
     }
     else {
         $('.login-btn').text('Login');
     }
-    $('.login-btn').click(function() {
+    $('.login-btn').click(function () {
         loginStatus = isLoggedIn();
-        if (loginStatus){
+        if (loginStatus) {
             deleteCookie('auth_token');
             loginStatus = isLoggedIn();
             $(this).text('Login');
@@ -42,39 +41,39 @@ $(document).ready(function () {
     console.log(url);
     var links = $('.navbar-link');
     // console.log(links);
-    links.each(function() {
+    links.each(function () {
         var href = $(this).attr('href');
         // console.log(href);
         // console.log("url-indexOf:",url.indexOf(href));
         // console.log("this:",$(this));
-        if (href === '/'){
-            if (url === href){
+        if (href === '/') {
+            if (url === href) {
                 $(this).addClass("active");
             }
-            else{
+            else {
                 $(this).removeClass("active");
             }
         }
         else {
-            if (url.includes(href)){
+            if (url.includes(href)) {
                 $(this).addClass("active");
             }
-            else{
+            else {
                 $(this).removeClass("active");
             }
         }
     });
 
-    
-    $(".popup-close, .popup-modal").click(function() {
+
+    $(".popup-close, .popup-modal").click(function () {
         $(".popup-window").fadeOut();
     });
-    
-    $(".popup-content").click(function(e) {
+
+    $(".popup-content").click(function (e) {
         e.stopPropagation();
     });
 
-    $(".login-form").submit(function(event) {
+    $(".login-form").submit(function (event) {
 
         event.preventDefault();
         var username = document.getElementById('username').value;
@@ -87,7 +86,7 @@ $(document).ready(function () {
 
 });
 
-function login(username, password){
+function login(username, password) {
     message = '';
     var url = '/api/login.php';
     var data = {
@@ -96,42 +95,42 @@ function login(username, password){
     };
 
     fetch(url, {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
     })
-    .then(function(response) {
-    if (response.ok) {
-        return response.json();
-    } else {
-        throw new Error('POST 請求失敗');
-    }
-    })
-    .then(function(data) {
-        console.log(data);
-        if (data.success == true){
-            console.log(data.message);
-            alert("Login successful!");
-            setCookie(data.username, data.role, data.token, 1);
-            $('.login-btn').text('Logout');
-            message = "Login successful!";
-            location.reload();
-        }
-        else{
-            message = data.message;
-            alert(data.message);
-            console.log(data.message);
-        }
-        loginStatus = isLoggedIn();
-        console.log("login status", loginStatus);
-        return message;
-    })
-    .catch(function(error) {
-        console.error(error);
-    });
-    
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('POST 請求失敗');
+            }
+        })
+        .then(function (data) {
+            console.log(data);
+            if (data.success == true) {
+                console.log(data.message);
+                alert("Login successful!");
+                setCookie(data.username, data.role, data.token, 1);
+                $('.login-btn').text('Logout');
+                message = "Login successful!";
+                location.reload();
+            }
+            else {
+                message = data.message;
+                alert(data.message);
+                console.log(data.message);
+            }
+            loginStatus = isLoggedIn();
+            console.log("login status", loginStatus);
+            return message;
+        })
+        .catch(function (error) {
+            console.error(error);
+        });
+
 }
 
 // Function to set a cookie
@@ -166,19 +165,33 @@ function getCookie(name) {
 
 // Function to check if user is logged in
 function isLoggedIn() {
-    var username = getCookie('auth_token');
-    var loginStatus = username !== null
-    if (loginStatus) {
-        console.log("Login");
-    }
-    else {
-        console.log("Logout");
-    }
+    loginStatus = false;
+
+    $.ajax({
+        url: '/api/loginstatus.php',
+        type: 'GET',
+        async: false,
+        dataType: 'json',
+        success: function (response) {
+            console.log(response);
+            console.log(response.success);
+            loginStatus = response.success === true
+            if (loginStatus) {
+                console.log("Login");
+            }
+            else {
+                console.log("Logout");
+            }
+        },
+        error: function (error) {
+            console.error('AJAX GET error:', error);
+        }
+    });
     return loginStatus;
 }
 
 // Function to handle login form submission
 function handleLogin(event) {
     event.preventDefault();
-    
+
 }

@@ -31,6 +31,33 @@
 	</main>
 
 	<script>
+	
+		function checkLoginPage() {
+			
+			$.ajax({
+				url: '/api/loginstatus.php',
+				type: 'GET',
+				async: false,
+				dataType: 'json',
+				success: function (response) {
+					loginStatus = response.success === true
+					if (loginStatus) {
+						console.log("Login");
+					}
+					else {
+						console.log("Logout");
+						alert("Please Login");
+						window.location.href = '/';
+						
+					}
+				},
+				error: function (error) {
+					console.error('AJAX GET error:', error);
+				}
+			});
+		}
+		checkLoginPage();
+
 		fetch('/api/machine/machinelist.php')
 			.then(res => res.json())
 			.then(data => {

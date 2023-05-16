@@ -70,6 +70,33 @@
 		</footer>
 		
 	</body>
+	<script>
+		function checkLoginPage() {
+			
+			$.ajax({
+				url: '/api/loginstatus.php',
+				type: 'GET',
+				async: false,
+				dataType: 'json',
+				success: function (response) {
+					loginStatus = response.success === true
+					if (loginStatus) {
+						console.log("Login");
+					}
+					else {
+						console.log("Logout");
+						alert("Please Login");
+						window.location.href = '/';
+						
+					}
+				},
+				error: function (error) {
+					console.error('AJAX GET error:', error);
+				}
+			});
+		}
+		checkLoginPage();
+	</script>
 	<script src="/js/script.js"></script>
 	<!-- ionicon link -->
 	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
