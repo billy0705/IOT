@@ -24,7 +24,7 @@
     if (isset($_GET['timeInterval'])){
         $timeInterval=$_GET['timeInterval'];
     }
-    require "./GetLocationName.php";
+    require "GetLocationName.php";
     require "fakedata.php";
     $url = 'http://10.10.2.108/fromsensor/api/SensorConfig/GetSensorByID/'.$sensorid;
     $json = file_get_contents($url);
