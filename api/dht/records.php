@@ -7,6 +7,19 @@
     $selectdate=date('Y-m-d');
     $errorsql='AND';
     $timeInterval = 5;
+    $username = '';
+    $role = '';
+    if (isset($_COOKIE['auth_token'])) {
+        $token = $_COOKIE['auth_token'];
+        $userInfo = json_decode(base64_decode($token), true);
+        if ($userInfo !== null) {
+            $username = $userInfo['username'];
+            $role = $userInfo['role'];
+        } else {
+            $username = '';
+            $role = '';
+        }
+    }
     
     if (isset($_GET['locationid'])){
         $locationid=$_GET['locationid'];
@@ -50,10 +63,8 @@
             //echo print_r($obj->lstDht_Value[$i])."<br>";
             $array = json_decode(json_encode($obj->lstDht_Value[$i]), true);
             $Temparray = Array();
-            // $temperatures[] = $array["temperature"];
-            // $humidities[] = $array["humidity"];
-            $temperatures[] = fake($array["temperature"], $configarray["tmax"], $configarray["tmin"]);
-            $humidities[] = fake($array["humidity"], $configarray["hmax"], $configarray["hmin"]);
+            
+            
             $timestamps[] = $array["dataDate"];
             $tmax[] = $configarray["tmax"];
             $tmin[] = $configarray["tmin"];
@@ -63,18 +74,28 @@
             $Temparray[] = $array["sensorID"];
             $Temparray[] = $array["locationID"];
             $Temparray[] = $array["dataDate"];
-            // $Temparray[] = $array["humidity"];
-            // $Temparray[] = $array["temperature"];
-            $Temparray[] = fake($array["humidity"], $configarray["hmax"], $configarray["hmin"]);
-            $Temparray[] = fake($array["temperature"], $configarray["tmax"], $configarray["tmin"]);
-            // $Temparray[] = $array["ahmin"];
-            // $Temparray[] = $array["ahmax"];
-            // $Temparray[] = $array["atmin"];
-            // $Temparray[] = $array["atmax"];
-            $Temparray[] = "N";
-            $Temparray[] = "N";
-            $Temparray[] = "N";
-            $Temparray[] = "N";
+            if ($role === ''){
+                $temperatures[] = fake($array["temperature"], $configarray["tmax"], $configarray["tmin"]);
+                $humidities[] = fake($array["humidity"], $configarray["hmax"], $configarray["hmin"]);
+                $Temparray[] = fake($array["humidity"], $configarray["hmax"], $configarray["hmin"]);
+                $Temparray[] = fake($array["temperature"], $configarray["tmax"], $configarray["tmin"]);
+                $Temparray[] = "N";
+                $Temparray[] = "N";
+                $Temparray[] = "N";
+                $Temparray[] = "N";
+            }
+            else{
+                $temperatures[] = $array["temperature"];
+                $humidities[] = $array["humidity"];
+                $Temparray[] = $array["humidity"];
+                $Temparray[] = $array["temperature"];
+                $Temparray[] = $array["ahmin"];
+                $Temparray[] = $array["ahmax"];
+                $Temparray[] = $array["atmin"];
+                $Temparray[] = $array["atmax"];
+            }
+            
+            
             $Temparray[] = $array["door"];
             //echo print_r($Temparray)."<br>";
             $php_data_array[] = $Temparray;
