@@ -5,7 +5,7 @@
 	if (isset($_GET['sensorid'])){
 		$sensorid=$_GET['sensorid'];
 	}
-	// require "fakedata.php";
+	require "./GetLocationName.php";
 	$url = 'http://10.10.2.108/fromsensor/api/DhtValue/GetDhtValueByLocationSensor?SensorId='.$sensorid.'&locationId='.$locationid;
 	$json = file_get_contents($url);
 	$obj = json_decode($json);
@@ -39,6 +39,7 @@
 		// echo "<a>".$obj->statusMessage."</a>";
 	}
     echo json_encode(array(
+		"LocationName" => $locationName,
         "temperature" => $t,
         "humidity" => $h,
         "tStatus" => $tStatus,
