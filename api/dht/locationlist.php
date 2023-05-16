@@ -4,7 +4,6 @@ $activeLocationCount = 0;
 $location_info_array = array();
 $username = '';
 $role = '';
-
 if (isset($_COOKIE['auth_token'])) {
     $token = $_COOKIE['auth_token'];
     $userInfo = json_decode(base64_decode($token), true);
@@ -68,13 +67,8 @@ foreach ($location_array as $row){
             $array = json_decode(json_encode($sensor_obj->lstSensorConfigs[$i]), true);
             if ($array["status"] == 'A'){
                 $active += 1;
-                if ($role === ''){
-                    $lastdataurl = 'http://localhost/api/dht/lastdatafake.php?locationid='. $array["locationID"] .'&sensorid=' . $array["sensorID"];
-                }
-                else{
-                    $lastdataurl = 'http://localhost/api/dht/lastdata.php?locationid='. $array["locationID"] .'&sensorid=' . $array["sensorID"];
-                }
-                // echo $url;
+                $lastdataurl = 'http://localhost/api/dht/lastdata.php?locationid='. $array["locationID"] .'&sensorid=' . $array["sensorID"].'&role=' . $role;
+                // echo $lastdataurl;
                 $json = file_get_contents($lastdataurl);
                 $obj2 = json_decode($json);
                 $data = json_decode(json_encode($obj2), true);
@@ -110,7 +104,7 @@ echo json_encode(array(
     "statusCode" => $statusCode,
     "locationCounts" => $activeLocationCount,
     "locationLists" => $location_info_array,
-    "role" => $role
+    // "role" => $role
 ));
 
 

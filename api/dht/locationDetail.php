@@ -47,12 +47,13 @@
             $Temparray["createby"] = $array["createby"];
             $Temparray["status"] = $array["status"];
             $Temparray["intervalTime"] = $array["intervalTime"];
-            if ($role === ''){
-                $lastdataurl = 'http://localhost/api/dht/lastdatafake.php?locationid='. $array["locationID"] .'&sensorid=' . $array["sensorID"];
-            }
-            else{
-                $lastdataurl = 'http://localhost/api/dht/lastdata.php?locationid='. $array["locationID"] .'&sensorid=' . $array["sensorID"];
-            }
+            // if ($role === ''){
+            //     $lastdataurl = 'http://localhost/api/dht/lastdatafake.php?locationid='. $array["locationID"] .'&sensorid=' . $array["sensorID"];
+            // }
+            // else{
+            //     $lastdataurl = 'http://localhost/api/dht/lastdata.php?locationid='. $array["locationID"] .'&sensorid=' . $array["sensorID"];
+            // }
+            $lastdataurl = 'http://localhost/api/dht/lastdata.php?locationid='. $array["locationID"] .'&sensorid=' . $array["sensorID"].'&role=' . $role;
             // echo $url;
             $json = file_get_contents($lastdataurl);
             $last_obj = json_decode($json);
