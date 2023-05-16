@@ -134,11 +134,11 @@ function login(username, password) {
 }
 
 // Function to set a cookie
-function setCookie(value, role, token, days) {
+function setCookie(value, role, token, hours) {
     let expires = "";
-    if (days) {
+    if (hours) {
         let date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        date.setTime(date.getTime() + (hours * 1 * 60 * 60 * 1000));
         expires = " expires=" + date.toUTCString();
     }
     token = "auth_token" + "=" + (token || "") + ";";
