@@ -79,7 +79,7 @@
 				$result = file_get_contents($url, false, $context);
 				// echo $result;
 			}
-		} elseif ($timestamp > $tenMinutesAgo) {
+		} elseif ($timestamp >= $tenMinutesAgo) {
 			if ($configarray["status"] == 'S'){
 				$url = "http://10.10.2.108/fromsensor/api/SensorConfig/UpdateSensorConfig?sid=".$configarray["sensorID"]
 						."&lid=".$configarray["locationID"]

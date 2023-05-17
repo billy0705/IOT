@@ -48,10 +48,29 @@ if ($location_obj->statusCode == 200) {
         }
         
         if ($fund_f) {
+            
             $url = 'http://10.10.2.108/Solder/api/jt_ws450/JT_WS450ValuesMachineDate?MachineID='.$machineid.'&Fdate='.$date.'&Edate='.$tomorrow;
+            // echo $url."<br>";
             $json = file_get_contents($url);
             $obj = json_decode($json);
-            $machineStatus = $obj->statusMessage;
+            if ($obj->statusCode === 200){
+                $configarray = json_decode(json_encode($obj->jT_WS450_Values[0]), true);
+                $time = $configarray["dataDate"];
+                $tenMinutesAgo = strtotime('-30 minutes');
+                // echo $tenMinutesAgo."<br>";
+                $timestamp = strtotime($time);
+                // echo $timestamp."<br>";
+                if ($timestamp > $tenMinutesAgo) {
+                    $machineStatus = "A";
+                } elseif ($timestamp <= $tenMinutesAgo) {
+                    $machineStatus = "S";
+                }
+            }
+            else {
+                $machineStatus = "S";
+            }
+            // $machineStatus = $obj->statusMessage;
+            
             $Temparray = array();
             $Temparray["locationID"] = $array["locationID"];
             $Temparray["locationName"] = $array["locationName"];
