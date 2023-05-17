@@ -79,3 +79,12 @@ fetch('/api/dht/locationlist.php')
 			// document.getElementById('sensor-location-table').appendChild(document.createElement('hr'));
 		}
 	});
+
+
+	window.onload = function () {
+		setInterval(function (){
+			location.reload();
+			console.log("reload")
+		}, 120000);
+		// setInterval(printSensorData,120000);
+	}
