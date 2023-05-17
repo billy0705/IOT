@@ -32,13 +32,15 @@
 	$json2 = file_get_contents($url2);
 	$obj2 = json_decode($json2);
 	$configarray = json_decode(json_encode($obj2->lstSensorConfigs[0]), true);
-	$time = date("Y-m-d H:i:s", time());
+	$timenow = date("Y-m-d H:i:s", time());
+	$time = $timenow;
 	// echo $configarray;
     $t = 0;
     $h = 0;
     $hStatus = 1;
 	$tStatus = 1;
     $door = 'N';
+	$result = '';
 	if ($obj->statusMessage == "Data Found"){
 		$sensor_array = Array();
 		$array = json_decode(json_encode($obj->lstDht_Value[0]), true);
@@ -50,10 +52,60 @@
 			$h = $array["humidity"];
 			$t = $array["temperature"];
 		}
-		// $h = $array["humidity"];
-		// $t = $array["temperature"];
 		$time = $array["dataDate"];
+		$tenMinutesAgo = strtotime('-10 minutes');
+		$timestamp = strtotime($time);
+
+		if ($timestamp < $tenMinutesAgo) {
+			if ($configarray["status"] == 'A'){
+				$url = "http://10.10.2.108/fromsensor/api/SensorConfig/UpdateSensorConfig?sid=".$configarray["sensorID"]
+						."&lid=".$configarray["locationID"]
+						."&hmin=".$configarray["hmin"]
+						."&hmax=".$configarray["hmax"]
+						."&tmin=".$configarray["tmin"]
+						."&tmax=".$configarray["tmax"]
+						."&interval=".$configarray["intervalTime"]
+						."&status="."S"
+						."&RowID=".$configarray["rowID"]
+						."&toffset=".$configarray["toffset"]
+						."&hoffset=".$configarray["hoffset"];
+				$opts = array('http' =>
+					array(
+						'method' => 'PUT',
+						'header' => 'Content-Length: 0',
+					)
+				);
+				$context = stream_context_create($opts);
+				$result = file_get_contents($url, false, $context);
+				// echo $result;
+			}
+		} elseif ($timestamp > $tenMinutesAgo) {
+			if ($configarray["status"] == 'S'){
+				$url = "http://10.10.2.108/fromsensor/api/SensorConfig/UpdateSensorConfig?sid=".$configarray["sensorID"]
+						."&lid=".$configarray["locationID"]
+						."&hmin=".$configarray["hmin"]
+						."&hmax=".$configarray["hmax"]
+						."&tmin=".$configarray["tmin"]
+						."&tmax=".$configarray["tmax"]
+						."&interval=".$configarray["intervalTime"]
+						."&status="."A"
+						."&RowID=".$configarray["rowID"]
+						."&toffset=".$configarray["toffset"]
+						."&hoffset=".$configarray["hoffset"];
+				$opts = array('http' =>
+					array(
+						'method' => 'PUT',
+						'header' => 'Content-Length: 0',
+					)
+				);
+				$context = stream_context_create($opts);
+				$result = file_get_contents($url, false, $context);
+				// echo $result;
+			}
+		}
+
 		$door = $array["door"];
+		
         // echo $h;
 		if ($h <= $configarray["hmax"] and $h >= $configarray["hmin"]){
 			$hStatus = 0;
@@ -73,6 +125,7 @@
         "hStatus" => $hStatus,
         "timestamp" => $time,
         "door" => $door,
-		"role" => $role
+		"role" => $role,
+		"result" => $result
     ));
 ?>

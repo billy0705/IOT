@@ -68,18 +68,39 @@ foreach ($location_array as $row){
             if ($array["status"] == 'A'){
                 $active += 1;
                 $lastdataurl = 'http://localhost/api/dht/lastdata.php?locationid='. $array["locationID"] .'&sensorid=' . $array["sensorID"].'&role=' . $role;
-                // echo $lastdataurl;
+                // echo $lastdataurl."<br>";
                 $json = file_get_contents($lastdataurl);
                 $obj2 = json_decode($json);
                 $data = json_decode(json_encode($obj2), true);
-                $h = $data["humidity"];
-                $t = $data["temperature"];
-                $hStatus = $data["hStatus"];
-                $tStatus = $data["tStatus"];
+                if ($data["result"] != ''){
+                    $stop += 1;
+                }
+                else{
+                    $active += 1;
+                    $h = $data["humidity"];
+                    $t = $data["temperature"];
+                    $hStatus = $data["hStatus"];
+                    $tStatus = $data["tStatus"];
+                }
                 // $activeLocationCount += 1;
             }
-            else{
-                $stop += 1;
+            else if($array["status"] == 'S'){
+                $lastdataurl = 'http://localhost/api/dht/lastdata.php?locationid='. $array["locationID"] .'&sensorid=' . $array["sensorID"].'&role=' . $role;
+                // echo $lastdataurl."<br>";
+                $json = file_get_contents($lastdataurl);
+                $obj2 = json_decode($json);
+                $data = json_decode(json_encode($obj2), true);
+                if ($data["result"] != ''){
+                    $active += 1;
+                    $h = $data["humidity"];
+                    $t = $data["temperature"];
+                    $hStatus = $data["hStatus"];
+                    $tStatus = $data["tStatus"];
+                }
+                else{
+                    $stop += 1;
+                }
+                
             }
         }
         $Temparray["locationID"] = $locationID;

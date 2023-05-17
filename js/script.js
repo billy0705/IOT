@@ -138,7 +138,7 @@ function setCookie(value, role, token, minutes) {
     let expires = "";
     if (minutes) {
         let date = new Date();
-        date.setTime(date.getTime() + (minutes * 1 * 1 * 60 * 1000));
+        date.setTime(date.getTime() + (minutes * 1 * 60 * 60 * 1000));
         expires = " expires=" + date.toUTCString();
     }
     token = "auth_token" + "=" + (token || "") + ";";
