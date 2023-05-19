@@ -56,10 +56,9 @@ if ($location_obj->statusCode == 200) {
             if ($obj->statusCode === 200){
                 $configarray = json_decode(json_encode($obj->jT_WS450_Values[0]), true);
                 $time = $configarray["dataDate"];
-                $tenMinutesAgo = strtotime('-30 minutes');
-                // echo $tenMinutesAgo."<br>";
-                $timestamp = strtotime($time);
-                // echo $timestamp."<br>";
+                $timezone = new DateTimeZone("Asia/Bangkok");
+                $timestamp = new DateTime($time, $timezone);
+                $tenMinutesAgo = new DateTime("-10 minute", $timezone);
                 if ($timestamp > $tenMinutesAgo) {
                     $machineStatus = "A";
                 } elseif ($timestamp <= $tenMinutesAgo) {

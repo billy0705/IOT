@@ -53,9 +53,9 @@
 			$t = $array["temperature"];
 		}
 		$time = $array["dataDate"];
-		$tenMinutesAgo = strtotime('-10 minutes');
-		$timestamp = strtotime($time);
-
+		$timezone = new DateTimeZone("Asia/Bangkok");
+		$timestamp = new DateTime($time, $timezone);
+		$tenMinutesAgo = new DateTime("-10 minute", $timezone);
 		if ($timestamp < $tenMinutesAgo) {
 			if ($configarray["status"] == 'A'){
 				$url = "http://10.10.2.108/fromsensor/api/SensorConfig/UpdateSensorConfig?sid=".$configarray["sensorID"]
