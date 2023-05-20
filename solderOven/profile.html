@@ -59,8 +59,11 @@
 		});
 	}
 	checkLoginPage();
+	// pdfjsLib.GlobalOptions.set('disableFontAntialiasing', false);
+    // pdfjsLib.DefaultRenderingQueueSettings.renderingResolution = 300;
+    // pdfjsLib.DefaultCanvasFactory.setRenderingIntent('high-quality');
 
-	pdfjsLib.getDocument('/img/test.pdf').promise.then(function (pdf) {
+	pdfjsLib.getDocument('/img/sample.pdf').promise.then(function (pdf) {
 		return pdf.getPage(1);
 	}).then(function (page) {
 		var viewport = page.getViewport({ scale: 1 });
@@ -78,25 +81,25 @@
 			viewport: viewport,
 		};
 		page.render(renderContext).promise.then(function () {
-			// 放大到图表所在区域
-			var chartArea = { left: 10, top: 10, width: 200, height: 200 }; // 根据实际情况修改图表区域
-			var destViewport = page.getViewport({ scale: 1 }); // 默认缩放比例为1
-			destViewport = destViewport.clone({ scale: viewport.width / chartArea.width }); // 根据实际情况调整缩放比例
-			var dest = [
-				chartArea.left,
-				viewport.height - chartArea.top - chartArea.height,
-				chartArea.width,
-				chartArea.height,
-				0
-			];
+			// // 放大到图表所在区域
+			// var chartArea = { left: 0, top: 0, width: 540, height: 800 }; // 根据实际情况修改图表区域
+			// var destViewport = page.getViewport({ scale: 1 }); // 默认缩放比例为1
+			// destViewport = destViewport.clone({ scale: viewport.width / chartArea.width }); // 根据实际情况调整缩放比例
+			// var dest = [
+			// 	chartArea.left,
+			// 	viewport.height - chartArea.top - chartArea.height,
+			// 	chartArea.width,
+			// 	chartArea.height,
+			// 	0
+			// ];
 
-			// 设置缩放和滚动到图表区域
-			var pdfCanvas = document.getElementById('pdfCanvas');
-			pdfCanvas.style.transformOrigin = '0 0';
-			pdfCanvas.style.transform = 'scale(' + destViewport.scale + ')';
-			pdfCanvas.scrollIntoView({ behavior: 'smooth', block: 'start' });
+			// // 设置缩放和滚动到图表区域
+			// var pdfCanvas = document.getElementById('pdfCanvas');
+			// pdfCanvas.style.transformOrigin = '0 0';
+			// pdfCanvas.style.transform = 'scale(' + destViewport.scale + ')';
+			// pdfCanvas.scrollIntoView({ behavior: 'smooth', block: 'start' });
 		});;
-		pdfViewer.style.overflow = 'hidden';
+		// pdfViewer.style.overflow = 'hidden';
 
 	});
 </script>
