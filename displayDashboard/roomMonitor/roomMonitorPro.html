@@ -151,7 +151,7 @@
 				inputData = {};
 
 				var timeoffset = 7;
-				//console.log(timearray);
+				//console.log(timeArray);
 				var chartData = {
 					labels: timeArray,
 					datasets: [
@@ -228,19 +228,6 @@
 					options: chartOptions
 				});
 
-				window.onload = function () {
-					console.log("start");
-					// for (var i = 0; i < timeArray.length; i++) {
-					// 	console.log(timeArray[i]);
-					// }
-					handleInputData();
-					setInterval(printTime, 1000);
-					setInterval(updateChartData, 60000);
-					updateChartData();
-					updateChart();
-					console.log("set");
-					//console.log("JavaScript version: " + (typeof BigInt === "function" ? "ES2020+" : "ES5 or ES6"));
-				}
 				// Function to update chart data
 				function updateChartData() {
 					var url = "/api/dht/lastdata.php?locationid="+ locationID +"&sensorid=" + sensorid;
@@ -288,17 +275,13 @@
 
 
 				function handleInputData() {
-					//console.log(timearray);
+					//console.log(timeArray);
 					inputData = {};
-					//var d=document.getElementById('Date');
 
 					for (var i = 0; i < timeArray.length; i++) {
 						// console.log(timeArray[i]);
 						time = moment(timeArray[i])
 						time.add(timeoffset, 'hours');
-						//console.log(time);
-						//console.log(typeof time);
-						// console.log(time.valueOf());
 						var roundedTime = new Date(Math.ceil(time.valueOf() / (timeInterval * 60 * 1000)) * timeInterval * 60 * 1000);
 						// console.log(roundedTime);
 						var roundedTimeString = roundedTime.toISOString();
@@ -393,6 +376,15 @@
 						updateChart();
 					}
 				}
+
+				console.log("start");
+				handleInputData();
+				setInterval(printTime, 1000);
+				setInterval(updateChartData, 60000);
+				updateChartData();
+				updateChart();
+				console.log("set");
+				
 			});
 
 	</script>
