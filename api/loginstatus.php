@@ -7,6 +7,7 @@
             $role = $userInfo['role'];
             echo json_encode(array(
                 'success' => true,
+                'role' => $role,
                 'message' => 'Login Success',
             ));
         } else {

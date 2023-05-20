@@ -42,7 +42,14 @@
 				success: function (response) {
 					loginStatus = response.success === true
 					if (loginStatus) {
-						console.log("Login");
+						if (response.role === 'admin' || response.role === 'b2'){
+							console.log("Login");
+						}
+						else {
+							console.log("Insufficient permissions");
+							alert("Insufficient permissions");
+							window.location.href = '/';
+						}
 					}
 					else {
 						console.log("Logout");

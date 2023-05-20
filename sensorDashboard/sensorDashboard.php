@@ -81,13 +81,19 @@
 				success: function (response) {
 					loginStatus = response.success === true
 					if (loginStatus) {
-						console.log("Login");
+						if (response.role === 'admin'){
+							console.log("Login");
+						}
+						else{
+							console.log("Insufficient permissions");
+							alert("Insufficient permissions");
+							window.location.href = '/';
+						}
 					}
 					else {
 						console.log("Logout");
 						alert("Please Login");
 						window.location.href = '/';
-						
 					}
 				},
 				error: function (error) {

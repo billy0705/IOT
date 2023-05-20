@@ -18,12 +18,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         else if ($username === "ems" && $password === "123"){
             $check = true;
-            $role = "b1";
+            $role = "b2";
         }
 
         else if ($username === "smm" && $password === "123"){
             $check = true;
-            $role = "b2";
+            $role = "b1";
         }
         else{
             $check = false;
