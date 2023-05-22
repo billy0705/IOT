@@ -3,7 +3,6 @@
     $json = file_get_contents($url);
     $obj = json_decode($json);
     if ($obj->statusMessage == "Data Found"){
-        $array = json_decode(json_encode($obj->lstLocationConfigs[0]), true);
-        $locationName = $array["locationName"];
+        $locationName = json_decode(json_encode($obj->lstLocationConfigs[0]), true)["locationName"];
     }
 ?>
