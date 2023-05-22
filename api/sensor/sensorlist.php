@@ -29,34 +29,50 @@ if ($sensor_obj->statusMessage == "Data Found"){
         $array = json_decode(json_encode($sensor_obj->lstSensorConfigs[$i]), true);
         $locationid = $array["locationID"];
         require "../dht/GetLocationName.php";
-        $lastdataurl = 'http://localhost/api/dht/lastdata.php?locationid='. $array["locationID"] .'&sensorid=' . $array["sensorID"].'&role=' . $role;
-        $json = file_get_contents($lastdataurl);
-        // echo $lastdataurl;
-        $data_obj = json_decode($json);
-        $data = json_decode(json_encode($data_obj), true);
-        $h = $data["humidity"];
-        $t = $data["temperature"];
-        $hStatus = $data["hStatus"];
-        $tStatus = $data["tStatus"];
-        $Temparray = Array();
-        $Temparray["sensorID"] = $array["sensorID"];
-        $Temparray["locationID"] = $array["locationID"];
-        $Temparray["locationName"] = $locationName;
-        $Temparray["temperature"] = $t;
-        $Temparray["humidity"] = $h;
-        $Temparray["tStatus"] = $tStatus;
-        $Temparray["hStatus"] = $hStatus;
-        $Temparray[] = $array["hmin"];
-        $Temparray[] = $array["hmax"];
-        $Temparray[] = $array["tmin"];
-        $Temparray[] = $array["tmax"];
-        $Temparray[] = $array["createdate"];
-        $Temparray[] = $array["createby"];
-        $Temparray["status"] = $array["status"];
-        $Temparray[] = $array["intervalTime"];
-        // echo print_r($Temparray)."<br>";
-        $sensor_array[] = $Temparray;
-        $sensor_count += 1;
+        $runFlag = 0;
+        if ($role === 'b1') {
+            if (substr($locationName, 0, 2) === "B1"){
+                $runFlag = 1;
+            }
+        }
+        else if ($role === 'b2') {
+            if (substr($locationName, 0, 2) === "B2"){
+                $runFlag = 1;
+            }
+        }
+        else if ($role === 'admin') {
+            $runFlag = 1;
+        }
+        if ($runFlag){
+            $lastdataurl = 'http://localhost/api/dht/lastdata.php?locationid='. $array["locationID"] .'&sensorid=' . $array["sensorID"].'&role=' . $role;
+            $json = file_get_contents($lastdataurl);
+            // echo $lastdataurl;
+            $data_obj = json_decode($json);
+            $data = json_decode(json_encode($data_obj), true);
+            $h = $data["humidity"];
+            $t = $data["temperature"];
+            $hStatus = $data["hStatus"];
+            $tStatus = $data["tStatus"];
+            $Temparray = Array();
+            $Temparray["sensorID"] = $array["sensorID"];
+            $Temparray["locationID"] = $array["locationID"];
+            $Temparray["locationName"] = $locationName;
+            $Temparray["temperature"] = $t;
+            $Temparray["humidity"] = $h;
+            $Temparray["tStatus"] = $tStatus;
+            $Temparray["hStatus"] = $hStatus;
+            $Temparray[] = $array["hmin"];
+            $Temparray[] = $array["hmax"];
+            $Temparray[] = $array["tmin"];
+            $Temparray[] = $array["tmax"];
+            $Temparray[] = $array["createdate"];
+            $Temparray[] = $array["createby"];
+            $Temparray["status"] = $array["status"];
+            $Temparray[] = $array["intervalTime"];
+            // echo print_r($Temparray)."<br>";
+            $sensor_array[] = $Temparray;
+            $sensor_count += 1;
+        }
     }
     // require "sensorstatus.php";
 }
