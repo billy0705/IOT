@@ -83,7 +83,7 @@ foreach ($location_array as $row){
             // echo print_r($sensor_obj->lstSensorConfigs[$i])."<br>";
             $array = json_decode(json_encode($sensor_obj->lstSensorConfigs[$i]), true);
             if ($array["status"] == 'A'){
-                $active += 1;
+                // $active += 1;
                 $lastdataurl = 'http://localhost/api/dht/lastdata.php?locationid='. $array["locationID"] .'&sensorid=' . $array["sensorID"].'&role=' . $role;
                 // echo $lastdataurl."<br>";
                 $json = file_get_contents($lastdataurl);
