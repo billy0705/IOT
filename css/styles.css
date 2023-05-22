@@ -727,7 +727,7 @@ main .sensordashboard .sensordashboard-right {
     }
 
     .navbar-list{
-        column-gap: 40px;
+        column-gap: 20px;
     }
 
     .navbar-link samp {

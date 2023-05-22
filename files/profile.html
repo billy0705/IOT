@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Solder Machine DashBoard</title>
+	<script src="/js/jquery-3.6.4.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.6.172/pdf.min.js"></script>
+	<link rel="stylesheet" href="/css/styles.css?">
+	<style>
+		body {
+			height: 100vh;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="header"></div>
+	<embed src="/img/sample.pdf" type="application/pdf" style="width:80vw; height:100%">
+</body>
+
+
+<script>
+	function checkLoginPage() {
+
+		$.ajax({
+			url: '/api/loginstatus.php',
+			type: 'GET',
+			async: false,
+			dataType: 'json',
+			success: function (response) {
+				loginStatus = response.success === true
+				if (loginStatus) {
+					console.log("Login");
+				}
+				else {
+					console.log("Logout");
+					alert("Please Login");
+					window.location.href = '/';
+
+				}
+			},
+			error: function (error) {
+				console.error('AJAX GET error:', error);
+			}
+		});
+	}
+	checkLoginPage();
+</script>
+<script src="/js/script.js"></script>
+<!-- ionicon link -->
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</html>
