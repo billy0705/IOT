@@ -16,12 +16,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $check = true;
             $role = "admin";
         }
+        else if ($username === "ems" && $password === "123"){
+            $check = true;
+            $role = "b2";
+        }
+
+        else if ($username === "smm" && $password === "123"){
+            $check = true;
+            $role = "b1";
+        }
         else{
             $check = false;
         }
+
         $userInfo = [
             'username' => $username,
-            'role' => 'admin'
+            'role' => $role
         ];
         $token = base64_encode(json_encode($userInfo));
         if ($check){

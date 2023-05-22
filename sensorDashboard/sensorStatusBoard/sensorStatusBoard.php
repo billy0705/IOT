@@ -107,7 +107,7 @@
 						<a class="" href="">Interval:<br><?php echo $intervalTime?></a>	
 					</div>
 					<div style="background-color: Gainsboro;">
-						<a class="" href="../modify.php?sensorid=<?php echo $sensorID?>">Modify</a>	
+						<a class="" href="../modify.html?sensorid=<?php echo $sensorID?>">Modify</a>	
 					</div>
 				</div>
 			</div>

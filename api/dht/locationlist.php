@@ -28,9 +28,26 @@ if ($location_obj->statusMessage == "Data Found"){
     for ($i = 0; $i < $acount; $i++){
         $array = json_decode(json_encode($location_obj->lstLocationConfigs[$i]), true);
         $Temparray = array();
-        $Temparray[] = $array["locationID"];
-        $Temparray[] = $array["locationName"];
-        $location_array[] = $Temparray;
+        if ($role === 'b1') {
+            if (substr($array["locationName"], 0, 2) === "B1"){
+                $Temparray[] = $array["locationID"];
+                $Temparray[] = $array["locationName"];
+                $location_array[] = $Temparray;
+            }
+        }
+        else if ($role === 'b2') {
+            if (substr($array["locationName"], 0, 2) === "B2"){
+                $Temparray[] = $array["locationID"];
+                $Temparray[] = $array["locationName"];
+                $location_array[] = $Temparray;
+            }
+        }
+        else {
+            $Temparray[] = $array["locationID"];
+            $Temparray[] = $array["locationName"];
+            $location_array[] = $Temparray;
+        }
+        
         $count = $count + 1;
     }
 }
