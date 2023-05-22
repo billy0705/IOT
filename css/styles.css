@@ -534,6 +534,24 @@ button:hover {
     display: none;
 }
 
+/*=============== Sensor ===============*/
+
+.sensor-table{
+    display: table;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.list-bar .sensor-temperature
+, .list-bar .sensor-humidity {
+    display: none;
+}
+
+.sensor-status
+,.sensor-modify {
+    display: none;
+}
+
 /* ************************************* */
 table, th, td {
 		border: 1px solid black;
@@ -657,6 +675,16 @@ main .sensordashboard .sensordashboard-right {
     , .list-bar .location-senosr-humidity-short {
         display: none;
     }
+
+    .list-bar .sensor-temperature
+    , .list-bar .sensor-humidity {
+        display: table-cell;
+    }
+
+    .list-bar .sensor-temperature-short
+    , .list-bar .sensor-humidity-short {
+        display: none;
+    }
     
     .logo {
         transform: scale(0.5, 0.5);
@@ -728,7 +756,10 @@ main .sensordashboard .sensordashboard-right {
         border-radius: 50%;
       }
 
-    
+    .sensor-status
+    , .sensor-modify {
+        display: table-cell;
+    }
     
 }
 
