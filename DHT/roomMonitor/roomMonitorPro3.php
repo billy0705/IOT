@@ -97,15 +97,15 @@
 		</div>
 		<div style="float:right; width:30%;">
 			<button id="reset-zoom-button">Reset Zoom</button>
-			<a id="simple" href="./roomMoniter.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>">Simple Moniter</a>
+			<a id="simple" href="./roomMonitor.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>">Simple Monitor</a>
 			<?php if ($timeInterval != 5){ ?>
-				<a id="simple" href="./roomMoniterPro.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>&timeInterval=5">5 Min</a>
+				<a id="simple" href="./roomMonitorPro.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>&timeInterval=5">5 Min</a>
 			<?php } ?>
 			<?php if ($timeInterval != 15){ ?>
-				<a id="simple" href="./roomMoniterPro.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>&timeInterval=15">15 Min</a>
+				<a id="simple" href="./roomMonitorPro.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>&timeInterval=15">15 Min</a>
 			<?php } ?>
 			<?php if ($timeInterval != 30){ ?>
-				<a id="simple" href="./roomMoniterPro.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>&timeInterval=30">30 Min</a>
+				<a id="simple" href="./roomMonitorPro.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>&timeInterval=30">30 Min</a>
 			<?php } ?>
 			<div class="" style="float:right; margin: auto;">
 				<a style = "width : 150px" class="modify" href="../locationStatusBoard/locationStatusBoard.php?locationid=<?php echo $locationid;?>">Back</a>

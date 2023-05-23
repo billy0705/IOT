@@ -1,7 +1,7 @@
 <!doctype html public >
 <html>
 	<head>
-		<title>Room Moniter</title>
+		<title>Room Monitor</title>
 		<link rel="stylesheet" href="/DHT/styles.css">
 		<style>
 			th {

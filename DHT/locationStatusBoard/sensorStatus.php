@@ -1,10 +1,10 @@
 <?php foreach ($sensor_array as $row) { ?>
 	<div class="sensordashboard">
-		<a style="display:block; width:10%" href="../roomMoniter/roomMoniter.php?locationid=<?php echo $row[1]?>&sensorid=<?php echo $row[0]?>"><?php echo $row[0];?></a>
+		<a style="display:block; width:10%" href="../roomMonitor/roomMonitor.php?locationid=<?php echo $row[1]?>&sensorid=<?php echo $row[0]?>"><?php echo $row[0];?></a>
 		<a style="display:block; width:10%" <?php if ($row[8] == 'A') echo ' class="active"'; else echo ' class = "down"'?>><?php if ($row[8] == 'A') echo 'Active'; else echo 'Stop'?></a>
 		<?php if ($row[8] == 'A'){ ?>
 			<?php
-				$url = 'http://localhost/displayDashboard/THnow.php?locationid='. $row[1] .'&sensorid=' . $row[0];
+				$url = 'http://localhost/DHT/THnow.php?locationid='. $row[1] .'&sensorid=' . $row[0];
 				$json = file_get_contents($url);
 				$obj = json_decode($json);
 				$acount = 0;
@@ -27,7 +27,7 @@
 			?>
 			<?php } ?>
 			<div class="sensordashboard-right" style = "width:28%">
-				<a style = "display:block; width:40%" class="modify" href="../roomMoniter/roomMoniterPro.php?locationid=<?php echo $row[1];?>&sensorid=<?php echo $row[0];?>">Moniter</a>
+				<a style = "display:block; width:40%" class="modify" href="../roomMonitor/roomMonitorPro.php?locationid=<?php echo $row[1];?>&sensorid=<?php echo $row[0];?>">Monitor</a>
 				<a style="display:block; width:5px"></a>
 				<!--<a style = "display:block; width:25%" class="modify" href="../displayDashboard.php?locationid=<?php echo $row[1];?>&sensorid=<?php echo $row[0];?>">All-time<br>Display</a>-->
 				<a style = "display:block; width:40%" class="modify" href="../record/records.php?locationid=<?php echo $row[1];?>&sensorid=<?php echo $row[0];?>">Records</a>
