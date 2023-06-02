@@ -50,7 +50,7 @@
 		if (isset($_GET['timeInterval'])){
 			$timeInterval=$_GET['timeInterval'];
 		}
-		require "../../php/LocationID2Name.php";
+		require "../php/LocationID2Name.php";
 		$url = 'http://10.10.2.108/fromsensor/api/SensorConfig/GetSensorByID/'.$sensorid;
 		$json = file_get_contents($url);
 		$obj = json_decode($json);

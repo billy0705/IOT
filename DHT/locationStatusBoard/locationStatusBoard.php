@@ -15,7 +15,7 @@
 					if (isset($_GET['locationid'])){
 						$locationid=$_GET['locationid'];
 					}
-					require "../../php/LocationID2Name.php";
+					require "../php/LocationID2Name.php";
 					
 				?>
 				<div class="sensordashboard" style="background-color: CornflowerBlue;">
