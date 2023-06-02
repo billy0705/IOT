@@ -42,7 +42,7 @@
 				success: function (response) {
 					loginStatus = response.success === true
 					if (loginStatus) {
-						if (response.auth === 'admin' || response.auth === 'b2'){
+						if (response.auth === 'admin' || response.auth === 'EMS'){
 							console.log("Login");
 						}
 						else {

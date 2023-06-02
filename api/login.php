@@ -18,15 +18,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         else if ($username === "ems" && $password === "123"){
             $check = true;
-            $auth = "b2";
+            $auth = "EMS";
         }
 
         else if ($username === "smm" && $password === "123"){
             $check = true;
-            $auth = "b1";
+            $auth = "SMM";
         }
         else{
             $check = false;
+            $auth = "";
         }
 
         $userInfo = [
