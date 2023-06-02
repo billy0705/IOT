@@ -3,17 +3,21 @@ $statusCode = 200;
 $activeLocationCount = 0;
 $location_info_array = array();
 $username = '';
-$role = '';
+$auth = '';
 if (isset($_COOKIE['auth_token'])) {
     $token = $_COOKIE['auth_token'];
     $userInfo = json_decode(base64_decode($token), true);
     if ($userInfo !== null) {
         $username = $userInfo['username'];
-        $role = $userInfo['role'];
+        $auth = $userInfo['auth'];
     } else {
         $username = '';
-        $role = '';
+        $auth = '';
     }
+}
+
+if (isset($_GET['bu'])){
+    $bu=$_GET['bu'];
 }
 
 $url = 'http://10.10.2.108/fromsensor/api/Location/GetListLocationConfig';
@@ -28,21 +32,21 @@ if ($location_obj->statusMessage == "Data Found"){
     for ($i = 0; $i < $acount; $i++){
         $array = json_decode(json_encode($location_obj->lstLocationConfigs[$i]), true);
         $Temparray = array();
-        if ($role === 'b1') {
+        if ($bu === 'SMM') {
             if (substr($array["locationName"], 0, 2) === "B1"){
                 $Temparray[] = $array["locationID"];
                 $Temparray[] = $array["locationName"];
                 $location_array[] = $Temparray;
             }
         }
-        else if ($role === 'b2') {
+        else if ($bu === 'EMS') {
             if (substr($array["locationName"], 0, 2) === "B2"){
                 $Temparray[] = $array["locationID"];
                 $Temparray[] = $array["locationName"];
                 $location_array[] = $Temparray;
             }
         }
-        else {
+        else if ($bu === 'Total') {
             $Temparray[] = $array["locationID"];
             $Temparray[] = $array["locationName"];
             $location_array[] = $Temparray;
@@ -83,8 +87,8 @@ foreach ($location_array as $row){
             // echo print_r($sensor_obj->lstSensorConfigs[$i])."<br>";
             $array = json_decode(json_encode($sensor_obj->lstSensorConfigs[$i]), true);
             if ($array["status"] == 'A'){
-                $active += 1;
-                $lastdataurl = 'http://localhost/api/dht/lastdata.php?locationid='. $array["locationID"] .'&sensorid=' . $array["sensorID"].'&role=' . $role;
+                // $active += 1;
+                $lastdataurl = 'http://localhost/api/dht/lastdata.php?locationid='. $array["locationID"] .'&sensorid=' . $array["sensorID"].'&auth=' . $auth;
                 // echo $lastdataurl."<br>";
                 $json = file_get_contents($lastdataurl);
                 $obj2 = json_decode($json);
@@ -102,7 +106,7 @@ foreach ($location_array as $row){
                 // $activeLocationCount += 1;
             }
             else if($array["status"] == 'S'){
-                $lastdataurl = 'http://localhost/api/dht/lastdata.php?locationid='. $array["locationID"] .'&sensorid=' . $array["sensorID"].'&role=' . $role;
+                $lastdataurl = 'http://localhost/api/dht/lastdata.php?locationid='. $array["locationID"] .'&sensorid=' . $array["sensorID"].'&auth=' . $auth;
                 // echo $lastdataurl."<br>";
                 $json = file_get_contents($lastdataurl);
                 $obj2 = json_decode($json);
@@ -142,7 +146,7 @@ echo json_encode(array(
     "statusCode" => $statusCode,
     "locationCounts" => $activeLocationCount,
     "locationLists" => $location_info_array,
-    // "role" => $role
+    // "auth" => $auth
 ));
 
 

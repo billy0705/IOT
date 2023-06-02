@@ -1,18 +1,23 @@
 <?php
 $statusCode = 200;	
 $sensor_count = 0;
-$role = '';
+$auth = '';
 if (isset($_COOKIE['auth_token'])) {
     $token = $_COOKIE['auth_token'];
     $userInfo = json_decode(base64_decode($token), true);
     if ($userInfo !== null) {
         $username = $userInfo['username'];
-        $role = $userInfo['role'];
+        $auth = $userInfo['auth'];
     } else {
         $username = '';
-        $role = '';
+        $auth = '';
     }
-}		
+}
+
+if (isset($_GET['bu'])){
+    $bu=$_GET['bu'];
+}
+
 $url = 'http://10.10.2.108/fromsensor/api/SensorConfig/GetSensorConfig';
 $json = file_get_contents($url);
 $sensor_obj = json_decode($json);
@@ -30,21 +35,21 @@ if ($sensor_obj->statusMessage == "Data Found"){
         $locationid = $array["locationID"];
         require "../dht/GetLocationName.php";
         $runFlag = 0;
-        if ($role === 'b1') {
+        if ($bu === 'SMM') {
             if (substr($locationName, 0, 2) === "B1"){
                 $runFlag = 1;
             }
         }
-        else if ($role === 'b2') {
+        else if ($bu === 'EMS') {
             if (substr($locationName, 0, 2) === "B2"){
                 $runFlag = 1;
             }
         }
-        else if ($role === 'admin') {
+        else if ($bu === 'Total') {
             $runFlag = 1;
         }
         if ($runFlag){
-            $lastdataurl = 'http://localhost/api/dht/lastdata.php?locationid='. $array["locationID"] .'&sensorid=' . $array["sensorID"].'&role=' . $role;
+            $lastdataurl = 'http://localhost/api/dht/lastdata.php?locationid='. $array["locationID"] .'&sensorid=' . $array["sensorID"].'&auth=' . $auth;
             $json = file_get_contents($lastdataurl);
             // echo $lastdataurl;
             $data_obj = json_decode($json);

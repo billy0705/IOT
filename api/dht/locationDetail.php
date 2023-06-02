@@ -1,7 +1,7 @@
 <?php
     $statusCode = 200;
     $username = '';
-    $role = '';
+    $auth = '';
     if (isset($_GET['locationid'])){
         $locationid=$_GET['locationid'];
     }
@@ -10,10 +10,10 @@
         $userInfo = json_decode(base64_decode($token), true);
         if ($userInfo !== null) {
             $username = $userInfo['username'];
-            $role = $userInfo['role'];
+            $auth = $userInfo['auth'];
         } else {
             $username = '';
-            $role = '';
+            $auth = '';
         }
     }
     require "./GetLocationName.php";
@@ -47,13 +47,13 @@
             $Temparray["createby"] = $array["createby"];
             $Temparray["status"] = $array["status"];
             $Temparray["intervalTime"] = $array["intervalTime"];
-            // if ($role === ''){
+            // if ($auth === ''){
             //     $lastdataurl = 'http://localhost/api/dht/lastdatafake.php?locationid='. $array["locationID"] .'&sensorid=' . $array["sensorID"];
             // }
             // else{
             //     $lastdataurl = 'http://localhost/api/dht/lastdata.php?locationid='. $array["locationID"] .'&sensorid=' . $array["sensorID"];
             // }
-            $lastdataurl = 'http://localhost/api/dht/lastdata.php?locationid='. $array["locationID"] .'&sensorid=' . $array["sensorID"].'&role=' . $role;
+            $lastdataurl = 'http://localhost/api/dht/lastdata.php?locationid='. $array["locationID"] .'&sensorid=' . $array["sensorID"].'&auth=' . $auth;
             // echo $url;
             $json = file_get_contents($lastdataurl);
             $last_obj = json_decode($json);

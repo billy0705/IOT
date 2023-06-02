@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<title>24-Hour Temperature and Humidity Chart</title>
-		<link rel="stylesheet" href="/DHT/styles.css">
+		<link rel="stylesheet" href="../../css/styles.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 		
@@ -50,8 +50,7 @@
 		if (isset($_GET['timeInterval'])){
 			$timeInterval=$_GET['timeInterval'];
 		}
-		require "../../php/LocationID2Name.php";
-		require "../../php/fakedata.php";
+		require "../php/LocationID2Name.php";
 		$url = 'http://10.10.2.108/fromsensor/api/SensorConfig/GetSensorByID/'.$sensorid;
 		$json = file_get_contents($url);
 		$obj = json_decode($json);
@@ -71,25 +70,20 @@
 			$tmin = array();
 			$hmax = array();
 			$hmin = array();
-			$door = array();
 			for ($i = 0; $i < $acount; $i++){
 				//echo print_r($obj->lstDht_Value[$i])."<br>";
 				$array = json_decode(json_encode($obj->lstDht_Value[$i]), true);
-				$temperatures[] = fake($array["temperature"], $configarray["tmax"], $configarray["tmin"]);
-				// $temperatures[] = $array["temperature"];
-				$humidities[] = fake($array["humidity"], $configarray["hmax"], $configarray["hmin"]);
-				// $humidities[] = $array["humidity"];
+				$temperatures[] = $array["temperature"];
+				$humidities[] = $array["humidity"];
 				$timestamps[] = $array["dataDate"];
 				$tmax[] = $configarray["tmax"];
 				$tmin[] = $configarray["tmin"];
 				$hmax[] = $configarray["hmax"];
 				$hmin[] = $configarray["hmin"];
-				$door[] = $array["door"];
 			}
 			$temperatures = array_reverse($temperatures);
 			$humidities = array_reverse($humidities);
 			$timestamps = array_reverse($timestamps);
-			$door = array_reverse($door);
 		}
 		else {
 			echo $obj->statusMessage;
@@ -103,15 +97,15 @@
 		</div>
 		<div style="float:right; width:30%;">
 			<button id="reset-zoom-button">Reset Zoom</button>
-			<a id="simple" href="./roomMoniter.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>">Simple Moniter</a>
+			<a id="simple" href="./roomMonitor.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>">Simple Monitor</a>
 			<?php if ($timeInterval != 5){ ?>
-				<a id="simple" href="./roomMoniterPro.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>&timeInterval=5">5 Min</a>
+				<a id="simple" href="./roomMonitorPro.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>&timeInterval=5">5 Min</a>
 			<?php } ?>
 			<?php if ($timeInterval != 15){ ?>
-				<a id="simple" href="./roomMoniterPro.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>&timeInterval=15">15 Min</a>
+				<a id="simple" href="./roomMonitorPro.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>&timeInterval=15">15 Min</a>
 			<?php } ?>
 			<?php if ($timeInterval != 30){ ?>
-				<a id="simple" href="./roomMoniterPro.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>&timeInterval=30">30 Min</a>
+				<a id="simple" href="./roomMonitorPro.php?locationid=<?php echo $locationid;?>&sensorid=<?php echo $sensorid;?>&timeInterval=30">30 Min</a>
 			<?php } ?>
 			<div class="" style="float:right; margin: auto;">
 				<a style = "width : 150px" class="modify" href="../locationStatusBoard/locationStatusBoard.php?locationid=<?php echo $locationid;?>">Back</a>
@@ -153,11 +147,8 @@
 			timeArray = <?php echo json_encode($timestamps); ?>;
 			temperatureArray = <?php echo json_encode($temperatures); ?>;
 			humidityArray = <?php echo json_encode($humidities); ?>;
-			doorArray = <?php echo json_encode($door); ?>;
 			var timeInterval = <?php echo $timeInterval; ?>;
 			var newesttime;
-			
-			console.log(doorArray);
 			inputData = {};
 			
 			var timeoffset = 7;
@@ -254,15 +245,18 @@
 				})
 				.then(result  => {
 					console.log(result);
+					/* console.log(result.temperature);
+					console.log(result.humidity);
+					console.log(result.timestamp); */
 					
 					last_date = timeArray[timeArray.length - 1];
 					
-					console.log(result.door);
+					//console.log(last_date);
 					if (last_date != result.timestamp){
 						timeArray.push(result.timestamp);
 						temperatureArray.push(result.temperature);
 						humidityArray.push(result.humidity);
-						doorArray.push(result.door);
+						doordata.push("O");
 						handleInputData();
 					}
 					txtTemp.innerHTML=result.temperature;
@@ -297,30 +291,24 @@
 					//console.log(typeof time);
 					var roundedTime = new Date(Math.ceil(time.valueOf() / (timeInterval * 60 * 1000)) * timeInterval * 60 * 1000);
 					var roundedTimeString = roundedTime.toISOString();
-					var doorS = 0;
-					if (doorArray[i] == "O"){
-						doorS = 1;
-					}
 					//console.log(roundedTimeString);
 					
 					 if (inputData[roundedTimeString]) {
-						inputData[roundedTimeString].tempsum += parseFloat(temperatureArray[i]);
-						inputData[roundedTimeString].humidsum += parseFloat(humidityArray[i]);
-						inputData[roundedTimeString].doorStatus += doorS;
+						inputData[roundedTimeString].tempsum += temperatureArray[i];
+						inputData[roundedTimeString].humidsum += humidityArray[i];
 						inputData[roundedTimeString].count++;
 					} else {
 						inputData[roundedTimeString] = {
-							tempsum: parseFloat(temperatureArray[i]),
-							humidsum: parseFloat(humidityArray[i]),
-							doorStatus: doorS,
+							tempsum: temperatureArray[i],
+							humidsum: humidityArray[i],
 							count: 1
 						};
-					}
+					} 
 				}
 				newesttime = roundedTimeString;
 				//d.innerHTML=time.getUTCHours();
 				
-				console.log(inputData);
+				//console.log(inputData);
 			} 
 			
 			function updateChart() {
@@ -331,8 +319,6 @@
 				var tmindata = [];
 				var hmaxdata = [];
 				var hmindata = [];
-				var doorStatusColorData = [];
-				var doorStatusRadiusData = [];
 				
 				for (var time in inputData) {
 					var tempaverage = inputData[time].tempsum / inputData[time].count;
@@ -344,23 +330,15 @@
 					tmindata.push(<?php echo $configarray["tmin"]?>);
 					hmaxdata.push(<?php echo $configarray["hmax"]?>);
 					hmindata.push(<?php echo $configarray["hmin"]?>);
-					if (inputData[time].doorStatus != 0){
-						doorStatusColorData.push("rgba(255, 0, 0, 1)");
-						doorStatusRadiusData.push(6);
-					}
-					else{
-						doorStatusColorData.push("rgba(0, 0, 0, 0.1)");
-						doorStatusRadiusData.push(3);
-					}
 				}
+				/* console.log(timedata);
+				console.log(tempdata);
+				console.log(humiddata); */ 
+				//console.log(doorStatusColorData);
 				
 				chart.data.labels = timedata;
 				chart.data.datasets[0].data = tempdata;
-				chart.data.datasets[0].pointBackgroundColor = doorStatusColorData;
-				chart.data.datasets[0].pointRadius = doorStatusRadiusData;
 				chart.data.datasets[1].data = humiddata;
-				chart.data.datasets[1].pointBackgroundColor = doorStatusColorData;
-				chart.data.datasets[1].pointRadius = doorStatusRadiusData;
 				chart.data.datasets[2].data = tmaxdata;
 				chart.data.datasets[3].data = tmindata;
 				chart.data.datasets[4].data = hmaxdata;
@@ -383,10 +361,17 @@
 				var s=("0" + (date.getSeconds())).slice(-2);
 				var ary = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 				d.innerHTML=year+'-'+mon+'-'+da+' '+' '+h+':'+m+':'+s+'  '+ary[day];
-				if (date.getMinutes() % 5 == 0 && date.getSeconds() == 0){
-					console.log(date);
+					//console.log(time);
+				date.setUTCHours(date.getUTCHours() + timeoffset);
+				var roundedTime = new Date(Math.ceil(date.getTime() / (1 * 1 * 1000)) * 1 * 1 * 1000);
+				var roundedTimeString = roundedTime.toISOString();
+				if (roundedTimeString == newesttime){
+					console.log("roundedTimeString:", roundedTimeString);
+					console.log("labels:", newesttime);
 					updateChart();
 				}
+				//d.innerHTML = Intl.DateTimeFormat().resolvedOptions().timeZone;
+				//d.innerHTML=roundedTimeString + newesttime;
 			}
 			
 			window.onload=function(){
@@ -398,6 +383,9 @@
 				console.log("set");
 				//console.log("JavaScript version: " + (typeof BigInt === "function" ? "ES2020+" : "ES5 or ES6"));
 			}
+			/* // Call updateChartData function every 10 seconds
+				setInterval(function() {
+			updateChartData();}, 60000); */ // Update every 10 seconds
 			document.getElementById("reset-zoom-button").addEventListener("click", function() {
 				chart.resetZoom();
 			});

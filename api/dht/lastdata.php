@@ -1,23 +1,23 @@
 <?php
-	$role = '';
+	$auth = '';
 	if (isset($_GET['locationid'])){
 		$locationid=$_GET['locationid'];
 	}
 	if (isset($_GET['sensorid'])){
 		$sensorid=$_GET['sensorid'];
 	}
-	if (isset($_GET['role'])){
-		$role=$_GET['role'];
+	if (isset($_GET['auth'])){
+		$auth=$_GET['auth'];
 	}
 	if (isset($_COOKIE['auth_token'])) {
 		$token = $_COOKIE['auth_token'];
 		$userInfo = json_decode(base64_decode($token), true);
 		if ($userInfo !== null) {
 			$username = $userInfo['username'];
-			$role = $userInfo['role'];
+			$auth = $userInfo['auth'];
 		} else {
 			$username = '';
-			$role = '';
+			$auth = '';
 		}
 	}
 	$username = '';
@@ -44,7 +44,7 @@
 	if ($obj->statusMessage == "Data Found"){
 		$sensor_array = Array();
 		$array = json_decode(json_encode($obj->lstDht_Value[0]), true);
-		if ($role === ''){
+		if ($auth === ''){
 			$h = fake($array["humidity"], $configarray["hmax"], $configarray["hmin"]);
 			$t = fake($array["temperature"], $configarray["tmax"], $configarray["tmin"]);
 		}
@@ -127,7 +127,7 @@
         "hStatus" => $hStatus,
         "timestamp" => $time,
         "door" => $door,
-		"role" => $role,
+		"auth" => $auth,
 		"result" => $result
     ));
 ?>

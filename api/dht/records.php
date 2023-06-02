@@ -8,16 +8,16 @@
     $errorsql='AND';
     $timeInterval = 5;
     $username = '';
-    $role = '';
+    $auth = '';
     if (isset($_COOKIE['auth_token'])) {
         $token = $_COOKIE['auth_token'];
         $userInfo = json_decode(base64_decode($token), true);
         if ($userInfo !== null) {
             $username = $userInfo['username'];
-            $role = $userInfo['role'];
+            $auth = $userInfo['auth'];
         } else {
             $username = '';
-            $role = '';
+            $auth = '';
         }
     }
     
@@ -74,7 +74,7 @@
             $Temparray[] = $array["sensorID"];
             $Temparray[] = $array["locationID"];
             $Temparray[] = $array["dataDate"];
-            if ($role === ''){
+            if ($auth === ''){
                 $temperatures[] = fake($array["temperature"], $configarray["tmax"], $configarray["tmin"]);
                 $humidities[] = fake($array["humidity"], $configarray["hmax"], $configarray["hmin"]);
                 $Temparray[] = fake($array["humidity"], $configarray["hmax"], $configarray["hmin"]);

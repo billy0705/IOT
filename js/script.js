@@ -113,7 +113,7 @@ function login(username, password) {
             if (data.success == true) {
                 console.log(data.message);
                 alert("Login successful!");
-                setCookie(data.username, data.role, data.token, 1);
+                setCookie(data.username, data.auth, data.token, 1);
                 $('.login-btn').text('Logout');
                 message = "Login successful!";
                 location.reload();
@@ -134,7 +134,7 @@ function login(username, password) {
 }
 
 // Function to set a cookie
-function setCookie(value, role, token, minutes) {
+function setCookie(value, auth, token, minutes) {
     let expires = "";
     if (minutes) {
         let date = new Date();
@@ -143,7 +143,7 @@ function setCookie(value, role, token, minutes) {
     }
     token = "auth_token" + "=" + (token || "") + ";";
     document.cookie = token + expires + "; path=/";
-    // role=${userInfo.role}
+    // auth=${userInfo.auth}
 }
 
 function deleteCookie(name) {
