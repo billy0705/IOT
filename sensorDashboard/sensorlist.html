@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Sensor DashBoard</title>
+		<script src="/js/jquery-3.6.4.min.js"></script>
+		<link rel="stylesheet" href="/css/styles.css?">
+	</head>
+	<body>
+	<div class="header"></div>
+		<div >
+			<main>
+				<div class="sensor-table" id="sensor-table">
+					<div class="sensor list-bar">
+						<a class="sensor-SensorID list-item">SensorID</a>
+						<a class="sensor-locationName list-item">LocationName</a>
+						<a class="sensor-status list-item">Status</a>
+						<a class="sensor-temperature list-item">Temperature</a>
+						<a class="sensor-humidity list-item">Humidity</a>
+						<a class="sensor-temperature-short list-item">T</a>
+						<a class="sensor-humidity-short list-item">H</a>
+						<a class="sensor-config list-item"></a>
+						<a class="sensor-modify list-item"></a>
+					</div>
+				</div>
+
+				<div class="sensordashboard" style="background-color: Gainsboro;">
+					<a href="addSensor.html" style="display:block; width:100%;"> + Add Sensor</a>
+				</div>
+				<!-- <hr> -->
+				
+			</main>
+		</div>
+		
+		<footer>
+			
+		</footer>
+		
+	</body>
+	<script>
+
+		var urlParams = new URLSearchParams(window.location.search);
+		var bu = urlParams.get("bu");
+
+		url = '/api/sensor/sensorlist.php?bu=' + bu;
+
+		function checkLoginPage() {
+			
+			$.ajax({
+				url: '/api/loginstatus.php',
+				type: 'GET',
+				async: false,
+				dataType: 'json',
+				success: function (response) {
+					loginStatus = response.success === true
+					if (loginStatus) {
+						if(bu == response.auth || response.auth === "admin"){
+							console.log("Login");
+						}
+						else {
+							console.log("Insufficient permissions");
+							alert("Insufficient permissions");
+							window.location.href = '/sensorDashboard/';
+						}
+					}
+					else {
+						console.log("Logout");
+						alert("Please Login");
+						window.location.href = '/sensorDashboard/';
+					}
+				},
+				error: function (error) {
+					console.error('AJAX GET error:', error);
+				}
+			});
+		}
+		checkLoginPage();
+
+		fetch(url)
+			.then(res => res.json())
+			.then(data => {
+				console.log(data)
+				var divCount = data.sensorCount;
+				for (var i = 0; i < divCount; i++) {
+					var div = document.createElement('div');
+					div.className = 'sensor list-content'
+						var divItem = document.createElement('div');
+						divItem.className= 'sensor-SensorID list-item';
+						var a = document.createElement('a');
+							a.textContent = data.sensorLists[i].sensorID;
+						divItem.appendChild(a);
+					div.appendChild(divItem);
+					
+						var divItem = document.createElement('div');
+						divItem.className= 'sensor-LocationName list-item';
+							var a = document.createElement('a');
+							a.textContent = data.sensorLists[i].locationName;
+						divItem.appendChild(a);
+					div.appendChild(divItem);
+					
+						var divItem = document.createElement('div');
+						divItem.className= 'sensor-status list-item';
+							var a = document.createElement('a');
+							a.className = 'value-status';
+							if (data.sensorLists[i].status === "S") {
+								a.textContent = 'Stop';
+								divItem.classList.add('abnormal');
+							}
+							else {
+								a.textContent = 'Active';
+								divItem.classList.add('normal');
+							}
+						divItem.appendChild(a);
+					div.appendChild(divItem);
+
+					var divItem = document.createElement('div');
+						divItem.className= 'sensor-temperature list-item';
+							var a = document.createElement('a');
+							a.className = 'value-status';
+							a.textContent = data.sensorLists[i].temperature;
+							if (data.sensorLists[i].tStatus !== 0) {
+								divItem.classList.add('abnormal');
+							}
+							else {
+								divItem.classList.add('normal');
+							}
+						divItem.appendChild(a);
+					div.appendChild(divItem);
+
+					var divItem = document.createElement('div');
+						divItem.className= 'sensor-humidity list-item';
+							var a = document.createElement('a');
+							a.className = 'value-status';
+							a.textContent = data.sensorLists[i].humidity;
+							console.log(data.sensorLists[i].hstatus);
+							if (data.sensorLists[i].hStatus !== 0) {
+								divItem.classList.add('abnormal');
+							}
+							else {
+								divItem.classList.add('normal');
+							}
+						divItem.appendChild(a);
+					div.appendChild(divItem);
+						
+						var divItem = document.createElement('div');
+						divItem.className = 'sensor-config list-item'
+							var a = document.createElement('a');
+							a.className = 'a-link-btn';
+							a.href = "./sensorStatusBoard/sensorStatusBoard.php?sensorid=" + data.sensorLists[i].sensorID;
+							a.textContent = 'Config';
+						divItem.appendChild(a);
+					div.appendChild(divItem)
+
+					var divItem = document.createElement('div');
+						divItem.className = 'sensor-modify list-item'
+							var a = document.createElement('a');
+							a.className = 'a-link-btn';
+							a.href = "./modify.html?sensorid=" + data.sensorLists[i].sensorID;
+							a.textContent = 'Modify';
+						divItem.appendChild(a);
+					div.appendChild(divItem)
+					document.getElementById('sensor-table').appendChild(div);
+				}
+			});
+	</script>
+	<script src="/js/script.js"></script>
+	<!-- ionicon link -->
+	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+	<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</html>					
