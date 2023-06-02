@@ -1,0 +1,32 @@
+.bu-table {
+    display: table;
+    border-collapse: collapse;
+    width: 100%;
+    text-align: center;
+}
+
+.bu-item {
+    padding: 60px 20px;
+}
+
+.bu-table .list-bar {
+    font-size: var(--fs-1);
+    color: var(--eerie-black-1);
+}
+
+.BU-EMS {
+    background: #00d9ff;
+}
+
+.BU-SMM {
+    background: #ffd900;
+}
+
+.BU-Total {
+    background: #00ff30;
+}
+
+.bu-table .list-bar:hover {
+	scale: 1 1.2;
+	color: var(--jet);
+}

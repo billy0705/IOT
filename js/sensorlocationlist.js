@@ -1,4 +1,9 @@
-fetch('/api/dht/locationlist.php')
+var urlParams = new URLSearchParams(window.location.search);
+var bu = urlParams.get("bu");
+
+url = '/api/dht/locationlist.php?bu=' + bu;
+
+fetch(url)
 	.then(res => {
 		// console.log(res);
 		return res.json();
