@@ -14,16 +14,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $password = $jsonData['password'];
         if ($username === "user" && $password === "123"){
             $check = true;
-            $role = "admin";
+            $auth = "admin";
         }
         else if ($username === "ems" && $password === "123"){
             $check = true;
-            $role = "b2";
+            $auth = "b2";
         }
 
         else if ($username === "smm" && $password === "123"){
             $check = true;
-            $role = "b1";
+            $auth = "b1";
         }
         else{
             $check = false;
@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $userInfo = [
             'username' => $username,
-            'role' => $role
+            'auth' => $auth
         ];
         $token = base64_encode(json_encode($userInfo));
         if ($check){
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'success' => true,
                 'message' => 'POST success',
                 'username' => $username,
-                'role' =>$role,
+                'auth' =>$auth,
                 'token' => $token
             ];
             // setcookie('auth_token', $token, time() + 3600, '/');

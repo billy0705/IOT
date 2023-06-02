@@ -4,10 +4,10 @@
         $userInfo = json_decode(base64_decode($token), true);
         if ($userInfo !== null) {
             $username = $userInfo['username'];
-            $role = $userInfo['role'];
+            $auth = $userInfo['auth'];
             echo json_encode(array(
                 'success' => true,
-                'role' => $role,
+                'auth' => $auth,
                 'message' => 'Login Success',
             ));
         } else {
