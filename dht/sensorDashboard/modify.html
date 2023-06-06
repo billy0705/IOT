@@ -1,0 +1,93 @@
+<html>
+	<head>
+		<title>Modify Sensor</title>
+		<script src="../js/jquery-3.6.4.min.js"></script>
+		<link rel="stylesheet" href="../css/styles.css">
+	</head>
+	<body>
+	<div class="header"></div>
+		
+		<form action="/api/sensor/update.php" name="frmAdd" method="post">
+			<table width="284" border="1">
+				<tr>
+					<th width="120">RowID</th>
+					<td width="238"><input type="text" name="txtRowID" id="txtRowID" size="10"></td>
+					</tr>
+				<tr>
+				<tr>
+					<th width="120">SensorID</th>
+					<td width="238"><input type="text" name="txtSensorID" id="txtSensorID" size="10" ></td>
+					</tr>
+				<tr>
+					<th width="120">LocationID</th>
+					<td><input type="text" name="txtLocationID" id="txtLocationID" size="20" ></td>
+				</tr>
+				<tr>
+					<th width="120">Humidity Min.</th>
+					<td><input type="text" name="txtHmin" id="txtHmin" size="6" ></td>
+				</tr>
+				<tr>
+					<th width="120">Humidity Max.</th>
+					<td><input type="text" name="txtHmax" id="txtHmax" size="6" ></td>
+				</tr>
+				<tr>
+					<th width="120">Humidity Offset</th>
+					<td><input type="text" name="txtHOffset" id="txtHOffset" size="6" ></td>
+				</tr>
+				<tr>
+					<th width="120">Temperature Min.</th>
+					<td><input type="text" name="txtTmin" id="txtTmin" size="6" ></td>
+				</tr>
+				<tr>
+					<th width="120">Temperature Max.</th>
+					<td><input type="text" name="txtTmax" id="txtTmax" size="6" ></td>
+				</tr>
+				<tr>
+					<th width="120">Temperature Offset</th>
+					<td><input type="text" name="txtTOffset" id="txtTOffset" size="6" ></td>
+				</tr>
+				<tr>
+					<th width="120">Create By</th>
+					<td><input type="text" name="txtCreatby" id="txtCreatby" size="6" ></td>
+				</tr>
+				<tr>
+					<th width="120">Status</th>
+					<td><input type="text" name="txtStatus" id="txtStatus" size="6" ></td>
+				</tr>
+				<tr>
+					<th width="120">Interval Time</th>
+					<td><input type="text" name="txtIntervalTime" id="txtIntervalTime" size="6" ></td>
+				</tr>
+			</table>
+			<input type="submit" name="submit" value="submit">
+		</form>
+	</body>
+	<script>
+		var urlParams = new URLSearchParams(window.location.search);
+		var sensorid = urlParams.get("sensorid");
+		url ='/api/sensor/modify.php?sensorid=' + sensorid;
+		console.log(url);
+		fetch(url)
+			.then(res => res.json())
+			.then(data => {
+				console.log(data);
+				console.log(data.Config.rowID);
+				document.getElementById("txtRowID").value = data.Config.rowID;
+				document.getElementById("txtSensorID").value = data.Config.sensorID;
+				document.getElementById("txtLocationID").value = data.Config.locationID;
+				document.getElementById("txtHmin").value = data.Config.hmin;
+				document.getElementById("txtHmax").value = data.Config.hmax;
+				document.getElementById("txtHOffset").value = data.Config.hoffset;
+				document.getElementById("txtTmin").value = data.Config.tmin;
+				document.getElementById("txtTmax").value = data.Config.tmax;
+				document.getElementById("txtTOffset").value = data.Config.toffset;
+				document.getElementById("txtCreatby").value = data.Config.createby;
+				document.getElementById("txtStatus").value = data.Config.status;
+				document.getElementById("txtIntervalTime").value = data.Config.intervalTime;
+			});
+	</script>
+	<script src="../js/script.js"></script>
+	<!-- ionicon link -->
+	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+	<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</html>

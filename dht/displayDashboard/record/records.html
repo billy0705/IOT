@@ -1,0 +1,383 @@
+<!doctype html public>
+<html>
+
+<head>
+	<title>Temperature and Humidity Records</title>
+	<link rel="stylesheet" href="../../css/styles.css">
+	<script src="../../js/jquery-3.6.4.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+	<style>
+		.formandlist {
+			display: flex;
+			position: relative;
+		}
+
+		.form1 {
+			display: flex;
+			flex-direction: column;
+			width: 30%;
+			gap: 5px;
+		}
+
+		.form1-p1 {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.form1-p2 {
+			display: flex;
+		}
+
+		.form-item {
+			display: flex;
+		}
+
+		.link-bar {
+			display: flex;
+			flex-direction: row;
+			gap: 20px;
+			position: absolute;
+			bottom: 0;
+			right: 0;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="header"></div>
+
+	<div class="formandlist">
+		<form class="form1" id="form1" name="form1" method="get" action="">
+			<p class="form1-p1">
+			<div class="form-item">
+				SensorID:
+				<input name="sensorid" type="text" id="txtSID" value="" readonly /><br>
+			</div>
+			<div class="form-item">
+				LocationID:
+				<input name="locationid" type="text" id="txtLID" value="" readonly /><br>
+			</div>
+			<div class="form-item">
+				TimeInterval:
+				<input name="timeInterval" type="text" id="txtTI" value="" readonly /><br>
+			</div>
+			<div class="form-item">
+				LocationName:
+				<a id="txtLN">
+					
+				</a><br>
+			</div>
+			<div class="form-item">
+				Date:
+				<input name="selectdate" type="date" id="txtDate" value="" min="2023-03-30"
+					max="">
+			</div>
+			</p>
+			<p class="form1-p2">
+				<input type="submit" name="button" id="button" value="Search" />
+				<input type="submit" name="download butten" value="Download CSV" formaction="/api/dht/exportcsv.php" />
+			</p>
+		</form>
+		<div class="link-bar" style="float:right; margin: auto;">
+			<a id="time-btn1"></a>
+			<a id="time-btn2"></a>
+			<a id="back-btn">Back</a>
+		</div>
+	</div>
+
+	<!-- <div id="datatable" style="height:200px"></div> -->
+	<div class="app" style="height: 50vh;">
+		<canvas id="chart"></canvas>
+	</div>
+
+
+	<br><br><br>
+
+
+	<br>Alarm Records<br>
+	<div id="alarmtable" style="height:200px"></div>
+	<br><br>
+</body>
+<script src="../../js/script.js"></script>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+	var today = new Date();
+
+	// Get the current year, month, and day
+	let year = today.getFullYear();
+	let month = String(today.getMonth() + 1).padStart(2, '0');
+	let date = String(today.getDate()).padStart(2, '0');
+
+	// Format the date as desired (e.g., YYYY-MM-DD)
+	var todayString = `${year}-${month}-${date}`;
+
+	var timebtn1 = document.getElementById('time-btn1');
+	var timebtn2 = document.getElementById('time-btn2');
+	var txtLID = document.getElementById('txtLID');
+	var txtSID = document.getElementById('txtSID');
+	var txtTI = document.getElementById('txtTI');
+	var txtLN = document.getElementById('txtLN');
+	var txtDate = document.getElementById('txtDate');
+	
+	var urlParams = new URLSearchParams(window.location.search);
+	var locationID = urlParams.get("locationid");
+	var sensorid = urlParams.get("sensorid");
+	var timeInterval = urlParams.get("timeInterval");
+	var selectdate = urlParams.get("selectdate");
+
+	if (timeInterval == null) {
+		timeInterval = 5;
+	}
+	if (selectdate == null) {
+		selectdate = todayString;
+	}
+
+	txtLID.value= locationID;
+	txtSID.value = sensorid;
+	txtTI.value = timeInterval;
+	txtDate.value = selectdate;
+	txtDate.max = todayString;
+
+	document.getElementById('back-btn').href = "../locationStatusBoard/locationStatusBoard.html?locationid=" + locationID;
+	if(timeInterval == 5){
+		timebtn1.innerHTML = "15 Min";
+		timebtn2.innerHTML = "30 Min";
+		timebtn1.href = 'records.html?locationid=' + locationID + "&sensorid=" + sensorid + "&timeInterval=" + 15;
+		timebtn2.href = 'records.html?locationid=' + locationID + "&sensorid=" + sensorid + "&timeInterval=" + 30;
+	}else if (timeInterval == 15){
+		timebtn1.innerHTML = "5 Min";
+		timebtn2.innerHTML = "30 Min";
+		timebtn1.href = 'records.html?locationid=' + locationID + "&sensorid=" + sensorid + "&timeInterval=" + 5;
+		timebtn2.href = 'records.html?locationid=' + locationID + "&sensorid=" + sensorid + "&timeInterval=" + 30;
+	}else if (timeInterval == 30){
+		timebtn1.innerHTML = "5 Min";
+		timebtn2.innerHTML = "15 Min";
+		timebtn1.href = 'records.html?locationid=' + locationID + "&sensorid=" + sensorid + "&timeInterval=" + 5;
+		timebtn2.href = 'records.html?locationid=' + locationID + "&sensorid=" + sensorid + "&timeInterval=" + 15;
+	}
+	
+	url = '/api/dht/records.php?locationid=' + locationID + "&sensorid=" + sensorid + "&timeInterval=" + timeInterval + "&selectdate=" + selectdate;
+	console.log(url);
+	fetch(url)
+		.then(res => {
+			console.log(res);
+			return res.json();
+			})
+		.then(data => {
+			timeArray = JSON.parse(data.timestamps);
+			temperatureArray = JSON.parse(data.temperatures);
+			humidityArray = JSON.parse(data.humidities);
+			doorArray = JSON.parse(data.door);
+			humidityArray = JSON.parse(data.humidities);
+			configarray = data.configarray;
+			txtLN.innerHTML = data.locationName;
+			my_2d = JSON.parse(data.data_array);
+
+			inputData = {};
+			var timeoffset = 7;
+			console.log(doorArray);
+			var chartData = {
+				labels: timeArray,
+				datasets: [
+					{
+						label: 'Temperature',
+						data: temperatureArray,
+						borderColor: 'green',
+						fill: false
+					},
+					{
+						label: 'Humidity',
+						data: humidityArray,
+						borderColor: 'blue',
+						fill: false
+					},
+					{
+						data: JSON.parse(data.tmax),
+						fill: false,
+						borderColor: 'rgba(255, 0, 0, 0.3)',
+						label: 'Temperature Upper Limit',
+						pointRadius: 0,
+						pointHoverRadius: 0,
+					},
+					{
+						data: JSON.parse(data.tmin),
+						fill: 2,
+						borderColor: 'rgba(255, 0, 0, 0.3)',
+						backgroundColor: 'rgba(0, 255, 0, 0.3)',
+						label: 'Temperature Lower Limit',
+						pointRadius: 0,
+						pointHoverRadius: 0
+
+					},
+					{
+						data: JSON.parse(data.hmax),
+						fill: false,
+						borderColor: 'rgba(255, 0, 0, 0.3)',
+						label: 'Humidity Upper Limit',
+						pointRadius: 0,
+						pointHoverRadius: 0
+					},
+					{
+						data: JSON.parse(data.hmin),
+						fill: 4,
+						borderColor: 'rgba(255, 0, 0, 0.3)',
+						backgroundColor: 'rgba(0, 255, 0, 0.3)',
+						label: 'Humidity Lower Limit',
+						pointRadius: 0,
+						pointHoverRadius: 0
+					}
+				]
+			};
+
+			var chartOptions = {
+				responsive: true,
+				maintainAspectRatio: false,
+				scales: {
+					xAxes: [{
+						type: 'time',
+						time: {
+							parser: 'YYYY-MM-DDTHH:mm:ss',
+							tooltipFormat: 'YYYY-MM-DDTHH:mm:ss',
+							unit: 'hour'
+						},
+					}],
+				},
+			};
+
+			var ctx = document.getElementById('chart').getContext('2d');
+			var chart = new Chart(ctx, {
+				type: 'line',
+				data: chartData,
+				options: chartOptions
+			});
+			handleInputData();
+			updateChart();
+
+			function handleInputData() {
+				//console.log(timearray);
+				inputData = {};
+				//var d=document.getElementById('Date');
+
+				for (var i = 0; i < timeArray.length; i++) {
+					time = moment(timeArray[i])
+					time.add(timeoffset, 'hours');
+					//console.log(time);
+					//console.log(typeof time);
+					var roundedTime = new Date(Math.ceil(time.valueOf() / (timeInterval * 60 * 1000)) * timeInterval * 60 * 1000);
+					var roundedTimeString = roundedTime.toISOString();
+					//console.log(roundedTimeString);
+					var doorS = 0;
+					if (doorArray[i] == "O") {
+						doorS = 1;
+					}
+
+					if (inputData[roundedTimeString]) {
+						inputData[roundedTimeString].tempsum += parseFloat(temperatureArray[i]);
+						inputData[roundedTimeString].humidsum += parseFloat(humidityArray[i]);
+						inputData[roundedTimeString].doorStatus += doorS;
+						inputData[roundedTimeString].count++;
+					} else {
+						inputData[roundedTimeString] = {
+							tempsum: parseFloat(temperatureArray[i]),
+							humidsum: parseFloat(humidityArray[i]),
+							doorStatus: doorS,
+							count: 1
+						};
+					}
+				}
+				//d.innerHTML=time.getUTCHours();
+
+				//console.log(inputData);
+			}
+
+			function updateChart() {
+				var timedata = [];
+				var tempdata = [];
+				var humiddata = [];
+				var tmaxdata = [];
+				var tmindata = [];
+				var hmaxdata = [];
+				var hmindata = [];
+				var doorStatusColorData = [];
+				var doorStatusRadiusData = [];
+
+				for (var time in inputData) {
+					var tempaverage = inputData[time].tempsum / inputData[time].count;
+					var humidaverage = inputData[time].humidsum / inputData[time].count;
+					timedata.push(time);
+					tempdata.push(tempaverage);
+					humiddata.push(humidaverage);
+					tmaxdata.push(configarray["tmax"]);
+					tmindata.push(configarray["tmin"]);
+					hmaxdata.push(configarray["hmax"]);
+					hmindata.push(configarray["hmin"]);
+					if (inputData[time].doorStatus != 0) {
+						doorStatusColorData.push("rgba(255, 0, 0, 1)");
+						doorStatusRadiusData.push(4);
+					}
+					else {
+						doorStatusColorData.push("rgba(0, 0, 0, 0.1)");
+						doorStatusRadiusData.push(3);
+					}
+				}
+				/* console.log(timedata);
+				console.log(tempdata);
+				console.log(humiddata); */
+
+				chart.data.labels = timedata;
+				chart.data.datasets[0].data = tempdata;
+				chart.data.datasets[0].pointBackgroundColor = doorStatusColorData;
+				chart.data.datasets[0].pointRadius = doorStatusRadiusData;
+				chart.data.datasets[1].data = humiddata;
+				chart.data.datasets[1].pointBackgroundColor = doorStatusColorData;
+				chart.data.datasets[1].pointRadius = doorStatusRadiusData;
+				chart.data.datasets[2].data = tmaxdata;
+				chart.data.datasets[3].data = tmindata;
+				chart.data.datasets[4].data = hmaxdata;
+				chart.data.datasets[5].data = hmindata;
+				//console.log(chart.data.labels);
+				chart.update();
+			}
+
+			google.charts.load('current', { packages: ['table', 'line', 'corechart'] });
+			google.charts.setOnLoadCallback(drawChart);
+
+			function drawChart() {
+
+				// data alarm plot
+				var data_alarm = new google.visualization.DataTable();
+				data_alarm.addColumn('string', 'Time');
+				data_alarm.addColumn('string', 'SensorID');
+				data_alarm.addColumn('string', 'LocationID');
+				data_alarm.addColumn('number', 'Humidity');
+				data_alarm.addColumn('number', 'Temperature');
+				data_alarm.addColumn('string', 'Humidity Min. Alarm');
+				data_alarm.addColumn('string', 'Humidity Max. Alarm');
+				data_alarm.addColumn('string', 'Temperature Min. Alarm');
+				data_alarm.addColumn('string', 'Temperature Max. Alarm');
+				data_alarm.addColumn('string', 'Door Status');
+				for (i = my_2d.length - 1; i >= 0; i--) {
+					// console.log(i);
+					if (my_2d[i][5] == "Y" || my_2d[i][6] == "Y" || my_2d[i][7] == "Y" || my_2d[i][8] == "Y") {
+						// console.log(my_2d[i][0]);
+						data_alarm.addRow([my_2d[i][2], my_2d[i][0].toString(), my_2d[i][1].toString(), parseFloat(my_2d[i][3]), parseFloat(my_2d[i][4]), my_2d[i][5], my_2d[i][6], my_2d[i][7], my_2d[i][8], my_2d[i][9]]);
+					}
+				};
+				var chartoptions = {
+					showRowNumber: true,
+					width: '100%',
+					height: '100%'
+				};
+				var chart_alarm = new google.visualization.Table(document.getElementById('alarmtable'));
+				chart_alarm.draw(data_alarm, chartoptions);
+
+			}
+		});
+</script>
+<!-- ionicon link -->
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</html>

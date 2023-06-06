@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Solder Machine DashBoard</title>
+	<script src="../js/jquery-3.6.4.min.js"></script>
+	<link rel="stylesheet" href="../css/styles.css?">
+</head>
+
+<body>
+	<div class="header"></div>
+	<main>
+		<div class="machine-location-table" id="machine-location-table">
+			<div class="machine-location list-bar">
+				<a class="machine-location-locationID list-item">LocationID</a>
+				<a class="machine-location-MachineID list-item">MachineID</a>
+				<a class="machine-location-LocationName list-item">LocationName</a>
+				<a class="machine-location-LocationName-short list-item">Location</a>
+				<a class="machine-location-Model list-item">Model</a>
+				<a class="machine-location-Status list-item">Status</a>
+				<a class="machine-location-Dashboard list-item">Dashboard</a>
+			</div>
+		</div>
+		<div id="container"></div>
+		<div class="sensordashboard" style="background-color: Gainsboro;">
+			<a href="#" style="display:block; width:100%;"> + Add Machine</a>
+		</div>
+
+	</main>
+
+	<script>
+	
+		function checkLoginPage() {
+			
+			$.ajax({
+				url: '/api/loginstatus.php',
+				type: 'GET',
+				async: false,
+				dataType: 'json',
+				success: function (response) {
+					loginStatus = response.success === true
+					if (loginStatus) {
+						if (response.auth === 'admin' || response.auth === 'EMS'){
+							console.log("Login");
+						}
+						else {
+							console.log("Insufficient permissions");
+							alert("Insufficient permissions");
+							window.location.href = '/';
+						}
+					}
+					else {
+						console.log("Logout");
+						alert("Please Login");
+						window.location.href = '/';
+						
+					}
+				},
+				error: function (error) {
+					console.error('AJAX GET error:', error);
+				}
+			});
+		}
+		checkLoginPage();
+
+		fetch('/api/machine/machinelist.php')
+			.then(res => res.json())
+			.then(data => {
+				console.log(data)
+				var divCount = data.locationCounts;
+				for (var i = 0; i < divCount; i++) {
+					var div = document.createElement('div');
+					div.className = 'machine-location list-content'
+						var divItem = document.createElement('div');
+						divItem.className= 'machine-location-locationID list-item';
+						var a = document.createElement('a');
+							a.textContent = data.locationLists[i].locationID;
+						divItem.appendChild(a);
+					div.appendChild(divItem);
+						var divItem = document.createElement('div');
+						divItem.className= 'machine-location-MachineID list-item';
+							var a = document.createElement('a');
+							a.textContent = data.locationLists[i].machineID;
+						divItem.appendChild(a);
+					div.appendChild(divItem);
+						var divItem = document.createElement('div');
+						divItem.className= 'machine-location-LocationName list-item';
+							var a = document.createElement('a');
+							a.textContent = data.locationLists[i].locationName;
+						divItem.appendChild(a);
+					div.appendChild(divItem);
+						var divItem = document.createElement('div');
+						divItem.className= 'machine-location-Model list-item';
+							var a = document.createElement('a');
+							a.textContent = data.locationLists[i].machineModel;
+						divItem.appendChild(a);
+					div.appendChild(divItem);
+						var divItem = document.createElement('div');
+						divItem.className= 'machine-location-Status list-item';
+							var a = document.createElement('a');
+							a.className = 'value-status';
+							if (data.locationLists[i].machineStatus === "S") {
+								a.textContent = 'Stop';
+								divItem.classList.add('abnormal');
+							}
+							else {
+								a.textContent = 'Active';
+								divItem.classList.add('normal');
+							}
+						divItem.appendChild(a);
+					div.appendChild(divItem);
+						
+						var divItem = document.createElement('div');
+						divItem.className = 'machine-location-dashboard list-item'
+							var a = document.createElement('a');
+							a.className = 'a-link-btn';
+							a.href = 'ovenDisplay.html?machineID=' + data.locationLists[i].machineID;
+							a.textContent = 'Detail';
+						divItem.appendChild(a);
+					div.appendChild(divItem)
+					document.getElementById('machine-location-table').appendChild(div);
+				}
+			});
+	</script>
+	<script src="../js/script.js"></script>
+	<!-- ionicon link -->
+	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+	<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
