@@ -17,13 +17,13 @@ $.ajax({
 			else {
 				console.log("Insufficient permissions");
 				alert("Insufficient permissions");
-				window.location.href = '/displayDashboard/';
+				window.location.href = dht_home + '/displayDashboard/';
 			}
 		}
 		else {
 			console.log("Logout");
 			alert("Please Login");
-			window.location.href = '/displayDashboard/';
+			window.location.href = dht_home + '/displayDashboard/';
 			
 		}
 	},
