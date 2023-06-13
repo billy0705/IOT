@@ -4,7 +4,7 @@
 		<a style="display:block; width:10%" <?php if ($row[8] == 'A') echo ' class="active"'; else echo ' class = "down"'?>><?php if ($row[8] == 'A') echo 'Active'; else echo 'Stop'?></a>
 		<?php if ($row[8] == 'A'){ ?>
 			<?php
-				$url = 'http://localhost/DHT/THnow.php?locationid='. $row[1] .'&sensorid=' . $row[0];
+				$url = 'http://localhost/dht/DHT/THnow.php?locationid='. $row[1] .'&sensorid=' . $row[0];
 				$json = file_get_contents($url);
 				$obj = json_decode($json);
 				$acount = 0;

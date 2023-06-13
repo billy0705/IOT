@@ -1,6 +1,6 @@
 <div class="header" style="height:15vh">
 	<a href="/DHT" class="logo">
-		<img src="/img/Tatung_logo.png" alt="">
+		<img src="/dht/img/Tatung_logo.png" alt="">
 	</a>
 	<!-- <div class="header-right">
 		<a class="active" href="/">Home</a>
