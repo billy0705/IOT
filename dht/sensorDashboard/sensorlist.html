@@ -56,8 +56,8 @@
 				dataType: 'json',
 				success: function (response) {
 					loginStatus = response.success === true
-					if (loginStatus) {
-						if(bu == response.auth || response.auth === "admin"){
+					if (loginStatus || bu == 'SMM') {
+						if(bu == response.auth || response.auth === "admin" || bu == 'SMM'){
 							console.log("Login");
 						}
 						else {

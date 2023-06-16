@@ -40,7 +40,7 @@
 			//echo $obj->statusMessage;
 		}
 	?>
-	<?php if ($total != 0) { ?>
+	<?php if ($total != 0 && ($row[0] == 10 || $row[0] == 21 || $row[0] == 22 || $row[0] == 31)) { ?>
 		<div class="sensordashboard" style="height:20%">
 			<a style="display:block; width:10%; font-size:1em;"><?php echo $row[0];?></a>
 			<a style="display:block; width:18%; font-size:1em;"><?php echo $row[1];?></a>

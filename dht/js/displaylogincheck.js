@@ -1,12 +1,13 @@
 $.ajax({
 	url: '/api/loginstatus.php',
 	type: 'GET',
-	async: false,
+	async: true,
 	dataType: 'json',
 	success: function (response) {
 		loginStatus = response.success === true
-		if (loginStatus) {
-			if (bu == response.auth || response.auth === "admin"){
+		console.log(bu);
+		if (loginStatus || bu == 'SMM') {
+			if (bu == response.auth || response.auth === "admin" || bu == 'SMM'){
 				console.log("Login");
 			}
 			else {
